@@ -2,13 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-light text-text; /* บังคับใช้สีพื้นหลังขาว และตัวหนังสือเข้ม */
-  }
-  
-  /* บังคับหัวข้อทุกระดับให้เป็นสีเข้มสุด */
-  h1, h2, h3, h4, h5, h6 {
-    @apply text-dark;
-  }
-}

@@ -1,8 +1,6 @@
-// ไฟล์: src/app/layout.tsx
-
 import type { Metadata } from "next";
 import { Prompt, Inter } from "next/font/google";
-import "../globals.css"; // <--- แก้เป็น ../globals.css แล้ว
+import "../globals.css";
 import Navbar from "@/components/layout/Navbar";
 
 const prompt = Prompt({
@@ -30,12 +28,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th" className={`${prompt.variable} ${inter.variable}`}>
-      <body className="font-sans bg-white text-dark antialiased">
+      {/* แก้ไขบรรทัดนี้: เปลี่ยน bg-white เป็น bg-light และเพิ่ม selection color */}
+      <body className="font-sans bg-light text-text antialiased selection:bg-primary-100 selection:text-primary-900">
         <Navbar />
         <main className="min-h-screen">
             {children}
         </main>
-        <footer className="bg-gray-50 border-t border-gray-200 py-8 mt-12 text-center text-sm text-gray-500">
+        {/* ปรับ Footer ให้ใช้สีจาก Theme */}
+        <footer className="bg-surface border-t border-border py-8 mt-12 text-center text-sm text-muted">
           <p>© 2024 Thai AI Tools. All rights reserved.</p>
         </footer>
       </body>
