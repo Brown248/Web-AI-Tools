@@ -2,71 +2,68 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Tool } from '@/lib/data';
-import { ExternalLink, Star } from 'lucide-react';
+import { ArrowUpRight, MessageSquare } from 'lucide-react';
 
 export default function ToolCard({ tool }: { tool: Tool }) {
   return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className="group bg-white rounded-2xl border border-border overflow-hidden hover:shadow-card hover:border-primary-400 transition-all duration-300 h-full flex flex-col relative"
-    >
-      <Link href={`/tool/${tool.slug}`} className="flex-1 flex flex-col">
-        
-        {/* Image Section */}
-        <div className="h-52 bg-surface relative overflow-hidden border-b border-border/60">
-           {/* Gradient Background แทนรูปภาพ */}
-           <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-             <span className="text-2xl font-bold text-slate-400/50 tracking-widest uppercase select-none">
-                {tool.name}
-             </span>
-           </div>
-           
-           {/* Overlay สีเมื่อ Hover */}
-           <div className="absolute inset-0 bg-primary-900/0 group-hover:bg-primary-900/5 transition-colors duration-300" />
-
-           {/* Badges */}
-           <div className="absolute top-4 left-4">
-             <span className="bg-white/90 backdrop-blur text-[10px] font-bold text-dark px-2 py-1 rounded border border-border/50 uppercase tracking-wide">
-               {tool.category}
-             </span>
-           </div>
-
-           <div className={`absolute top-4 right-4 px-3 py-1 text-xs font-bold rounded-lg shadow-sm border ${
-             tool.isFree 
-               ? 'bg-emerald-100 text-emerald-800 border-emerald-200' 
-               : 'bg-amber-100 text-amber-800 border-amber-200'
-           }`}>
-             {tool.isFree ? 'ใช้ฟรี' : 'พรีเมียม'}
-           </div>
-        </div>
-
-        {/* Content Section */}
-        <div className="p-6 flex flex-col flex-1">
-          
-          <h3 className="text-xl font-bold text-dark mb-3 group-hover:text-primary-600 transition-colors line-clamp-1">
-            {tool.name}
-          </h3>
-          
-          {/* ใช้ text-text (Slate-800) เพื่อให้อ่านชัดที่สุด */}
-          <p className="text-text text-sm line-clamp-3 leading-relaxed mb-5 flex-1 font-medium">
-            {tool.description}
-          </p>
-          
-          {/* Footer */}
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-sm">
-            <div className="flex items-center gap-1 text-amber-500 font-bold">
-               <Star size={14} fill="currentColor"/> 
-               <span>4.8</span>
-               <span className="text-muted font-normal text-xs ml-1">(120 รีวิว)</span>
+    <Link href={`/tool/${tool.slug}`} className="block h-full">
+      <motion.div
+        whileHover={{ y: -4 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="group relative bg-white rounded-2xl h-full border border-border shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col overflow-hidden"
+      >
+        {/* Card Body */}
+        <div className="p-8 flex flex-col h-full">
+            
+            {/* Header: Icon + Name */}
+            <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-4">
+                    {/* Placeholder Icon box */}
+                    <div className="w-14 h-14 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-xl font-bold text-gray-400">
+                        {tool.name.charAt(0)}
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                            {tool.name}
+                        </h3>
+                        <span className="text-xs font-medium text-gray-400">{tool.category}</span>
+                    </div>
+                </div>
+                
+                {/* Free/Paid Badge */}
+                 <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase border ${
+                    tool.isFree 
+                    ? 'bg-emerald-50 text-emerald-600 border-emerald-100' 
+                    : 'bg-amber-50 text-amber-600 border-amber-100'
+                }`}>
+                    {tool.isFree ? 'Free' : 'Paid'}
+                </span>
             </div>
 
-            <div className="flex items-center font-bold text-primary-600 group-hover:text-primary-700 transition-colors bg-primary-50 px-3 py-1.5 rounded-lg group-hover:bg-primary-100">
-              อ่านต่อ <ExternalLink size={14} className="ml-1.5" />
+            {/* Description */}
+            <p className="text-base text-gray-500 font-light leading-relaxed line-clamp-3 mb-8 flex-1">
+                {tool.description}
+            </p>
+
+            {/* Footer Actions */}
+            <div className="flex items-center justify-between pt-6 border-t border-gray-50">
+                <div className="flex items-center gap-4 text-sm font-medium text-gray-400">
+                     <div className="flex items-center gap-1.5 hover:text-gray-600 transition-colors">
+                        <MessageSquare size={16} />
+                        <span>12</span>
+                     </div>
+                     <div className="flex items-center gap-1.5 text-primary-500">
+                        ▲ <span>248</span>
+                     </div>
+                </div>
+
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300">
+                    <ArrowUpRight size={16} />
+                </div>
             </div>
-          </div>
+
         </div>
-      </Link>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }

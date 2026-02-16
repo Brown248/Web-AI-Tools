@@ -1,144 +1,117 @@
-import { tools } from '@/lib/data';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+"use client";
 import Link from 'next/link';
+import { motion, Variants } from 'framer-motion';
+import { tools, categories } from '@/lib/data';
+import ToolCard from '@/components/ui/ToolCard';
 import AdUnit from '@/components/ui/AdUnit';
-import { Check, X, HelpCircle } from 'lucide-react';
+import { ArrowRight, Sparkles, Search, Layers, Image as IconImage, Type, Presentation, Video, ShoppingBag, GraduationCap, Mic } from 'lucide-react';
 
-// 1. Generate Static Params (จำเป็นสำหรับ Static Export)
-export async function generateStaticParams() {
-  return tools.map((tool) => ({
-    slug: tool.slug,
-  }));
-}
+const iconMap: any = {
+  Image: <IconImage size={24} />,
+  Type: <Type size={24} />,
+  Presentation: <Presentation size={24} />,
+  Video: <Video size={24} />,
+  ShoppingBag: <ShoppingBag size={24} />,
+  GraduationCap: <GraduationCap size={24} />,
+  Mic: <Mic size={24} />,
+};
 
-// 2. Dynamic SEO Metadata
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const tool = tools.find((t) => t.slug === params.slug);
-  if (!tool) return {};
-
-  return {
-    title: `รีวิว ${tool.name} ดีไหม? วิธีใช้และราคา - Thai AI Tools`,
-    description: tool.description,
-    openGraph: {
-      title: tool.name,
-      description: tool.description,
-      images: [tool.image],
-    },
-  };
-}
-
-export default function ToolDetail({ params }: { params: { slug: string } }) {
-  const tool = tools.find((t) => t.slug === params.slug);
-  
-  if (!tool) {
-    notFound();
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.5, ease: "easeOut" } 
   }
+};
 
-  // Schema for SEO (SoftwareApplication)
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: tool.name,
-    applicationCategory: tool.category,
-    offers: {
-      '@type': 'Offer',
-      price: tool.isFree ? '0' : 'Price varies',
-      priceCurrency: 'THB',
-    },
-    description: tool.description,
-  };
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+export default function Home() {
+  // ดึงเฉพาะ 6 รายการแรกมาแสดงที่หน้าแรก
+  const displayTools = tools.slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-white pb-20">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <main className="min-h-screen pb-20">
       
-      {/* Article Header */}
-      <header className="bg-gray-50 pt-24 pb-12 border-b border-gray-200">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-sm font-bold rounded-full mb-4">
-            {tool.category}
-          </span>
-          <h1 className="text-4xl md:text-5xl font-bold text-dark mb-6">{tool.name} คืออะไร? รีวิวเจาะลึก</h1>
-          <p className="text-xl text-gray-500 mb-8">{tool.description}</p>
-          <div className="flex justify-center gap-4">
-            <a href="#" className="bg-dark text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors">
-              ไปที่เว็บไซต์ {tool.name}
-            </a>
-          </div>
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-gradient-to-b from-primary-50/50 to-white">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-primary-100 rounded-full blur-3xl opacity-30 animate-float" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="flex flex-col items-center">
+            <motion.div variants={fadeInUp} className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-primary-100 rounded-full shadow-sm text-sm font-semibold text-primary-600">
+              <Sparkles size={14} className="fill-primary-600" />
+              <span>อัปเดต AI ล่าสุด 2024</span>
+            </motion.div>
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-extrabold text-foreground mb-6 leading-tight">
+              รวม <span className="text-primary-600">AI ฟรี</span> ที่คนไทยต้องรู้
+            </motion.h1>
+            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+              รีวิวละเอียด วิธีใช้จริง เหมาะกับใคร บอกครบ เพื่อคนไทยที่อยากทำงานไวขึ้น
+            </motion.p>
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
+               <Link href="/categories" className="px-8 py-3.5 bg-primary-600 text-white rounded-2xl font-bold text-lg hover:bg-primary-700 shadow-lg shadow-primary-600/20 transition-all">
+                 ดู AI ทั้งหมด
+               </Link>
+            </motion.div>
+          </motion.div>
         </div>
-      </header>
+      </section>
 
-      <div className="container mx-auto px-4 max-w-3xl mt-12">
-        {/* AdSense Top */}
-        <AdUnit slot="top-content" />
-
-        <article className="prose prose-lg prose-indigo mx-auto text-gray-700">
-          {/* เนื้อหาบทความ */}
-          <h2>{tool.name} คืออะไร?</h2>
-          <div dangerouslySetInnerHTML={{ __html: tool.content }} />
-          
-          <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 my-8 not-prose">
-            <h3 className="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
-              <HelpCircle size={20}/> สรุปจุดเด่น
-            </h3>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2 text-sm">
-                <Check className="text-green-500 mt-1 flex-shrink-0" size={16} />
-                <span>ใช้งานภาษาไทยได้ดีเยี่ยม (ตัวอย่าง)</span>
-              </li>
-              <li className="flex items-start gap-2 text-sm">
-                <Check className="text-green-500 mt-1 flex-shrink-0" size={16} />
-                <span>มีเวอร์ชันฟรีตลอดชีพ</span>
-              </li>
-            </ul>
-          </div>
-
-          <h2>ราคาและความคุ้มค่า</h2>
-          <p>{tool.isFree ? 'สามารถใช้งานได้ฟรี โดยมีข้อจำกัดบางอย่าง...' : 'เริ่มต้นที่ $20 ต่อเดือน...'}</p>
-
-          <AdUnit slot="middle-content" />
-
-          <h2>ข้อดี / ข้อเสีย</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose my-8">
-             <div className="border border-green-200 bg-green-50/50 p-5 rounded-lg">
-                <h4 className="font-bold text-green-800 mb-3">ข้อดี</h4>
-                <ul className="space-y-2 text-sm text-gray-700">
-                   <li className="flex gap-2"><Check size={16} className="text-green-600"/> ประมวลผลเร็ว</li>
-                   <li className="flex gap-2"><Check size={16} className="text-green-600"/> UI ใช้งานง่าย</li>
-                </ul>
-             </div>
-             <div className="border border-red-200 bg-red-50/50 p-5 rounded-lg">
-                <h4 className="font-bold text-red-800 mb-3">ข้อสังเกต</h4>
-                 <ul className="space-y-2 text-sm text-gray-700">
-                   <li className="flex gap-2"><X size={16} className="text-red-600"/> ต้องต่อเน็ตตลอดเวลา</li>
-                </ul>
-             </div>
-          </div>
-
-          <h2>เหมาะกับใคร?</h2>
-          <p>เครื่องมือนี้เหมาะสำหรับนักเรียน นักศึกษา และ Content Creator...</p>
-
-        </article>
-
-        {/* AdSense Bottom */}
-        <AdUnit slot="bottom-content" className="mt-12" />
-
-        <div className="border-t border-gray-200 mt-12 pt-8">
-            <h3 className="text-xl font-bold mb-6">บทความแนะนำอื่นๆ</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {tools.filter(t => t.id !== tool.id).slice(0,2).map(t => (
-                    <Link key={t.id} href={`/tool/${t.slug}`} className="block p-4 border rounded-lg hover:border-primary-400 transition-colors">
-                        <div className="font-bold text-dark">{t.name}</div>
-                        <div className="text-sm text-gray-500 line-clamp-1">{t.description}</div>
-                    </Link>
-                ))}
-            </div>
-        </div>
+      <div className="max-w-4xl mx-auto px-6 mb-16">
+        <AdUnit label="ผู้สนับสนุน" />
       </div>
-    </div>
+
+      {/* AI Grid Section */}
+      <section className="max-w-7xl mx-auto px-6 mb-24">
+        <div className="flex justify-between items-end mb-10">
+          <h2 className="text-3xl font-bold text-foreground">AI ฟรียอดนิยม 🔥</h2>
+          <Link href="/ranking" className="text-primary-600 font-bold hover:underline flex items-center gap-1">
+            ดูทั้งหมด <ArrowRight size={18} />
+          </Link>
+        </div>
+
+        {displayTools.length > 0 ? (
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayTools.map((tool) => (
+              <motion.div key={tool.id} variants={fadeInUp}>
+                <ToolCard tool={tool} />
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          <div className="py-20 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 text-slate-400">
+            กำลังอัปเดตข้อมูลเครื่องมือใหม่...
+          </div>
+        )}
+      </section>
+
+      {/* Categories Section */}
+      <section className="bg-slate-50 py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12">หมวดหมู่ AI</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+            {categories.map((cat, idx) => (
+              <Link href={`/category/${cat.slug}`} key={idx}>
+                <motion.div whileHover={{ scale: 1.05 }} className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center gap-3 border border-border shadow-soft h-32">
+                  <div className="text-primary-600 bg-primary-50 p-2 rounded-lg">{iconMap[cat.icon]}</div>
+                  <span className="font-semibold text-sm">{cat.name}</span>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-4xl mx-auto px-6 mt-16">
+        <AdUnit label="โฆษณา" />
+      </div>
+    </main>
   );
 }

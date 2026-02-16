@@ -17,8 +17,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Thai AI Tools - รวม AI ฟรีที่คนไทยต้องรู้",
-  description: "แหล่งรวมเครื่องมือ AI ภาษาไทย รีวิวชัดเจน ใช้งานง่าย ช่วยทำงานและเรียน",
+  title: {
+    template: '%s | Thai AI Tools',
+    default: 'Thai AI Tools - รวม AI ฟรีที่คนไทยต้องรู้ วิธีใช้งานง่าย',
+  },
+  description: "แหล่งรวมรีวิว AI Tools ภาษาไทย คัดเฉพาะตัวฟรีที่ใช้งานได้จริง สอนวิธีใช้ Step-by-step สำหรับนักเรียน คนทำงาน และแม่ค้าออนไลน์",
+  keywords: ["AI ฟรี", "สอนใช้ AI", "ChatGPT ภาษาไทย", "รวม AI", "เครื่องมือ AI"],
+  openGraph: {
+    title: 'Thai AI Tools - รวม AI ฟรีที่คนไทยต้องรู้',
+    description: 'แหล่งรวมรีวิว AI Tools ภาษาไทย คัดเฉพาะตัวฟรีที่ใช้งานได้จริง',
+    locale: 'th_TH',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
@@ -28,15 +38,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th" className={`${prompt.variable} ${inter.variable}`}>
-      {/* แก้ไขบรรทัดนี้: เปลี่ยน bg-white เป็น bg-light และเพิ่ม selection color */}
-      <body className="font-sans bg-light text-text antialiased selection:bg-primary-100 selection:text-primary-900">
+      <body className="font-sans bg-background text-foreground antialiased selection:bg-primary-100 selection:text-primary-900">
         <Navbar />
-        <main className="min-h-screen">
-            {children}
-        </main>
-        {/* ปรับ Footer ให้ใช้สีจาก Theme */}
-        <footer className="bg-surface border-t border-border py-8 mt-12 text-center text-sm text-muted">
-          <p>© 2024 Thai AI Tools. All rights reserved.</p>
+        {children}
+        <footer className="bg-white border-t border-border py-12 mt-0">
+          <div className="container mx-auto px-6 text-center">
+            <p className="font-bold text-xl mb-4 text-foreground">Thai<span className="text-primary-600">AI</span>Tools</p>
+            <div className="flex justify-center gap-6 text-sm text-muted-foreground mb-8">
+              <a href="#" className="hover:text-primary-600">หน้าแรก</a>
+              <a href="#" className="hover:text-primary-600">เกี่ยวกับเรา</a>
+              <a href="#" className="hover:text-primary-600">นโยบายความเป็นส่วนตัว</a>
+            </div>
+            <p className="text-sm text-muted-foreground">© 2024 Thai AI Tools. All rights reserved.</p>
+          </div>
         </footer>
       </body>
     </html>

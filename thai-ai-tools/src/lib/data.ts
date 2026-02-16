@@ -1,3 +1,10 @@
+import { Image, Type, Presentation, Video, ShoppingBag, GraduationCap, Mic } from 'lucide-react';
+
+export interface FAQ {
+  question: string;
+  answer: string;
+}
+
 export interface Tool {
   id: string;
   slug: string;
@@ -5,38 +12,31 @@ export interface Tool {
   description: string;
   category: string;
   isFree: boolean;
-  image: string;
-  content: string; // HTML หรือ Markdown สำหรับบทความยาว
+  priceModel: 'Free' | 'Freemium' | 'Paid';
+  rating: number;
+  reviewCount: number;
+  updatedAt: string;
+  longDescription: string;
+  features: string[];
+  steps: { title: string; desc: string }[];
+  pros: string[];
+  cons: string[];
+  targetAudience: string[];
+  faqs: FAQ[];
+  externalUrl: string; // เพิ่ม URL จริงของเครื่องมือ
 }
 
-export const tools: Tool[] = [
-  {
-    id: '1',
-    slug: 'chatgpt',
-    name: 'ChatGPT',
-    description: 'AI แชทบอทอัจฉริยะที่ช่วยตอบคำถาม เขียนโค้ด และแปลภาษาได้เป็นธรรมชาติ',
-    category: 'AI เขียนบทความ',
-    isFree: true,
-    image: '/images/chatgpt.jpg',
-    content: '<p>เนื้อหาบทความรีวิว ChatGPT แบบละเอียด...</p>'
-  },
-  {
-    id: '2',
-    slug: 'midjourney',
-    name: 'Midjourney',
-    description: 'สุดยอด AI วาดรูปที่ให้คุณภาพสูงระดับศิลปิน เหมาะสำหรับงานดีไซน์',
-    category: 'AI ทำรูป',
-    isFree: false,
-    image: '/images/midjourney.jpg',
-    content: '<p>เนื้อหาบทความรีวิว Midjourney...</p>'
-  },
-  // เพิ่มข้อมูลอื่นๆ ตรงนี้
+export const categories = [
+  { name: 'AI ทำรูปฟรี', slug: 'image-generator', icon: 'Image' },
+  { name: 'AI เขียนบทความ', slug: 'writing', icon: 'Type' },
+  { name: 'AI ทำสไลด์', slug: 'presentation', icon: 'Presentation' },
+  { name: 'AI ทำวิดีโอ', slug: 'video-generator', icon: 'Video' },
+  { name: 'AI ทำเสียง', slug: 'voice', icon: 'Mic' },
+  { name: 'AI ขายของ', slug: 'ecommerce', icon: 'ShoppingBag' },
+  { name: 'AI นักเรียน', slug: 'education', icon: 'GraduationCap' },
 ];
 
-export const categories = [
-  { name: 'AI ทำการบ้าน', icon: 'BookOpen' },
-  { name: 'AI ทำรูป', icon: 'Image' },
-  { name: 'AI เขียนบทความ', icon: 'PenTool' },
-  { name: 'AI ทำสไลด์', icon: 'Presentation' },
-  { name: 'AI สำหรับแม่ค้า', icon: 'ShoppingBag' },
+// คำแนะนำ: เมื่อเริ่มใช้งานจริง ให้ลบรายการเหล่านี้ออกและใส่ข้อมูลที่คุณรีวิวเองลงไป
+export const tools: Tool[] = [
+  // ใส่ข้อมูลเครื่องมือ AI ที่คุณรีวิวที่นี่
 ];
