@@ -18,13 +18,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Thai AI Tools',
-    default: 'Thai AI Tools - รวม AI ฟรีที่คนไทยต้องรู้ วิธีใช้งานง่าย',
+    template: '%s | AI Tool box',
+    default: 'AI Tool box - รวม AI ฟรีที่คนไทยต้องรู้ วิธีใช้งานง่าย',
   },
   description: "แหล่งรวมรีวิว AI Tools ภาษาไทย คัดเฉพาะตัวฟรีที่ใช้งานได้จริง สอนวิธีใช้ Step-by-step สำหรับนักเรียน คนทำงาน และแม่ค้าออนไลน์",
   keywords: ["AI ฟรี", "สอนใช้ AI", "ChatGPT ภาษาไทย", "รวม AI", "เครื่องมือ AI"],
   openGraph: {
-    title: 'Thai AI Tools - รวม AI ฟรีที่คนไทยต้องรู้',
+    title: 'AI Tool box - รวม AI ฟรีที่คนไทยต้องรู้',
     description: 'แหล่งรวมรีวิว AI Tools ภาษาไทย คัดเฉพาะตัวฟรีที่ใช้งานได้จริง',
     locale: 'th_TH',
     type: 'website',
@@ -43,13 +43,11 @@ export default function RootLayout({
         {children}
         <footer className="bg-white border-t border-border py-12 mt-0">
           <div className="container mx-auto px-6 text-center">
-            <p className="font-bold text-xl mb-4 text-foreground">Thai<span className="text-primary-600">AI</span>Tools</p>
+            <p className="font-bold text-xl mb-4 text-foreground">AI<span className="text-primary-600">Tool</span>box</p>
             <div className="flex justify-center gap-6 text-sm text-muted-foreground mb-8">
-              <a href="#" className="hover:text-primary-600">หน้าแรก</a>
-              <a href="#" className="hover:text-primary-600">เกี่ยวกับเรา</a>
               <a href="#" className="hover:text-primary-600">นโยบายความเป็นส่วนตัว</a>
             </div>
-            <p className="text-sm text-muted-foreground">© 2024 Thai AI Tools. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© 2024 AI Tool box. All rights reserved.</p>
           </div>
         </footer>
       </body>

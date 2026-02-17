@@ -1,72 +1,56 @@
 @import "tailwindcss";
 
 @theme {
-  /* --- COLORS (High-End Corporate) --- */
-  --color-background: #ffffff;
-  --color-foreground: #020617; /* Slate-950: ดำสนิทแต่มีมิติ */
+  /* --- COLORS (Premium Soft Slate) --- */
+  /* พื้นหลังเปลี่ยนเป็นสีเทาอ่อน (Slate-50) ช่วยลดแสงจ้าและดูแพง */
+  --color-background: #f8fafc; 
+  --color-foreground: #0f172a; /* Slate-900 */
 
-  /* Primary: Indigo-Blue (Intelligent & Sharp) */
-  --color-primary: #3b82f6; 
-  --color-primary-foreground: #ffffff;
+  /* Surface สีขาวสำหรับการ์ด */
+  --color-surface: #ffffff;
+  
+  /* Primary: ปรับให้เข้ากับพื้นหลังโทนเย็น */
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
   --color-primary-500: #3b82f6;
   --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
   --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
 
   --color-border: #e2e8f0;
-  --color-muted: #64748b;
-  --color-surface: #f8fafc;
-
-  /* --- SHADOWS (Luminous) --- */
-  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-elevation: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-glow: 0 0 40px -10px rgba(59, 130, 246, 0.3);
-  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.04);
-
+  
   /* --- ANIMATIONS --- */
-  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-shimmer: shimmer 2s linear infinite;
-}
-
-@keyframes shimmer {
-  from { background-position: 0 0; }
-  to { background-position: -200% 0; }
+  --animate-float: float 10s ease-in-out infinite;
+  --animate-pulse-slow: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+  }
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary-500/20 selection:text-primary-700;
+    @apply bg-background text-foreground antialiased selection:bg-blue-100 selection:text-blue-900;
   }
 }
 
 @layer utilities {
-  /* พื้นหลัง Grid จางๆ */
-  .bg-grid-slate {
-    background-size: 40px 40px;
-    background-image: linear-gradient(to right, rgba(226, 232, 240, 0.4) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
-  }
-  
-  /* พื้นผิว Noise ให้ดูแพง */
-  .bg-noise {
-    position: relative;
-  }
-  .bg-noise::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
+  /* พื้นหลัง Grid จางๆ แบบ Professional */
+  .bg-grid-pattern {
+    background-size: 60px 60px;
+    background-image: linear-gradient(to right, rgba(226, 232, 240, 0.5) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(226, 232, 240, 0.5) 1px, transparent 1px);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
   }
 
-  /* Glass ขั้นสูง */
-  .glass-pro {
-    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-glass supports-[backdrop-filter]:bg-white/60;
-  }
-  
-  .text-balance {
-    text-wrap: balance;
+  /* Glassmorphism ที่ปรับให้เข้ากับพื้นหลัง Slate */
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)];
   }
 }

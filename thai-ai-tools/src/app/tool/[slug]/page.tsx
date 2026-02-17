@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: `${tool.name} - รีวิว วิธีใช้ และราคา | Thai AI Tools`,
+    title: `${tool.name} - รีวิว วิธีใช้ และราคา | AI Tool box`,
     description: tool.description,
     openGraph: {
       title: `${tool.name} - รีวิว AI Tool`,
