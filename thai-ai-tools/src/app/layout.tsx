@@ -1,34 +1,20 @@
 import type { Metadata } from "next";
-import { Prompt, Inter } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import "../globals.css";
 import Navbar from "@/components/layout/Navbar";
+import CookieConsent from "@/components/ui/CookieConsent";
 
-const prompt = Prompt({
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['thai', 'latin'],
-  variable: '--font-prompt',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
+const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
+const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://aitoolbox-demo.vercel.app'), // ⚠️ เปลี่ยนเป็นโดเมนจริง
   title: {
-    template: '%s | AI Tool box',
-    default: 'AI Tool box - รวม AI ฟรีที่คนไทยต้องรู้ วิธีใช้งานง่าย',
+    default: "AIToolbox - รวมเครื่องมือ AI ที่ดีที่สุด",
+    template: "%s | AIToolbox" 
   },
-  description: "แหล่งรวมรีวิว AI Tools ภาษาไทย คัดเฉพาะตัวฟรีที่ใช้งานได้จริง สอนวิธีใช้ Step-by-step สำหรับนักเรียน คนทำงาน และแม่ค้าออนไลน์",
-  keywords: ["AI ฟรี", "สอนใช้ AI", "ChatGPT ภาษาไทย", "รวม AI", "เครื่องมือ AI"],
-  openGraph: {
-    title: 'AI Tool box - รวม AI ฟรีที่คนไทยต้องรู้',
-    description: 'แหล่งรวมรีวิว AI Tools ภาษาไทย คัดเฉพาะตัวฟรีที่ใช้งานได้จริง',
-    locale: 'th_TH',
-    type: 'website',
-  },
+  description: "ค้นหาเครื่องมือ AI ยอดนิยม อัปเดตล่าสุด 2025",
 };
 
 export default function RootLayout({
@@ -37,20 +23,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className={`${prompt.variable} ${inter.variable}`}>
-      <body className="font-sans bg-background text-foreground antialiased selection:bg-primary-100 selection:text-primary-900">
+    <html lang="th" className={`${inter.variable} ${outfit.variable}`}>
+      <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen">
         <Navbar />
-        {children}
-        <footer className="bg-white border-t border-border py-12 mt-0">
-          <div className="container mx-auto px-6 text-center">
-            <p className="font-bold text-xl mb-4 text-foreground">AI<span className="text-primary-600">Tool</span>box</p>
-            <div className="flex justify-center gap-6 text-sm text-muted-foreground mb-8">
-              <a href="#" className="hover:text-primary-600">นโยบายความเป็นส่วนตัว</a>
-            </div>
-            <p className="text-sm text-muted-foreground">© 2024 AI Tool box. All rights reserved.</p>
+        
+        <div className="flex-grow">
+          {children}
+        </div>
+
+        {/* ✅ Footer ที่มีลิงก์กฎหมาย */}
+        <footer className="py-8 text-center text-sm text-slate-400 border-t border-slate-100 bg-slate-50 mt-auto">
+          <div className="flex justify-center gap-6 mb-4 font-medium">
+            <a href="/privacy" className="hover:text-blue-600 transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-blue-600 transition-colors">Terms of Service</a>
           </div>
+          <p>© 2025 AIToolbox. All rights reserved.</p>
         </footer>
+
+        {/* ✅ แบนเนอร์คุกกี้ */}
+        <CookieConsent />
       </body>
+
+      {/* ✅ Google Analytics (ใส่รหัสจริงของคุณที่นี่) */}
+      <GoogleAnalytics gaId="G-XXXXXXXXXX" />
     </html>
   );
 }
