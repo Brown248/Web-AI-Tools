@@ -6,7 +6,7 @@ import {
   XCircle, Zap, Globe, Share2, Flag 
 } from 'lucide-react';
 
-// ✅ 1. จำเป็นสำหรับ Static Export
+// ✅ 1. Static Export Config
 export async function generateStaticParams() {
   return tools.map((tool) => ({
     slug: tool.slug,
@@ -22,9 +22,7 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const tool = tools.find((t) => t.slug === slug);
   
-  if (!tool) {
-    return { title: 'Tool Not Found' };
-  }
+  if (!tool) return { title: 'Tool Not Found' };
 
   return {
     title: `${tool.name} Review - Features, Pricing & Guide | AIToolbox`,
@@ -36,9 +34,7 @@ export default async function ToolDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const tool = tools.find((t) => t.slug === slug);
 
-  if (!tool) {
-    notFound();
-  }
+  if (!tool) notFound();
 
   // ✅ 3. JSON-LD
   const jsonLd = {
@@ -62,15 +58,14 @@ export default async function ToolDetailPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background pb-20">
-      
-      {/* JSON-LD Script */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* --- HERO SECTION --- */}
+      {/* --- HERO SECTION (ส่วนบนสุด) --- */}
       <div className="bg-slate-900 text-white pt-32 pb-16 px-6 relative overflow-hidden">
+         {/* Background Effect */}
          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4" />
          
          <div className="max-w-4xl mx-auto relative z-10">
@@ -79,6 +74,7 @@ export default async function ToolDetailPage({ params }: PageProps) {
             </Link>
 
             <div className="flex flex-col md:flex-row items-start gap-8">
+               {/* Logo */}
                <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-900/50 text-slate-900 text-4xl font-bold shrink-0">
                   {tool.name.charAt(0)}
                </div>
@@ -96,7 +92,10 @@ export default async function ToolDetailPage({ params }: PageProps) {
                      {tool.description}
                   </p>
                   
+                  {/* 🔥 ปุ่ม Action Buttons (วางคู่กันตรงนี้เลย เห็นชัด 100%) */}
                   <div className="flex flex-wrap items-center gap-4">
+                     
+                     {/* 1. ปุ่มเข้าเว็บ (สีน้ำเงิน) */}
                      <a 
                         href={tool.externalUrl} 
                         target="_blank" 
@@ -105,14 +104,26 @@ export default async function ToolDetailPage({ params }: PageProps) {
                      >
                         เข้าใช้งานเว็บไซต์ <ExternalLink size={18} />
                      </a>
-                     <div className="flex items-center gap-4 text-sm text-slate-400 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
-                        <span className="flex items-center gap-1 text-yellow-400">
-                           <Star size={16} fill="currentColor" /> {tool.rating}
-                        </span>
-                        <span className="w-px h-4 bg-white/10" />
-                        <span>{tool.reviewCount.toLocaleString()} รีวิว</span>
-                     </div>
+
+                     {/* 2. ปุ่มแจ้งปัญหา (สีแดงอ่อน) - วางข้างๆ กันเลย */}
+                     <Link 
+                       href={`/report?tool=${encodeURIComponent(tool.name)}`}
+                       className="inline-flex items-center gap-2 px-5 py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 font-semibold rounded-xl border border-red-500/20 transition-all"
+                     >
+                       <Flag size={18} /> แจ้งปัญหา
+                     </Link>
+
                   </div>
+                  
+                  {/* Review Stats */}
+                  <div className="mt-6 flex items-center gap-4 text-sm text-slate-400 px-4 py-2 bg-white/5 rounded-lg border border-white/10 w-fit">
+                     <span className="flex items-center gap-1 text-yellow-400">
+                        <Star size={16} fill="currentColor" /> {tool.rating}
+                     </span>
+                     <span className="w-px h-4 bg-white/10" />
+                     <span>{tool.reviewCount.toLocaleString()} รีวิว</span>
+                  </div>
+
                </div>
             </div>
          </div>
@@ -227,17 +238,8 @@ export default async function ToolDetailPage({ params }: PageProps) {
                <button className="w-full py-3 rounded-xl border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors flex items-center justify-center gap-2">
                   <Share2 size={18} /> แชร์หน้านี้
                </button>
-
-               {/* ✅ ปุ่ม REPORT (เพิ่มตรงนี้) */}
-               <Link 
-                 href={`/report?tool=${encodeURIComponent(tool.name)}`}
-                 className="flex items-center justify-center gap-2 text-xs text-slate-400 hover:text-red-500 transition-colors mt-4 pt-4 border-t border-slate-100 w-full text-center"
-               >
-                 <Flag size={14} /> แจ้งปัญหาข้อมูลไม่ถูกต้อง
-               </Link>
             </div>
          </div>
-
       </div>
     </main>
   );
