@@ -1,67 +1,49 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { ExternalLink, Megaphone } from 'lucide-react';
 
-interface AdUnitProps {
-  label?: string;
-  slotId?: string; // Google AdSense Slot ID (ถ้ามี)
-  format?: 'auto' | 'fluid' | 'rectangle';
-}
-
-export default function AdUnit({ 
-  label = "Advertisement", 
-  slotId, 
-  format = 'auto' 
-}: AdUnitProps) {
-  const adRef = useRef<HTMLDivElement>(null);
-  const isDev = process.env.NODE_ENV === 'development';
-
-  // ถ้าจะใส่ AdSense Script จริงๆ ให้ uncomment ส่วนนี้
-  /*
-  useEffect(() => {
-    if (slotId && !isDev) {
-      try {
-        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
-      } catch (e) {
-        console.error('AdSense error:', e);
-      }
-    }
-  }, [slotId, isDev]);
-  */
-
+export default function AdUnit() {
   return (
-    <div className="w-full my-8 flex flex-col items-center gap-2">
-      {/* Label ตัวเล็กๆ ด้านบน */}
-      <span className="text-[10px] uppercase tracking-widest text-slate-400 font-medium">
-        {label}
-      </span>
+    <article className="h-full relative group">
+      {/* Glow Effect */}
+      <div className="absolute -inset-0.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-[26px] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-500" />
 
-      {/* Ad Container */}
-      <div 
-        ref={adRef}
-        className="relative w-full overflow-hidden rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center min-h-[120px] md:min-h-[200px]"
-      >
-        {slotId && !isDev ? (
-          /* พื้นที่สำหรับ Google AdSense (ถ้ามี Slot ID) */
-          <ins
-            className="adsbygoogle block w-full h-full"
-            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" // ใส่ Client ID ของคุณ
-            data-ad-slot={slotId}
-            data-ad-format={format}
-            data-full-width-responsive="true"
-          />
-        ) : (
-          /* Placeholder (แสดงตอน Dev หรือยังไม่มีโฆษณา) */
-          <div className="flex flex-col items-center gap-3 text-slate-300 select-none p-6">
-             <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-                <svg className="w-6 h-6 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-             </div>
-             <span className="text-sm font-medium">Space for {label}</span>
-          </div>
-        )}
+      <div className="relative h-full bg-gradient-to-br from-amber-50 to-white rounded-3xl border border-amber-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+         
+         {/* Ad Badge */}
+         <div className="absolute top-4 right-4 z-10">
+            <span className="px-2 py-0.5 bg-white/80 backdrop-blur-sm border border-amber-200 text-[10px] font-bold text-amber-600 rounded-full uppercase tracking-wider">
+               Sponsored
+            </span>
+         </div>
+
+         {/* Content Area */}
+         <div className="px-7 pt-10 pb-7 flex flex-col h-full items-center text-center">
+            
+            {/* Icon / Logo */}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-50 flex items-center justify-center mb-6 shadow-inner text-amber-600">
+               <Megaphone size={32} />
+            </div>
+
+            <div className="space-y-3 flex-1">
+               <h3 className="text-xl font-bold text-slate-900">
+                  ลงโฆษณาที่นี่?
+               </h3>
+               <p className="text-sm text-slate-500 leading-relaxed">
+                  เข้าถึงผู้ใช้งานกว่า 10,000 คนต่อเดือน โปรโมท AI Tool หรือบริการของคุณตรงกลุ่มเป้าหมาย
+               </p>
+            </div>
+
+            {/* CTA Button */}
+            <Link 
+              href="/contact" 
+              className="mt-8 w-full py-3 bg-slate-900 hover:bg-amber-600 text-white rounded-xl font-medium transition-colors duration-300 shadow-lg shadow-slate-900/10 flex items-center justify-center gap-2"
+            >
+               ติดต่อเรา <ExternalLink size={16} />
+            </Link>
+         </div>
       </div>
-    </div>
+    </article>
   );
 }
