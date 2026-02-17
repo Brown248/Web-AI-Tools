@@ -1,54 +1,65 @@
 "use client";
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Search, Sparkles } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { Search, Sparkles, Menu, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 20);
+  });
 
   return (
     <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4"
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-6 pointer-events-none"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
-      <nav className={`
-        flex items-center justify-between px-6 py-3 rounded-full transition-all duration-300
-        ${scrolled 
-          ? 'bg-white/80 backdrop-blur-md shadow-glass border border-white/20 w-full max-w-4xl' 
-          : 'bg-transparent w-full max-w-6xl'}
-      `}>
+      <div 
+        className={`
+          pointer-events-auto flex items-center justify-between px-4 py-2.5 rounded-full transition-all duration-500 border
+          ${isScrolled 
+            ? 'glass-pro w-full max-w-4xl border-white/50 shadow-sm' 
+            : 'bg-transparent border-transparent w-full max-w-7xl'}
+        `}
+      >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-foreground">
-          <div className="bg-primary-600 text-white p-1.5 rounded-lg">
-            <Sparkles size={16} />
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-b from-slate-800 to-slate-950 text-white shadow-lg shadow-slate-900/20 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-300">
+            <Sparkles size={14} className="text-primary-200" />
+            <div className="absolute inset-0 rounded-lg bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
-          Thai<span className="text-primary-600">AI</span>Tools
+          <span className="font-bold text-lg tracking-tight text-slate-900">
+            Thai<span className="text-primary-600">AI</span>Tools
+          </span>
         </Link>
         
-        {/* Menu */}
-        <div className="hidden md:flex gap-6 text-sm font-medium text-muted-foreground">
-          {['หน้าแรก', 'หมวดหมู่', 'บทความ', 'เกี่ยวกับเรา'].map((item) => (
-            <Link key={item} href="#" className="hover:text-primary-600 transition-colors relative group">
+        {/* Pro Menu (Desktop) */}
+        <nav className="hidden md:flex items-center gap-1 bg-slate-100/50 p-1 rounded-full border border-slate-200/50">
+          {['Discover', 'Categories', 'Blog', 'About'].map((item) => (
+            <Link key={item} href="#" className="px-4 py-1.5 text-sm font-medium text-slate-600 rounded-full hover:bg-white hover:text-slate-900 hover:shadow-sm transition-all duration-200">
               {item}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-600 transition-all group-hover:w-full"></span>
             </Link>
           ))}
-        </div>
+        </nav>
 
-        {/* Action */}
-        <button className="p-2 rounded-full hover:bg-black/5 transition-colors text-foreground">
-          <Search size={20} />
-        </button>
-      </nav>
+        {/* Actions */}
+        <div className="flex items-center gap-3">
+           <Link href="/login" className="hidden sm:flex text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">
+             Log in
+           </Link>
+           <button className="group flex items-center gap-2 pl-3 pr-2 py-1.5 bg-slate-900 text-white rounded-full text-sm font-medium hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20 active:scale-95">
+             <span>Get Started</span>
+             <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                <ChevronRight size={12} />
+             </div>
+           </button>
+        </div>
+      </div>
     </motion.header>
   );
 }
