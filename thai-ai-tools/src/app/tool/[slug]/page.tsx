@@ -3,7 +3,7 @@ import { tools } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { 
   ArrowLeft, ExternalLink, Star, CheckCircle2, 
-  XCircle, Zap, Globe, Share2, Flag 
+  XCircle, Zap, Globe, Share2, Flag, AlertTriangle 
 } from 'lucide-react';
 
 // ✅ 1. Static Export Config
@@ -36,6 +36,9 @@ export default async function ToolDetailPage({ params }: PageProps) {
 
   if (!tool) notFound();
 
+  // 🛠️ Debug: เช็คใน Terminal ว่าหน้านี้ถูกเรียกจริงไหม
+  console.log(`Tool Page Loaded: ${tool.name}`);
+
   // ✅ 3. JSON-LD
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -57,15 +60,14 @@ export default async function ToolDetailPage({ params }: PageProps) {
   };
 
   return (
-    <main className="min-h-screen bg-background pb-20">
+    <main className="min-h-screen bg-background pb-20 relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* --- HERO SECTION (ส่วนบนสุด) --- */}
+      {/* --- HERO SECTION --- */}
       <div className="bg-slate-900 text-white pt-32 pb-16 px-6 relative overflow-hidden">
-         {/* Background Effect */}
          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4" />
          
          <div className="max-w-4xl mx-auto relative z-10">
@@ -74,28 +76,37 @@ export default async function ToolDetailPage({ params }: PageProps) {
             </Link>
 
             <div className="flex flex-col md:flex-row items-start gap-8">
-               {/* Logo */}
                <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shadow-2xl shadow-blue-900/50 text-slate-900 text-4xl font-bold shrink-0">
                   {tool.name.charAt(0)}
                </div>
                
                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                     <h1 className="text-3xl md:text-4xl font-bold">{tool.name}</h1>
-                     {tool.isFree && (
-                        <span className="px-2 py-0.5 bg-green-500/20 text-green-300 text-xs font-bold rounded-full border border-green-500/30">
-                           FREE
-                        </span>
-                     )}
+                  <div className="flex flex-col gap-4 mb-2">
+                     <div className="flex items-center gap-3">
+                        <h1 className="text-3xl md:text-4xl font-bold">{tool.name}</h1>
+                        {tool.isFree && (
+                           <span className="px-2 py-0.5 bg-green-500/20 text-green-300 text-xs font-bold rounded-full border border-green-500/30">
+                              FREE
+                           </span>
+                        )}
+                     </div>
+
+                     {/* 🔥 ปุ่ม REPORT (ใส่ตรงนี้เลย ใต้ชื่อ เห็นชัดแน่นอน!) */}
+                     <div className="flex gap-3">
+                        <Link 
+                           href={`/report?tool=${encodeURIComponent(tool.name)}`}
+                           className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-300 hover:text-red-200 text-xs font-medium rounded-lg border border-red-500/20 transition-colors w-fit"
+                        >
+                           <Flag size={14} /> แจ้งปัญหาข้อมูล
+                        </Link>
+                     </div>
                   </div>
+
                   <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-2xl">
                      {tool.description}
                   </p>
                   
-                  {/* 🔥 ปุ่ม Action Buttons (วางคู่กันตรงนี้เลย เห็นชัด 100%) */}
                   <div className="flex flex-wrap items-center gap-4">
-                     
-                     {/* 1. ปุ่มเข้าเว็บ (สีน้ำเงิน) */}
                      <a 
                         href={tool.externalUrl} 
                         target="_blank" 
@@ -104,26 +115,15 @@ export default async function ToolDetailPage({ params }: PageProps) {
                      >
                         เข้าใช้งานเว็บไซต์ <ExternalLink size={18} />
                      </a>
-
-                     {/* 2. ปุ่มแจ้งปัญหา (สีแดงอ่อน) - วางข้างๆ กันเลย */}
-                     <Link 
-                       href={`/report?tool=${encodeURIComponent(tool.name)}`}
-                       className="inline-flex items-center gap-2 px-5 py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 font-semibold rounded-xl border border-red-500/20 transition-all"
-                     >
-                       <Flag size={18} /> แจ้งปัญหา
-                     </Link>
-
+                     
+                     <div className="flex items-center gap-4 text-sm text-slate-400 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
+                        <span className="flex items-center gap-1 text-yellow-400">
+                           <Star size={16} fill="currentColor" /> {tool.rating}
+                        </span>
+                        <span className="w-px h-4 bg-white/10" />
+                        <span>{tool.reviewCount.toLocaleString()} รีวิว</span>
+                     </div>
                   </div>
-                  
-                  {/* Review Stats */}
-                  <div className="mt-6 flex items-center gap-4 text-sm text-slate-400 px-4 py-2 bg-white/5 rounded-lg border border-white/10 w-fit">
-                     <span className="flex items-center gap-1 text-yellow-400">
-                        <Star size={16} fill="currentColor" /> {tool.rating}
-                     </span>
-                     <span className="w-px h-4 bg-white/10" />
-                     <span>{tool.reviewCount.toLocaleString()} รีวิว</span>
-                  </div>
-
                </div>
             </div>
          </div>
@@ -189,6 +189,25 @@ export default async function ToolDetailPage({ params }: PageProps) {
                      </div>
                   ))}
                </div>
+            </div>
+
+            {/* 🔥 กล่องแจ้งปัญหาขนาดใหญ่ด้านล่าง (เผื่อข้างบนยังไม่เห็นอีก) */}
+            <div className="bg-red-50 p-6 rounded-3xl border border-red-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+               <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-red-500 shadow-sm">
+                     <AlertTriangle size={24} />
+                  </div>
+                  <div>
+                     <h3 className="font-bold text-slate-900">พบข้อมูลผิดพลาด?</h3>
+                     <p className="text-sm text-slate-600">ช่วยแจ้งให้เราทราบ เพื่อปรับปรุงข้อมูลให้ถูกต้อง</p>
+                  </div>
+               </div>
+               <Link 
+                 href={`/report?tool=${encodeURIComponent(tool.name)}`}
+                 className="px-6 py-2.5 bg-white text-red-600 font-semibold rounded-xl border border-red-200 hover:bg-red-600 hover:text-white transition-all shadow-sm"
+               >
+                 แจ้งปัญหา
+               </Link>
             </div>
          </div>
 
