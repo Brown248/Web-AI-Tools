@@ -1,26 +1,67 @@
-// ไฟล์: src/components/ui/AdUnit.tsx
+"use client";
 
-import React from 'react';
+import { useEffect, useRef } from 'react';
 
 interface AdUnitProps {
-  className?: string;
-  slot?: string; // AdSense slot ID
   label?: string;
+  slotId?: string; // Google AdSense Slot ID (ถ้ามี)
+  format?: 'auto' | 'fluid' | 'rectangle';
 }
 
-const AdUnit: React.FC<AdUnitProps> = ({ className, slot, label = "Advertisement" }) => {
+export default function AdUnit({ 
+  label = "Advertisement", 
+  slotId, 
+  format = 'auto' 
+}: AdUnitProps) {
+  const adRef = useRef<HTMLDivElement>(null);
+  const isDev = process.env.NODE_ENV === 'development';
+
+  // ถ้าจะใส่ AdSense Script จริงๆ ให้ uncomment ส่วนนี้
+  /*
+  useEffect(() => {
+    if (slotId && !isDev) {
+      try {
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+      } catch (e) {
+        console.error('AdSense error:', e);
+      }
+    }
+  }, [slotId, isDev]);
+  */
+
   return (
-    <div className={`w-full flex flex-col items-center justify-center py-8 my-10 bg-surface border border-border rounded-2xl overflow-hidden ${className}`}>
-      <span className="text-[10px] font-bold text-muted/50 uppercase tracking-widest mb-3">
+    <div className="w-full my-8 flex flex-col items-center gap-2">
+      {/* Label ตัวเล็กๆ ด้านบน */}
+      <span className="text-[10px] uppercase tracking-widest text-slate-400 font-medium">
         {label}
       </span>
-      
-      {/* พื้นที่สำหรับใส่ Script AdSense จริง */}
-      <div className="w-full max-w-[728px] h-[90px] bg-border/20 animate-pulse rounded-lg flex items-center justify-center text-muted text-sm font-medium border border-dashed border-border">
-        Google AdSense Area ({slot || 'Auto'})
+
+      {/* Ad Container */}
+      <div 
+        ref={adRef}
+        className="relative w-full overflow-hidden rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center min-h-[120px] md:min-h-[200px]"
+      >
+        {slotId && !isDev ? (
+          /* พื้นที่สำหรับ Google AdSense (ถ้ามี Slot ID) */
+          <ins
+            className="adsbygoogle block w-full h-full"
+            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" // ใส่ Client ID ของคุณ
+            data-ad-slot={slotId}
+            data-ad-format={format}
+            data-full-width-responsive="true"
+          />
+        ) : (
+          /* Placeholder (แสดงตอน Dev หรือยังไม่มีโฆษณา) */
+          <div className="flex flex-col items-center gap-3 text-slate-300 select-none p-6">
+             <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
+                <svg className="w-6 h-6 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+             </div>
+             <span className="text-sm font-medium">Space for {label}</span>
+          </div>
+        )}
       </div>
     </div>
   );
-};
-
-export default AdUnit;
+}

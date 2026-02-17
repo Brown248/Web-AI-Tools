@@ -1,28 +1,34 @@
-// ไฟล์: src/app/sitemap.ts
+import { MetadataRoute } from 'next'
+import { tools } from '@/lib/data' // ดึงข้อมูล Tool มา loop สร้าง link
 
-import { MetadataRoute } from 'next';
-import { tools } from '@/lib/data';
-
-// เพิ่มบรรทัดนี้ครับ 👇 เพื่อบอก Next.js ว่านี่คือไฟล์ Static
-export const dynamic = 'force-static';
+// ✅ เพิ่มบรรทัดนี้
+export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://your-domain.com'; // อย่าลืมแก้เป็น Domain จริงของคุณเมื่อ Deploy
+  // เปลี่ยนเป็นโดเมนจริงของคุณ
+  const baseUrl = 'https://thaiaitools.com'
 
+  // สร้าง URL สำหรับหน้า Tool แต่ละอัน
   const toolUrls = tools.map((tool) => ({
     url: `${baseUrl}/tool/${tool.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
-  }));
+  }))
 
   return [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 1,
     },
+    {
+      url: `${baseUrl}/ranking`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.9,
+    },
     ...toolUrls,
-  ];
+  ]
 }

@@ -1,8 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   output: 'export',
+  
+  // ✅ ต้องปิด Image Optimization ถ้าไม่ได้ใช้ Custom Loader
   images: {
-    unoptimized: true, // จำเป็นสำหรับ Static Export ถ้าไม่ได้ใช้ Image Loader ภายนอก
+    unoptimized: true, 
   },
 };
 
