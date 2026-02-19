@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image'; // ✅ Import Next.js Image Component
 import { motion } from 'framer-motion';
 import { blogPosts } from '@/lib/data';
 import { Clock, User, ArrowRight } from 'lucide-react';
@@ -23,22 +24,28 @@ export default function BlogPage() {
           </p>
         </div>
 
-        {/* Featured Post */}
+        {/* Featured Post (บทความแนะนำ) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-16 group cursor-pointer"
         >
           <div className="relative rounded-3xl overflow-hidden bg-white shadow-xl shadow-slate-200/50 border border-slate-100 grid md:grid-cols-2 gap-0">
-             <div className="h-64 md:h-auto overflow-hidden relative">
+             
+             {/* ✅ ใช้ <Image> สำหรับรูปปกใหญ่ */}
+             <div className="h-64 md:h-auto overflow-hidden relative w-full">
                 <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition-colors z-10"/>
-                <img 
+                <Image 
                   src={featuredPost.coverImage} 
                   alt={featuredPost.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                  fill
+                  priority // โหลดรูปนี้ทันที (ลดเวลา LCP)
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transform group-hover:scale-105 transition-transform duration-700"
                 />
              </div>
-             <div className="p-8 md:p-12 flex flex-col justify-center">
+
+             <div className="p-8 md:p-12 flex flex-col justify-center relative z-20">
                 <div className="flex items-center gap-4 text-sm text-slate-500 mb-4">
                    <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-semibold">{featuredPost.category}</span>
                    <span className="flex items-center gap-1"><Clock size={14}/> {featuredPost.readTime}</span>
@@ -50,7 +57,7 @@ export default function BlogPage() {
                   {featuredPost.excerpt}
                 </p>
                 <div className="flex items-center gap-3">
-                   <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                   <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 shrink-0">
                       <User size={20}/>
                    </div>
                    <div className="text-sm">
@@ -62,7 +69,7 @@ export default function BlogPage() {
           </div>
         </motion.div>
 
-        {/* Recent Posts Grid */}
+        {/* Recent Posts Grid (บทความอื่นๆ) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {otherPosts.map((post, idx) => (
             <motion.article 
@@ -73,13 +80,18 @@ export default function BlogPage() {
               viewport={{ once: true }}
               className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300 group flex flex-col"
             >
-              <div className="h-48 overflow-hidden relative">
-                 <img 
+              
+              {/* ✅ ใช้ <Image> สำหรับรูปปกย่อย */}
+              <div className="h-48 overflow-hidden relative w-full">
+                 <Image 
                    src={post.coverImage} 
                    alt={post.title}
-                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                   fill
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                   className="object-cover transform group-hover:scale-110 transition-transform duration-500"
                  />
               </div>
+
               <div className="p-6 flex flex-col flex-1">
                  <div className="flex items-center gap-3 text-xs text-slate-400 mb-3">
                     <span className="text-blue-600 font-semibold uppercase tracking-wider">{post.category}</span>
@@ -92,7 +104,7 @@ export default function BlogPage() {
                  <p className="text-slate-500 text-sm line-clamp-2 mb-4 flex-1">
                    {post.excerpt}
                  </p>
-                 <Link href={`/blog/${post.slug}`} className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:gap-2 transition-all">
+                 <Link href={`/blog/${post.slug}`} className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:gap-2 transition-all mt-auto">
                    อ่านต่อ <ArrowRight size={16}/>
                  </Link>
               </div>

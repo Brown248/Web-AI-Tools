@@ -12,6 +12,13 @@ export default function Navbar() {
     setIsScrolled(latest > 50);
   });
 
+  const navLinks = [
+    { name: 'Discover', href: '/' },
+    { name: 'Categories', href: '/categories' }, // ✅ เปลี่ยนตรงนี้เป็น /categories
+    { name: 'Blog', href: '/blog' },              
+    { name: 'Submit', href: '/submit' }           
+  ];
+
   return (
     <motion.header 
       className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 md:pt-6 pointer-events-none"
@@ -23,8 +30,10 @@ export default function Navbar() {
         className={`
           pointer-events-auto flex items-center justify-between px-5 py-3 rounded-full transition-all duration-500 ease-in-out
           ${isScrolled 
-            ? 'glass-card w-full max-w-5xl shadow-lg shadow-slate-200/20' 
-            : 'bg-white/40 backdrop-blur-sm border border-white/20 w-full max-w-7xl'}
+            /* 🔥 เปลี่ยนเอฟเฟคตอนเลื่อนลงตรงนี้: ใส่ขอบดำ (border-slate-800) และเงาดำฟุ้งๆ (shadow-slate-900/20) */
+            ? 'bg-white/85 backdrop-blur-md border border-slate-800 shadow-2xl shadow-slate-900/20 w-full max-w-5xl' 
+            /* สถานะตอนอยู่บนสุด (ยังไม่เลื่อน) */
+            : 'bg-white/40 backdrop-blur-sm border border-white/20 shadow-none w-full max-w-7xl'}
         `}
       >
         {/* Logo */}
@@ -40,9 +49,9 @@ export default function Navbar() {
         
         {/* Menu (Centered) */}
         <nav className="hidden md:flex items-center gap-1 bg-slate-100/50 p-1.5 rounded-full border border-slate-200/50 backdrop-blur-md absolute left-1/2 -translate-x-1/2">
-          {['Discover', 'Categories', 'Blog', 'About'].map((item) => (
-            <Link key={item} href="#" className="relative px-4 py-1.5 text-sm font-medium text-slate-500 rounded-full hover:text-slate-900 transition-colors duration-300 group">
-              {item}
+          {navLinks.map((item) => (
+            <Link key={item.name} href={item.href} className="relative px-4 py-1.5 text-sm font-medium text-slate-500 rounded-full hover:text-slate-900 transition-colors duration-300 group">
+              {item.name}
               <span className="absolute inset-0 bg-white rounded-full scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 shadow-sm -z-10" />
             </Link>
           ))}
