@@ -49,7 +49,10 @@ export default function Home() {
   const handleCategorySelect = (slug: string | null) => {
     setSelectedCategory(slug === selectedCategory ? null : slug);
     if (slug) {
-      document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // ✅ เพิ่มการหน่วงเวลาเล็กน้อยกันบั๊ก Scroll ไม่ไป
+      setTimeout(() => {
+        document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
     }
   };
 
@@ -61,7 +64,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background relative overflow-hidden">
       
-      {/* Background & Hero Section (เหมือนเดิม) ... */}
+      {/* Background & Hero Section */}
       <div className="absolute inset-0 w-full h-full pointer-events-none">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.6] z-0" />
         <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] mix-blend-multiply animate-pulse-slow" />
@@ -76,7 +79,6 @@ export default function Home() {
             variants={containerVariants}
             className="flex flex-col items-center gap-8"
           >
-             {/* ... (Hero Content Code เดิม) ... */}
              <motion.div variants={itemVariants}>
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-blue-100 shadow-sm text-xs font-semibold text-blue-600 tracking-wide">
                 <span className="relative flex h-2 w-2">
@@ -136,7 +138,7 @@ export default function Home() {
       </section>
 
       {/* =========================================
-          TOOLS GRID SECTION (Updated with Ads)
+          TOOLS GRID SECTION (🔥 แก้บั๊กค้างเสร็จแล้ว)
       ========================================= */}
       <section id="tools-section" className="max-w-7xl mx-auto px-6 mb-32 relative z-10 min-h-[500px]">
         
@@ -182,40 +184,41 @@ export default function Home() {
            </div>
         )}
 
-        {/* Grid Content with Ads */}
-        <AnimatePresence mode="wait">
-          {filteredTools.length > 0 ? (
-            <motion.div 
-              key="grid"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
+        {/* ✅ Grid Content (จุดที่แก้อาการค้าง) */}
+        {filteredTools.length > 0 ? (
+          <motion.div 
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            <AnimatePresence mode="popLayout">
               {filteredTools.map((tool, index) => (
-                <motion.div key={tool.id} layout>
+                <motion.div 
+                  key={tool.id} 
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.25 }}
+                >
                    <ToolCard tool={tool} />
                    
-                   {/* ✅ แทรก AdUnit ทุกๆ 6 การ์ด (และต้องไม่ใช่การ์ดสุดท้าย) */}
+                   {/* ✅ แทรก AdUnit ทุกๆ 6 การ์ด */}
                    {(index + 1) % 6 === 0 && index !== filteredTools.length - 1 && (
                      <div className="hidden lg:block lg:col-span-1 mt-6">
                         <AdUnit />
                      </div>
                    )}
-                   {/* สำหรับ Mobile อาจจะแทรกถี่ขึ้นหรือซ่อนไว้ก็ได้ */}
                 </motion.div>
               ))}
-              
-              {/* ถ้าอยากให้ AdUnit แทรกเป็น Item แยกใน Grid เลย (ไม่ซ้อนใน Div) ต้องใช้ Fragment */}
-              {/* แต่เนื่องจากเราใช้ framer-motion การห่อด้วย div แล้วใช้ grid-flow อาจจะซับซ้อน */}
-              {/* วิธีที่ง่ายที่สุดสำหรับ Grid คือ Render Array ที่ผสม Ad เข้าไปแล้ว */}
-            </motion.div>
-          ) : (
+            </AnimatePresence>
+          </motion.div>
+        ) : (
+          <AnimatePresence mode="wait">
             <motion.div 
               key="empty"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
               className="flex flex-col items-center justify-center py-20 text-center bg-white/50 rounded-3xl border border-dashed border-slate-200"
             >
                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-slate-400">
@@ -227,8 +230,8 @@ export default function Home() {
                  กลับไปดูทั้งหมด
                </button>
             </motion.div>
-          )}
-        </AnimatePresence>
+          </AnimatePresence>
+        )}
       </section>
 
       {/* Categories Section (เหมือนเดิม) ... */}
