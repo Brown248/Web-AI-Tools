@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { motion, Variants } from 'framer-motion';
-import { Tool } from '@/lib/data';
+import { AITool } from '@/lib/data';
 import { ArrowUpRight } from 'lucide-react';
 
 interface ToolCardProps {
-  tool: Tool;
+  tool: AITool;
   index?: number;
 }
 

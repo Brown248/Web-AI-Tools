@@ -1,143 +1,194 @@
-import { Image, Type, Presentation, Video, ShoppingBag, GraduationCap, Mic } from 'lucide-react';
-
-export interface FAQ {
-  question: string;
-  answer: string;
-}
-
-export interface Tool {
+export interface AITool {
   id: string;
   slug: string;
   name: string;
   description: string;
+  longDescription: string;
   category: string;
+  priceModel: string;
   isFree: boolean;
-  priceModel: 'Free' | 'Freemium' | 'Paid';
+  externalUrl: string;
   rating: number;
   reviewCount: number;
   updatedAt: string;
-  longDescription: string;
   features: string[];
-  steps: { title: string; desc: string }[];
   pros: string[];
   cons: string[];
-  targetAudience: string[];
-  faqs: FAQ[];
-  externalUrl: string; 
+  steps: { title: string; desc: string }[];
+  faqs: { question: string; answer: string }[];
 }
 
-// ✅ 1. เพิ่ม Interface สำหรับ Blog
-export interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  coverImage: string;
-  category: string;
-  author: string;
-  date: string;
-  readTime: string;
-}
+export const tools: AITool[] = [
+  {
+    id: "1",
+    slug: "chatgpt",
+    name: "ChatGPT",
+    description: "แชทบอทอัจฉริยะที่เก่งที่สุดด้านการสนทนา เขียนบทความ และให้คำปรึกษา",
+    longDescription: "พัฒนาโดย OpenAI เป็น AI Language Model ที่มีความสามารถครอบจักรวาล เก่งด้านการใช้ภาษาธรรมชาติ การแต่งประโยค และการคิดวิเคราะห์เบื้องต้น",
+    category: "Text Generation & Chatbot", // ✅ แชทและเขียนข้อความ
+    priceModel: "Free / $20",
+    isFree: true,
+    externalUrl: "https://chat.openai.com",
+    rating: 4.9,
+    reviewCount: 15420,
+    updatedAt: "Feb 2025",
+    features: ["GPT-4o Model", "Voice Conversation", "Data Analysis", "Custom GPTs"],
+    pros: ["ภาษาไทยฉลาดมาก", "ตอบสนองรวดเร็ว", "ใช้งานง่ายบนทุกแพลตฟอร์ม"],
+    cons: ["ข้อมูลอาจจะไม่อัปเดตแบบ Real-time เท่า Perplexity", "เวอร์ชันฟรีจำกัดการใช้โมเดลล่าสุด"],
+    steps: [
+      { title: "พิมพ์ Prompt", desc: "พิมพ์คำถามหรือคำสั่งที่ต้องการในช่องแชท" },
+      { title: "ปรับแก้", desc: "สั่งให้ AI ปรับแก้โทนเสียงหรือความยาวของคำตอบได้ตามต้องการ" }
+    ],
+    faqs: [
+      { question: "ใช้ฟรีได้ไหม?", answer: "มีเวอร์ชันฟรีให้ใช้งานได้ตลอด" }
+    ]
+  },
+  {
+    id: "2",
+    slug: "notebooklm",
+    name: "NotebookLM",
+    description: "สุดยอด AI สำหรับอ่านเอกสาร สรุปเนื้อหา และถามตอบจากไฟล์งานของคุณ",
+    longDescription: "AI จาก Google ที่ออกแบบมาเพื่อการ 'สรุปเนื้อหา' โดยเฉพาะ คุณสามารถอัปโหลด PDF, สไลด์, หรือลิงก์เว็บ แล้วให้ AI ช่วยสรุป หรือจัดเป็น Audio Podcast ก็ยังได้",
+    category: "Summarization & Notes", // ✅ สรุปเนื้อหา
+    priceModel: "Free",
+    isFree: true,
+    externalUrl: "https://notebooklm.google.com",
+    rating: 4.8,
+    reviewCount: 3200,
+    updatedAt: "Feb 2025",
+    features: ["PDF/Web Upload", "Auto-Summary", "Audio Overview (Podcast)", "Citation Tracking"],
+    pros: ["สรุปข้อมูลยาวๆ ได้แม่นยำมาก ไม่มั่วข้อมูล", "ใช้งานฟรี 100%", "อ้างอิงแหล่งที่มาให้ดูได้เลยว่าดึงมาจากหน้าไหนของเอกสาร"],
+    cons: ["Audio Podcast ยังไม่ค่อยรองรับภาษาไทยเท่าที่ควร", "อัปโหลดได้เฉพาะไฟล์จำกัดขนาดตามกำหนด"],
+    steps: [
+      { title: "อัปโหลดข้อมูล", desc: "ใส่ไฟล์ PDF, ลิงก์เว็บ หรือข้อความที่เป็น Source ของเราลงไป" },
+      { title: "สั่งสรุป", desc: "พิมพ์ถามคำถาม หรือกดปุ่มให้สรุปประเด็นสำคัญได้เลย" }
+    ],
+    faqs: [
+      { question: "ข้อมูลหลุดไหม?", answer: "Google ระบุว่าข้อมูลที่อัปโหลดจะไม่ถูกนำไปใช้เทรนโมเดลสาธารณะ" }
+    ]
+  },
+  {
+    id: "3",
+    slug: "gamma",
+    name: "Gamma App",
+    description: "AI ช่วยทำสไลด์ Presentation สวยๆ เสร็จภายใน 1 นาที",
+    longDescription: "เครื่องมือออกแบบสไลด์ Presentation และเว็บไซต์อัตโนมัติ เพียงแค่พิมพ์หัวข้อที่ต้องการ AI จะเขียนเนื้อหา จัดหน้า และวางรูปภาพให้ออกมาสวยงามพร้อมพรีเซนต์",
+    category: "Presentation & Slides", // ✅ ทำสไลด์
+    priceModel: "Free / Starts at $8",
+    isFree: true,
+    externalUrl: "https://gamma.app",
+    rating: 4.8,
+    reviewCount: 6500,
+    updatedAt: "Jan 2025",
+    features: ["Text to Presentation", "Auto-Layout", "One-click Themes", "Export to PDF/PPT"],
+    pros: ["สร้างสไลด์ไวมาก ประหยัดเวลาได้มหาศาล", "ดีไซน์สวยงาม ทันสมัย แบบไม่ต้องจัดหน้าเอง", "รองรับภาษาไทยค่อนข้างดี"],
+    cons: ["เวอร์ชันฟรีมีลายน้ำ Gamma ติดตอน Export", "ปรับแต่ง Layout อิสระได้ยากกว่า PowerPoint ทั่วไป"],
+    steps: [
+      { title: "ใส่หัวข้อสไลด์", desc: "พิมพ์หัวข้อหรือใส่ Outline โครงเรื่องที่ต้องการทำสไลด์" },
+      { title: "เลือกธีมสี", desc: "เลือกสไตล์ภาพรวม แล้วกด Generate" },
+      { title: "Export นำไปใช้งาน", desc: "ดาวน์โหลดเป็น PDF หรือ PowerPoint เพื่อพรีเซนต์ได้เลย" }
+    ],
+    faqs: [
+      { question: "เซฟเป็น PowerPoint ได้ไหม?", answer: "ได้ครับ สามารถ Export เป็น .pptx ได้แต่ Layout อาจจะคลาดเคลื่อนเล็กน้อย" }
+    ]
+  },
+  {
+    id: "4",
+    slug: "midjourney",
+    name: "Midjourney",
+    description: "สุดยอด AI สร้างรูปภาพที่มีความสมจริงและมีสไตล์ศิลปะที่สวยงามที่สุด",
+    longDescription: "AI สร้างรูปภาพจาก Text-to-Image ที่ขึ้นชื่อเรื่องความละเอียด แสงเงา และสไตล์ที่เป็นเอกลักษณ์ เหมาะสำหรับงานกราฟิกและศิลปิน",
+    category: "Image Generation", // ✅ สร้างรูปภาพ
+    priceModel: "Starts at $10",
+    isFree: false,
+    externalUrl: "https://midjourney.com",
+    rating: 4.8,
+    reviewCount: 9850,
+    updatedAt: "Feb 2025",
+    features: ["V6 Model", "Style Reference", "Character Reference", "High Upscaling"],
+    pros: ["ภาพสวยงามระดับมืออาชีพ", "เข้าใจ Prompt ศิลปะได้ดีมาก", "ฟีเจอร์คุมสไตล์ภาพแม่นยำ"],
+    cons: ["ต้องใช้งานผ่าน Discord (อาจจะยุ่งยากสำหรับมือใหม่)", "ไม่มีแพ็กเกจทดลองใช้ฟรี"],
+    steps: [
+      { title: "เข้า Discord", desc: "เข้าไปที่ห้องแชทของ Midjourney Bot" },
+      { title: "ใช้คำสั่ง /imagine", desc: "พิมพ์ /imagine ตามด้วยคำอธิบายภาพที่ต้องการ (Prompt ภาษาอังกฤษ)" }
+    ],
+    faqs: [
+      { question: "เอารูปไปใช้เชิงพาณิชย์ได้ไหม?", answer: "หากสมัครสมาชิกแบบเสียเงิน สามารถนำไปใช้เชิงพาณิชย์ได้ 100%" }
+    ]
+  },
+  {
+    id: "5",
+    slug: "perplexity",
+    name: "Perplexity AI",
+    description: "AI Search Engine ค้นหาข้อมูลพร้อมอ้างอิงแหล่งที่มาแบบ Real-time",
+    longDescription: "ค้นหาข้อมูลได้แม่นยำและรวดเร็วกว่าการใช้ Google Search แบบเดิม สรุปข้อมูลพร้อมแปะลิงก์อ้างอิงเสมอ ลดปัญหา AI มั่วข้อมูล",
+    category: "AI Search Engine", // ✅ ค้นหาข้อมูลวิจัย
+    priceModel: "Free / $20",
+    isFree: true,
+    externalUrl: "https://perplexity.ai",
+    rating: 4.9,
+    reviewCount: 8400,
+    updatedAt: "Feb 2025",
+    features: ["Real-time Web Search", "Citations & Sources", "Pro Search", "File Uploads"],
+    pros: ["อ้างอิงแหล่งข้อมูลชัดเจน ลดปัญหา Hallucination", "ค้นหาข่าวหรือข้อมูลอัปเดตล่าสุดได้", "ใช้งานลื่นไหลมาก"],
+    cons: ["ไม่เก่งเรื่องการแต่งนิยายหรืองานครีเอทีฟ", "Pro Search แบบฟรีจำกัดโควต้าค่อนข้างน้อย"],
+    steps: [
+      { title: "ถามคำถาม", desc: "พิมพ์คำถามที่ต้องการค้นหาแบบปกติ" },
+      { title: "อ่านสรุป", desc: "AI จะค้นหาเว็บหลายๆ หน้าและนำมาสรุปพร้อมแปะเลขกำกับแหล่งที่มา" }
+    ],
+    faqs: [
+      { question: "ต่างจาก ChatGPT ยังไง?", answer: "Perplexity เน้นค้นหาข้อมูลจริงจากเว็บและให้แหล่งอ้างอิง ส่วน ChatGPT เน้นสนทนาและแต่งเนื้อหา" }
+    ]
+  },
+  {
+    id: "6",
+    slug: "github-copilot",
+    name: "GitHub Copilot",
+    description: "ผู้ช่วยเขียนโค้ดสำหรับโปรแกรมเมอร์ ช่วยเติมโค้ดและแนะนำ Logic อัตโนมัติ",
+    longDescription: "AI Pair Programmer ที่เทรนจากโค้ดบน GitHub ช่วยลดเวลาการพิมพ์โค้ดซ้ำซากและช่วยหา Bug ได้อย่างรวดเร็ว",
+    category: "Coding & Development", // ✅ เขียนโปรแกรม
+    priceModel: "$10 / month",
+    isFree: false,
+    externalUrl: "https://github.com/features/copilot",
+    rating: 4.7,
+    reviewCount: 12300,
+    updatedAt: "Feb 2025",
+    features: ["Auto-complete", "Chat inside IDE", "Pull Request Summaries", "Security Vulnerability Fixes"],
+    pros: ["รองรับเกือบทุกภาษาโปรแกรม", "ฝังตัวใน VS Code ได้แนบเนียน", "เพิ่มความเร็วในการเขียนโค้ดได้ 50%"],
+    cons: ["บางครั้งแนะนำโค้ดที่ล้าสมัย (Deprecated)", "ไม่มีเวอร์ชันฟรีสำหรับคนทั่วไป"],
+    steps: [
+      { title: "ติดตั้ง Extension", desc: "โหลด Copilot extension ใน VS Code หรือ IDE ที่ใช้" },
+      { title: "เริ่มพิมพ์โค้ด", desc: "พิมพ์ชื่อฟังก์ชัน หรือคอมเมนต์อธิบาย แล้วกด Tab เพื่อยอมรับโค้ดที่ AI แนะนำ" }
+    ],
+    faqs: [
+      { question: "นักศึกษาใช้ฟรีไหม?", answer: "ฟรีครับ นักศึกษาสามารถยืนยันตัวตนด้วยอีเมลมหาวิทยาลัยเพื่อใช้งานได้ฟรี" }
+    ]
+  }
+];
+
+// ข้อมูลสำหรับบทความ (คงไว้เหมือนเดิม)
+export const blogPosts = [
+  {
+    id: "1",
+    slug: "top-10-ai-tools-2025",
+    title: "10 เครื่องมือ AI ที่คนทำงานยุค 2025 ต้องมีติดเครื่อง",
+    excerpt: "รวมสุดยอดเครื่องมือ AI ที่จะช่วยลดเวลาทำงานของคุณลงครึ่งหนึ่ง พร้อมเปรียบเทียบข้อดีข้อเสียแบบเจาะลึก...",
+    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995",
+    date: "17 ก.พ. 2025",
+    category: "Guide",
+    readTime: "5 นาที",
+    author: "AI Expert"
+  }
+];
 
 export const categories = [
-  { name: 'AI ทำรูปฟรี', slug: 'image-generator', icon: 'Image' },
-  { name: 'AI เขียนบทความ', slug: 'writing', icon: 'Type' },
-  { name: 'AI ทำสไลด์', slug: 'presentation', icon: 'Presentation' },
-  { name: 'AI ทำวิดีโอ', slug: 'video-generator', icon: 'Video' },
-  { name: 'AI ทำเสียง', slug: 'voice', icon: 'Mic' },
-  { name: 'AI ขายของ', slug: 'ecommerce', icon: 'ShoppingBag' },
-  { name: 'AI นักเรียน', slug: 'education', icon: 'GraduationCap' },
-];
-
-export const tools: Tool[] = [
-  {
-    id: '1',
-    slug: 'chatgpt',
-    name: 'ChatGPT',
-    description: 'AI Chatbot ยอดนิยมที่ช่วยตอบคำถาม เขียนบทความ และเขียนโค้ดได้หลากหลายภาษา',
-    category: 'writing',
-    isFree: true,
-    priceModel: 'Freemium',
-    rating: 4.9,
-    reviewCount: 10500,
-    updatedAt: '2024-02-01',
-    longDescription: 'ChatGPT คือโมเดลภาษาขนาดใหญ่ที่พัฒนาโดย OpenAI สามารถสนทนาโต้ตอบได้เหมือนมนุษย์ ช่วยงานได้สารพัดประโยชน์ตั้งแต่งานเขียน งานแปล ไปจนถึงการเขียนโปรแกรมที่ซับซ้อน',
-    features: ['ตอบคำถามทั่วไปอย่างฉลาด', 'ช่วยเขียนและแก้ไขโค้ดโปรแกรม', 'แปลภาษาได้เป็นธรรมชาติ', 'สรุปบทความยาวๆ ให้สั้นลง', 'คิดไอเดีย Content Marketing'],
-    steps: [
-      { title: 'สมัครสมาชิก', desc: 'ไปที่ chat.openai.com แล้วสมัครด้วย Email หรือ Google Account' },
-      { title: 'เริ่มแชท', desc: 'พิมพ์คำถามหรือคำสั่งที่ต้องการในช่องแชทได้ทันที' },
-      { title: 'ปรับแต่งคำสั่ง', desc: 'หากคำตอบยังไม่โดนใจ สามารถพิมพ์สั่งให้แก้ใหม่ได้เรื่อยๆ' }
-    ],
-    pros: ['ใช้งานง่าย อินเตอร์เฟซเป็นมิตร', 'รองรับภาษาไทยได้ดีมาก', 'มีความรู้กว้างขวางในหลายสาขา'],
-    cons: ['ข้อมูลฟรี (GPT-3.5) อาจไม่อัปเดตล่าสุด', 'บางครั้งอาจให้ข้อมูลที่ผิดพลาด (Hallucination)'],
-    targetAudience: ['นักเรียน/นักศึกษา', 'โปรแกรมเมอร์', 'Content Creator', 'นักการตลาด'],
-    faqs: [
-      { question: 'ChatGPT ใช้ฟรีไหม?', answer: 'มีเวอร์ชันฟรี (GPT-3.5) ตลอดชีพ และเวอร์ชันเสียเงิน (GPT-4) ที่ฉลาดกว่า' },
-      { question: 'ใช้ภาษาไทยได้ไหม?', answer: 'ได้ดีมาก แต่บางครั้งอาจจะตอบช้ากว่าภาษาอังกฤษเล็กน้อย' }
-    ],
-    externalUrl: 'https://chat.openai.com'
-  },
-  {
-    id: '2',
-    slug: 'midjourney',
-    name: 'Midjourney',
-    description: 'สุดยอด AI วาดรูปที่สร้างภาพได้สวยงามสมจริงที่สุดในปัจจุบัน',
-    category: 'image-generator',
-    isFree: false,
-    priceModel: 'Paid',
-    rating: 4.8,
-    reviewCount: 8500,
-    updatedAt: '2024-01-15',
-    longDescription: 'Midjourney คือ AI Image Generator ที่ทำงานผ่าน Discord โดดเด่นเรื่องความสวยงามทางศิลปะ แสงเงา และความละเอียดที่สูงมาก เหมาะสำหรับงาน Art, Concept Design และสื่อสิ่งพิมพ์',
-    features: ['สร้างภาพความละเอียดสูง', 'รองรับ Style หลากหลาย', 'Image-to-Image', 'Pan & Zoom Out'],
-    steps: [
-      { title: 'เข้าร่วม Discord', desc: 'ต้องมีบัญชี Discord และเข้าร่วม Server ของ Midjourney' },
-      { title: 'สมัครสมาชิก', desc: 'เลือกแพ็กเกจรายเดือน (ไม่มีฟรีแล้ว)' },
-      { title: 'พิมพ์คำสั่ง', desc: 'ใช้คำสั่ง /imagine ตามด้วย prompt ภาษาอังกฤษ' }
-    ],
-    pros: ['คุณภาพรูปสวยที่สุดในตลาด', 'Community แข็งแกร่ง มีตัวอย่างให้ดูเยอะ'],
-    cons: ['ต้องใช้ผ่าน Discord เท่านั้น (เริ่มมีเว็บแล้วแต่ยัง beta)', 'ไม่มีเวอร์ชันฟรีแล้ว', 'ควบคุม Pose ตัวละครยากกว่า ControlNet'],
-    targetAudience: ['Graphic Designer', 'Artist', 'Architect'],
-    faqs: [
-      { question: 'ใช้ฟรีได้ไหม?', answer: 'ปัจจุบันไม่มีทดลองใช้ฟรีแล้ว ต้องสมัครสมาชิกเท่านั้น' }
-    ],
-    externalUrl: 'https://www.midjourney.com'
-  }
-];
-
-// ✅ 2. เพิ่มข้อมูล Mock Up สำหรับหน้า Blog
-export const blogPosts: BlogPost[] = [
-  {
-    id: '1',
-    slug: 'chatgpt-tips-2024',
-    title: 'รวม 10 เทคนิคสั่ง ChatGPT ให้ทำงานแทนคุณแบบมือโปร',
-    excerpt: 'เลิกสั่งงานกว้างๆ แล้วมาดูวิธีเขียน Prompt ให้ได้ผลลัพธ์ที่ตรงใจ ประหยัดเวลาทำงานไปได้ 10 เท่า...',
-    coverImage: 'https://images.unsplash.com/photo-1684469273523-26466336e7a2?q=80&w=2000&auto=format&fit=crop',
-    category: 'Tips & Tricks',
-    author: 'Admin Ton',
-    date: '15 Feb 2024',
-    readTime: '5 min'
-  },
-  {
-    id: '2',
-    slug: 'midjourney-v6-update',
-    title: 'รีวิว Midjourney V6 มีอะไรใหม่? สวยขึ้นจริงไหม?',
-    excerpt: 'เจาะลึกฟีเจอร์ใหม่ใน V6 ที่สายอาร์ตต้องร้องว้าว พร้อมตัวอย่าง Prompt เปรียบเทียบกับ V5.2',
-    coverImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop',
-    category: 'Update',
-    author: 'Creative Jane',
-    date: '10 Feb 2024',
-    readTime: '8 min'
-  },
-  {
-    id: '3',
-    slug: 'ai-tools-for-student',
-    title: '5 AI Tools ที่นักศึกษาต้องมีติดเครื่อง ปี 2024',
-    excerpt: 'แนะนำตัวช่วยทำการบ้าน ทำสไลด์ และสรุปวิจัย ที่จะทำให้ชีวิตมหาลัยง่ายขึ้นเยอะ',
-    coverImage: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000&auto=format&fit=crop',
-    category: 'Education',
-    author: 'Study Smart',
-    date: '05 Feb 2024',
-    readTime: '4 min'
-  }
+  { name: "Text Generation & Chatbot", slug: "Text Generation & Chatbot" },
+  { name: "Summarization & Notes", slug: "Summarization & Notes" },
+  { name: "Presentation & Slides", slug: "Presentation & Slides" },
+  { name: "Image Generation", slug: "Image Generation" },
+  { name: "Video Generation", slug: "Video Generation" },
+  { name: "Voice & Audio", slug: "Voice & Audio" },
+  { name: "AI Search Engine", slug: "AI Search Engine" },
+  { name: "Coding & Development", slug: "Coding & Development" },
+  { name: "Productivity & Workflow", slug: "Productivity & Workflow" }
 ];
