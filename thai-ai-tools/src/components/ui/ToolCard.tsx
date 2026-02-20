@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
 import { AITool } from '@/lib/data';
-import { ArrowUpRight, Star } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react'; // เอา Star ออกจากบรรทัดนี้แล้ว
 
 interface ToolCardProps {
   tool: AITool;
@@ -41,9 +41,7 @@ export default function ToolCard({ tool, variants }: ToolCardProps) {
                    Free
                  </span>
               )}
-              <div className="flex items-center gap-1 text-xs font-medium text-slate-500 bg-slate-50 px-2 py-1 rounded-lg">
-                <Star size={12} className="text-yellow-400 fill-yellow-400" /> {tool.rating}
-              </div>
+              {/* ❌ ส่วนดาวรีวิวถูกเอาออกไปจากตรงนี้แล้ว */}
             </div>
           </div>
 
