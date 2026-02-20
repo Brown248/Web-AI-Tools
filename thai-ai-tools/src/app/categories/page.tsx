@@ -2,13 +2,12 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image'; // ✅ นำเข้า Image สำหรับแสดงโลโก้
 import { tools } from '@/lib/data';
+import ToolCard from '@/components/ui/ToolCard'; // ✅ ดึงการ์ดจากหน้าแรกมาใช้เลย!
 import { 
   LayoutGrid, MessageSquare, ImageIcon, Video, Code, 
-  PenTool, Music, ArrowRight, Search, Mic, 
-  Presentation, FileText, CheckCircle2 
+  Search, Mic, Presentation, FileText, CheckCircle2, 
+  Music
 } from 'lucide-react';
 
 // 🧠 ฟังก์ชันสแกนชื่อหมวดหมู่ แล้วหาไอคอนที่ตรงสายที่สุด
@@ -118,57 +117,8 @@ export default function CategoriesPage() {
                 transition={{ duration: 0.3 }}
                 className="h-full"
               >
-                <Link href={`/tool/${tool.slug}`} className="block h-full group">
-                  <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col relative overflow-hidden">
-                    
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    <div className="flex justify-between items-start mb-5">
-                      
-                      {/* ✅ เปลี่ยนมาแสดงรูปภาพโลโก้ตรงนี้ */}
-                      <div className="w-14 h-14 relative bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 group-hover:border-blue-100 transition-colors shadow-sm overflow-hidden shrink-0">
-                         {tool.logoUrl ? (
-                           <Image 
-                             src={tool.logoUrl} 
-                             alt={`${tool.name} logo`} 
-                             fill
-                             sizes="56px"
-                             className="object-cover"
-                           />
-                         ) : (
-                           // ระบบป้องกันเว็บพัง ถ้าลืมใส่รูป จะโชว์อักษรตัวแรก
-                           <span className="text-xl font-bold text-slate-900">{tool.name.charAt(0)}</span>
-                         )}
-                      </div>
-
-                      <div className="flex flex-col items-end gap-2">
-                        {tool.isFree && (
-                           <span className="px-2.5 py-1 bg-green-50 text-green-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-green-100">
-                             Free
-                           </span>
-                        )}
-                      </div>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
-                      {tool.name}
-                    </h3>
-                    <p className="text-slate-500 text-sm line-clamp-2 mb-6 flex-grow leading-relaxed">
-                      {tool.description}
-                    </p>
-
-                    <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
-                       {/* ป้ายแสดงหมวดหมู่ */}
-                       <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50 px-2 py-1 rounded-md flex items-center gap-1">
-                         {getCategoryIcon(tool.category)} {tool.category}
-                       </span>
-                       <span className="flex items-center gap-1 text-sm font-bold text-slate-400 group-hover:text-blue-600 transition-colors">
-                         ดูรายละเอียด <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-                       </span>
-                    </div>
-
-                  </div>
-                </Link>
+                {/* ✅ โค้ดสั้นลงเยอะมาก เพราะดึง ToolCard มาใช้แทนการเขียนใหม่ทั้งหมด */}
+                <ToolCard tool={tool} />
               </motion.div>
             ))}
           </AnimatePresence>

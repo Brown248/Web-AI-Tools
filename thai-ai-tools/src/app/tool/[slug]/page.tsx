@@ -7,7 +7,9 @@ import {
   XCircle, Zap, Sparkles, Terminal, BookOpen, AlertCircle
 } from 'lucide-react';
 import PromptCopyBox from '@/components/ui/PromptCopyBox';
+import { Metadata } from 'next'; 
 
+// สร้าง Static HTML ตามจำนวนเครื่องมือ AI ทั้งหมด
 export async function generateStaticParams() {
   return tools.map((tool) => ({
     slug: tool.slug,
@@ -15,28 +17,40 @@ export async function generateStaticParams() {
 }
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>; 
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
+// 🧠 Dynamic SEO: ปรับ Title & Description อัตโนมัติตามชื่อ AI
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolvedParams = await params; 
+  const slug = resolvedParams.slug;
   const tool = tools.find((t) => t.slug === slug);
-  if (!tool) return { title: 'Tool Not Found' };
+  
+  if (!tool) return { title: 'ไม่พบเครื่องมือ AI' };
+  
   return {
-    title: `รู้จักกับ ${tool.name} - คู่มือใช้งาน เจาะลึกข้อดีข้อเสีย และแจก Prompt | AIToolbox`,
+    title: `รีวิว ${tool.name} และแจก Prompt | สอนใช้งานปี 2025`,
     description: tool.description,
+    keywords: [tool.name, "วิธีใช้ " + tool.name, tool.category, "AI", "Prompt", "รีวิว AI"],
+    openGraph: {
+      title: `รีวิว ${tool.name} ฉบับเจาะลึก`,
+      description: tool.description,
+      images: tool.logoUrl ? [tool.logoUrl] : ['/og-image-home.jpg'], 
+    }
   };
 }
 
 export default async function ToolArticlePage({ params }: PageProps) {
-  const { slug } = await params;
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   const tool = tools.find((t) => t.slug === slug);
 
   if (!tool) notFound();
 
+  // 🧠 Schema Markup (JSON-LD) ทำให้ Google เข้าใจง่ายขึ้นว่านี่คือ "บทความ"
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'TechArticle',
     headline: `คู่มือการใช้งาน ${tool.name} ฉบับเจาะลึก`,
     description: tool.longDescription,
     author: {
@@ -44,6 +58,7 @@ export default async function ToolArticlePage({ params }: PageProps) {
       name: 'AIToolbox'
     },
     dateModified: tool.updatedAt,
+    image: tool.logoUrl ? tool.logoUrl : undefined
   };
 
   return (
