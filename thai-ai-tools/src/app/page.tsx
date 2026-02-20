@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { tools, categories } from '@/lib/data';
 import ToolCard from '@/components/ui/ToolCard';
-import AdUnit from '@/components/ui/AdUnit'; // ✅ Import AdUnit
-import { Search, ArrowRight, Sparkles, X, Filter } from 'lucide-react';
+import { Search, ArrowRight, Sparkles, X } from 'lucide-react';
 import { useState, useMemo } from 'react';
 
 // --- Animation Config ---
@@ -49,7 +48,6 @@ export default function Home() {
   const handleCategorySelect = (slug: string | null) => {
     setSelectedCategory(slug === selectedCategory ? null : slug);
     if (slug) {
-      // ✅ เพิ่มการหน่วงเวลาเล็กน้อยกันบั๊ก Scroll ไม่ไป
       setTimeout(() => {
         document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 50);
@@ -138,7 +136,7 @@ export default function Home() {
       </section>
 
       {/* =========================================
-          TOOLS GRID SECTION (🔥 แก้บั๊กค้างเสร็จแล้ว)
+          TOOLS GRID SECTION (🔥 คลีนโค้ดแล้ว สเกลเป๊ะ)
       ========================================= */}
       <section id="tools-section" className="max-w-7xl mx-auto px-6 mb-32 relative z-10 min-h-[500px]">
         
@@ -166,7 +164,7 @@ export default function Home() {
                  <X size={16} /> ล้างตัวกรอง
                </button>
              ) : (
-               <Link href="/ranking" className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-full transition-all">
+               <Link href="/categories" className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-full transition-all">
                  ดูทั้งหมด <ArrowRight size={16} />
                </Link>
              )}
@@ -184,14 +182,14 @@ export default function Home() {
            </div>
         )}
 
-        {/* ✅ Grid Content (จุดที่แก้อาการค้าง) */}
+        {/* ✅ Grid Content */}
         {filteredTools.length > 0 ? (
           <motion.div 
             layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             <AnimatePresence mode="popLayout">
-              {filteredTools.map((tool, index) => (
+              {filteredTools.map((tool) => (
                 <motion.div 
                   key={tool.id} 
                   layout
@@ -199,15 +197,9 @@ export default function Home() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.25 }}
+                  className="h-full" // ✅ บังคับให้ความสูงเต็ม Grid ป้องกันกล่องเบี้ยว
                 >
                    <ToolCard tool={tool} />
-                   
-                   {/* ✅ แทรก AdUnit ทุกๆ 6 การ์ด */}
-                   {(index + 1) % 6 === 0 && index !== filteredTools.length - 1 && (
-                     <div className="hidden lg:block lg:col-span-1 mt-6">
-                        <AdUnit />
-                     </div>
-                   )}
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -234,7 +226,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* Categories Section (เหมือนเดิม) ... */}
+      {/* Categories Section */}
       <section className="py-24 relative bg-slate-50/50 border-t border-slate-200/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
