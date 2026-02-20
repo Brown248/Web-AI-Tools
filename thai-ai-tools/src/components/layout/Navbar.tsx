@@ -15,7 +15,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Discover', href: '/' },
     { name: 'Categories', href: '/categories' }, // ✅ เปลี่ยนตรงนี้เป็น /categories
-    { name: 'Blog', href: '/blog' },              
+    { name: 'Prompts', href: '/prompts' },       // ✅ เปลี่ยนจาก Blog เป็น Prompts
     { name: 'Submit', href: '/submit' }           
   ];
 
