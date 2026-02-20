@@ -1,14 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // ตั้งค่าอนุญาตโดเมนรูปภาพภายนอก สำหรับ Image Optimization
   images: {
+    // ปิดการใช้งาน Optimization ชั่วคราวเพื่อเช็คว่าพาธรูปถูกต้องหรือไม่
+    unoptimized: true, 
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com',
+        hostname: '**',
       },
-      // หากอนาคตมีรูปจากโดเมนอื่น (เช่น Supabase, AWS) สามารถนำมาเพิ่มตรงนี้ได้
     ],
   },
 };
