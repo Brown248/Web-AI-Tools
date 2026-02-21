@@ -14,10 +14,10 @@ const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit' });
 export const metadata: Metadata = {
   metadataBase: new URL('https://aitoolbox-demo.vercel.app'), 
   title: {
-    default: "AIToolbox | รวมเครื่องมือ AI ที่ดีที่สุดของปี 2025",
+    default: "AIToolbox | รวมเครื่องมือ AI ที่ดีที่สุด",
     template: "%s | AIToolbox" 
   },
-  description: "ศูนย์รวมเครื่องมือ AI ยอดนิยม อัปเดตล่าสุดปี 2025 ค้นหา AI แชทบอท, วาดรูป, ทำวิดีโอ, ทำเพลง พร้อมแจก Prompt ฟรีระดับพรีเมียม ช่วยลดเวลาทำงานของคุณ.",
+  description: "ค้นหา AI สุดล้ำ พร้อมแจก Prompt ระดับโปร ช่วยให้คุณทำงานเสร็จไวขึ้น 10 เท่า",
   keywords: ["เครื่องมือ AI", "AI วาดรูป", "AI เขียนบทความ", "Prompt AI", "ChatGPT", "Midjourney", "AI ช่วยทำงาน", "สอนใช้ AI"],
   authors: [{ name: "AIToolbox Team" }],
   creator: "AIToolbox",
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AIToolbox | ศูนย์รวมเครื่องมือ AI อันดับ 1',
-    description: 'อัปเดตเครื่องมือ AI ใหม่ๆ ก่อนใคร พร้อมแจก Prompt ฟรี!',
+    title: 'AIToolbox | ศูนย์รวมเครื่องมือ AI',
+    description: 'ค้นหา AI สุดล้ำ พร้อมแจก Prompt ระดับโปร ช่วยให้คุณทำงานเสร็จไวขึ้น 10 เท่า',
     images: ['/og-image-home.jpg'], // ใช้รูปเดียวกับ OpenGraph
   },
 };
