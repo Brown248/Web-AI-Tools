@@ -22,11 +22,17 @@ export const metadata: Metadata = {
   authors: [{ name: "AIToolbox Team" }],
   creator: "AIToolbox",
   publisher: "AIToolbox",
+  
+  // ✅ เพิ่มโค้ดบรรทัดนี้เพื่อดึงรูปจากโฟลเดอร์ public/images/icon.png มาทำโลโก้แท็บเว็บ
+  icons: {
+    icon: '/images/icon.png',
+  },
+
   openGraph: {
     type: 'website',
     locale: 'th_TH',
     url: 'https://aitoolbox-demo.vercel.app',
-    title: 'AIToolbox | รวมเครื่องมือ AI ที่ดีที่สุดของปี 2025',
+    title: 'AIToolbox | รวมเครื่องมือ AI ที่ดีที่สุด',
     description: 'ค้นหา AI สุดล้ำ พร้อมแจก Prompt ระดับโปร ช่วยให้คุณทำงานเสร็จไวขึ้น 10 เท่า',
     siteName: 'AIToolbox',
     images: [
@@ -80,7 +86,6 @@ export default function RootLayout({
 
         <CookieConsent />
         
-        {/* ✅ ย้าย Google Analytics เข้ามาอยู่ใน body แล้วครับ */}
         <GoogleAnalytics gaId="G-XXXXXXXXXX" /> 
       </body>
     </html>
