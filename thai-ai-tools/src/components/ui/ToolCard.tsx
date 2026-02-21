@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
 import { AITool } from '@/lib/data';
-import { ArrowUpRight } from 'lucide-react'; // เอา Star ออกจากบรรทัดนี้แล้ว
+import { ArrowUpRight } from 'lucide-react';
 
 interface ToolCardProps {
   tool: AITool;
@@ -15,7 +15,7 @@ export default function ToolCard({ tool, variants }: ToolCardProps) {
   return (
     <motion.div variants={variants} className="h-full">
       <Link href={`/tool/${tool.slug}`} className="block h-full group">
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col relative overflow-hidden">
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col relative overflow-hidden transform-gpu">
           
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           
@@ -28,7 +28,7 @@ export default function ToolCard({ tool, variants }: ToolCardProps) {
                    alt={`${tool.name} logo`} 
                    fill
                    sizes="56px"
-                   className="object-cover"
+                   className="object-contain p-1" // ✅ เปลี่ยนจาก object-cover เป็น object-contain พร้อมใส่ padding นิดๆ ให้โลโก้ไม่ชิดขอบ
                  />
                ) : (
                  <span className="text-xl font-bold text-slate-900">{tool.name.charAt(0)}</span>
@@ -41,7 +41,6 @@ export default function ToolCard({ tool, variants }: ToolCardProps) {
                    Free
                  </span>
               )}
-              {/* ❌ ส่วนดาวรีวิวถูกเอาออกไปจากตรงนี้แล้ว */}
             </div>
           </div>
 

@@ -5,7 +5,7 @@ import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { tools, categories } from '@/lib/data';
 import ToolCard from '@/components/ui/ToolCard';
 import { Search, ArrowRight, Sparkles, X } from 'lucide-react';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 // --- Animation Config ---
 const containerVariants: Variants = {
@@ -29,6 +29,16 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
+  // ✅ ใช้ useEffect สำหรับจัดการ Smooth Scroll แทน setTimeout
+  useEffect(() => {
+    if (selectedCategory) {
+      document.getElementById('tools-section')?.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  }, [selectedCategory]);
+
   const filteredTools = useMemo(() => {
     return tools.filter((tool) => {
       const searchContent = query.toLowerCase();
@@ -47,11 +57,6 @@ export default function Home() {
 
   const handleCategorySelect = (slug: string | null) => {
     setSelectedCategory(slug === selectedCategory ? null : slug);
-    if (slug) {
-      setTimeout(() => {
-        document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 50);
-    }
   };
 
   const clearFilters = () => {
@@ -63,10 +68,11 @@ export default function Home() {
     <main className="min-h-screen bg-background relative overflow-hidden">
       
       {/* Background & Hero Section */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
+      {/* ✅ ปรับปรุง Performance พื้นหลัง: เติม transform-gpu, will-change-transform และเอา mix-blend-multiply ออกเพื่อลดภาระเครื่อง */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.6] z-0" />
-        <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] mix-blend-multiply animate-pulse-slow" />
-        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-purple-100/40 rounded-full blur-[120px] mix-blend-multiply animate-pulse-slow animation-delay-2000" />
+        <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] animate-pulse-slow transform-gpu will-change-transform" />
+        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-purple-100/40 rounded-full blur-[120px] animate-pulse-slow animation-delay-2000 transform-gpu will-change-transform" />
       </div>
 
       <section className="relative pt-44 pb-32 px-6 z-10">
@@ -98,7 +104,7 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={itemVariants} className="w-full max-w-xl relative group mt-2">
-               <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-2xl blur opacity-40 group-hover:opacity-60 transition duration-500"></div>
+               <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-2xl blur opacity-40 group-hover:opacity-60 transition duration-500 transform-gpu"></div>
                <div className="relative flex items-center bg-white p-2 rounded-2xl shadow-xl shadow-blue-900/5 border border-slate-100">
                   <Search className="ml-4 text-slate-400" size={20} />
                   <input 
@@ -136,11 +142,10 @@ export default function Home() {
       </section>
 
       {/* =========================================
-          TOOLS GRID SECTION (🔥 คลีนโค้ดแล้ว สเกลเป๊ะ)
+          TOOLS GRID SECTION
       ========================================= */}
       <section id="tools-section" className="max-w-7xl mx-auto px-6 mb-32 relative z-10 min-h-[500px]">
         
-        {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-10 px-2 gap-4">
           <div>
             <h2 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
@@ -171,7 +176,6 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Active Filters */}
         {selectedCategory && (
            <div className="mb-8 flex gap-2">
               <span className="text-sm text-slate-500 py-1">หมวดหมู่:</span>
@@ -182,28 +186,25 @@ export default function Home() {
            </div>
         )}
 
-        {/* ✅ Grid Content */}
+        {/* ✅ ปรับปรุง Performance: เปลี่ยน div ธรรมดาเป็น container (ลบ layout ตรงก้อนใหญ่ออก) */}
         {filteredTools.length > 0 ? (
-          <motion.div 
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {filteredTools.map((tool) => (
                 <motion.div 
                   key={tool.id} 
-                  layout
+                  layout="position" // ✅ ใช้ layout="position" ช่วยลดการคำนวณของเบราว์เซอร์
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.25 }}
-                  className="h-full" // ✅ บังคับให้ความสูงเต็ม Grid ป้องกันกล่องเบี้ยว
+                  transition={{ duration: 0.2 }} // ลดเวลาแอนิเมชันให้ฉับไวขึ้น
+                  className="h-full" 
                 >
                    <ToolCard tool={tool} />
                 </motion.div>
               ))}
             </AnimatePresence>
-          </motion.div>
+          </div>
         ) : (
           <AnimatePresence mode="wait">
             <motion.div 

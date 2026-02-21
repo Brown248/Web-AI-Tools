@@ -24,7 +24,7 @@ export default function SubmitPage() {
            
            {/* 🔴 เอาลิงก์ Google Form ของคุณมาใส่ใน src ตรงนี้ 🔴 */}
            <iframe 
-             src="https://docs.google.com/forms/d/e/1FAIpQLSdKx080ZvqzMRBLzmgtSyv4PvtRgCEdwmhUlwdJGe0eBNboUA/viewform?usp=publish-editor" 
+             src="https://docs.google.com/forms/d/e/1FAIpQLSeh6poQOWhW9lCTsjHRGkxdtpfcytTU7bWIcXlpYmD3wfvSMQ/viewform?usp=dialog" 
              width="100%" 
              height="850" 
              frameBorder="0" 

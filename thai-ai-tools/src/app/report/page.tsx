@@ -27,7 +27,7 @@ export default function ReportPage() {
            
            {/* 🔴 นำลิงก์จากเมนู "ฝัง HTML" (< >) ของ Google Form มาใส่ใน src นี้ 🔴 */}
            <iframe 
-             src="https://docs.google.com/forms/d/e/1FAIpQLSfxxxxxxxxxxxxxxxxxxxx/viewform?embedded=true" 
+             src="https://docs.google.com/forms/d/e/1FAIpQLScywFDoXVEUeRotEc4m8KaUzQ3dT9b_W3H8u6kSuE71H_ytbg/viewform?usp=dialog" 
              width="100%" 
              height="800" 
              frameBorder="0" 
