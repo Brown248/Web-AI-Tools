@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'th_TH',
-    url: 'https://aitoolbox-demo.vercel.app',
+    url: 'https://web-ai-tools.vercel.app/',
     title: 'AIToolbox | รวมเครื่องมือ AI ที่ดีที่สุด',
     description: 'ค้นหา AI สุดล้ำ พร้อมแจก Prompt ระดับโปร ช่วยให้คุณทำงานเสร็จไวขึ้น 10 เท่า',
     siteName: 'AIToolbox',
@@ -86,7 +86,7 @@ export default function RootLayout({
 
         <CookieConsent />
         
-        <GoogleAnalytics gaId="G-XXXXXXXXXX" /> 
+        <GoogleAnalytics gaId="G-J3JWTXQ2K0" /> 
       </body>
     </html>
   );
