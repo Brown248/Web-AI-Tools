@@ -9,6 +9,9 @@ import {
 import PromptCopyBox from '@/components/ui/PromptCopyBox';
 import { Metadata } from 'next'; 
 
+// 🧠 1. ตั้งค่า Domain หลักของคุณ (เปลี่ยนเป็นโดเมนจริงเมื่อได้โดเมนแล้ว)
+const siteUrl = 'https://web-ai-tools.vercel.app'; 
+
 // สร้าง Static HTML ตามจำนวนเครื่องมือ AI ทั้งหมด
 export async function generateStaticParams() {
   return tools.map((tool) => ({
@@ -20,26 +23,54 @@ interface PageProps {
   params: Promise<{ slug: string }>; 
 }
 
-// 🧠 Dynamic SEO: ปรับ Title & Description อัตโนมัติตามชื่อ AI
+// 🌟 2. Dynamic SEO: ปรับ Title & Description อัตโนมัติ พร้อม Open Graph & Twitter แบบครบสูตร
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params; 
   const slug = resolvedParams.slug;
   const tool = tools.find((t) => t.slug === slug);
   
-  if (!tool) return { title: 'ไม่พบเครื่องมือ AI' };
+  if (!tool) {
+    return { 
+      title: 'ไม่พบเครื่องมือ AI | AIToolbox',
+      description: 'หน้าที่คุณค้นหาไม่มีอยู่ในระบบ หรือถูกลบไปแล้ว'
+    };
+  }
   
   return {
     title: `รีวิว ${tool.name} และแจก Prompt | สอนใช้งานปี 2025`,
     description: tool.description,
-    keywords: [tool.name, "วิธีใช้ " + tool.name, tool.category, "AI", "Prompt", "รีวิว AI"],
+    keywords: [tool.name, "วิธีใช้ " + tool.name, tool.category, "AI", "Prompt", "รีวิว AI", "เครื่องมือ AI", "AIToolbox"],
+    // ✅ เพิ่ม Canonical URL ป้องกันเนื้อหาซ้ำ (Duplicate Content)
+    alternates: {
+      canonical: `${siteUrl}/tool/${tool.slug}`, 
+    },
+    // ✅ เพิ่ม Open Graph สำหรับแชร์ลง Facebook, LINE ให้ขึ้นรูปและชื่อของ AI ตัวนั้นๆ อัตโนมัติ
     openGraph: {
+      title: `รีวิว ${tool.name} ฉบับเจาะลึก พร้อมแจก Prompt ฟรี`,
+      description: tool.description,
+      url: `${siteUrl}/tool/${tool.slug}`,
+      siteName: 'AIToolbox',
+      type: 'article', 
+      images: [
+        {
+          url: tool.logoUrl || '/og-image-home.jpg', 
+          width: 800,
+          height: 800,
+          alt: `โลโก้ของ ${tool.name}`,
+        }
+      ],
+    },
+    // ✅ เพิ่ม Twitter Card สำหรับการแชร์ลง X
+    twitter: {
+      card: 'summary_large_image',
       title: `รีวิว ${tool.name} ฉบับเจาะลึก`,
       description: tool.description,
-      images: tool.logoUrl ? [tool.logoUrl] : ['/og-image-home.jpg'], 
+      images: [tool.logoUrl || '/og-image-home.jpg'],
     }
   };
 }
 
+// 🎨 3. หน้า UI บทความของเดิม (ดีไซน์เดิมของคุณอยู่ครบ 100%)
 export default async function ToolArticlePage({ params }: PageProps) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
