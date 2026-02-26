@@ -1,35 +1,40 @@
 import { MetadataRoute } from 'next';
-import { tools, categories } from '@/lib/data'; // ❌ เอา blogPosts ออกไปแล้ว
-
-// ✅ บรรทัดนี้สำคัญมาก!
-export const dynamic = 'force-static';
-
-const BASE_URL = 'https://aitoolbox-demo.vercel.app'; // ⚠️ เปลี่ยนเป็นโดเมนจริงของคุณเมื่อได้โดเมนแล้ว
+import { tools, categories } from '@/lib/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // หน้าหลักๆ ของเว็บ (Static Routes)
-  const staticRoutes = [
-    { url: BASE_URL, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 1.0 },
-    { url: `${BASE_URL}/categories`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.8 },
-    { url: `${BASE_URL}/prompts`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 0.9 }, // ✅ เปลี่ยนเป็น prompts
-    { url: `${BASE_URL}/submit`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.5 },
-  ];
+  const baseUrl = 'https://web-ai-tools.vercel.app';
 
-  // หน้าย่อยของหมวดหมู่ (ถ้าในอนาคตคุณทำหน้ารวม AI เฉพาะหมวดหมู่)
-  const categoryRoutes = categories.map((cat) => ({
-    url: `${BASE_URL}/category/${cat.slug}`,
+  // 1. หน้า Static หลักๆ
+  const routes = [
+    '',
+    '/categories',
+    '/prompts',
+    '/submit',
+    '/privacy',
+    '/terms',
+    '/report',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: route === '' ? 1.0 : 0.8,
+  }));
+
+  // 2. หน้า Dynamic - หมวดหมู่
+  const categoryRoutes = categories.map((category) => ({
+    url: `${baseUrl}/categories/${category.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
 
-  // หน้ารายละเอียด AI แต่ละตัว (สำคัญมาก ต้องให้ Google เข้ามาเก็บข้อมูลให้ครบ)
+  // 3. หน้า Dynamic - เครื่องมือ AI แบบรายตัว
   const toolRoutes = tools.map((tool) => ({
-    url: `${BASE_URL}/tool/${tool.slug}`,
-    lastModified: new Date(tool.updatedAt),
-    changeFrequency: 'monthly' as const,
-    priority: 0.9,
+    url: `${baseUrl}/tool/${tool.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9, // ให้ความสำคัญหน้าเครื่องมือสูงหน่อย
   }));
 
-  return [...staticRoutes, ...categoryRoutes, ...toolRoutes];
+  return [...routes, ...categoryRoutes, ...toolRoutes];
 }

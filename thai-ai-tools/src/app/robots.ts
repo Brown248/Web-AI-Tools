@@ -1,16 +1,16 @@
-import type { MetadataRoute } from 'next';
-
-export const dynamic = 'force-static';
-
-const BASE_URL = 'https://aitoolbox-demo.vercel.app'; // ⚠️ เปลี่ยนโดเมนเมื่อถึงเวลา
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = 'https://web-ai-tools.vercel.app';
+
   return {
     rules: {
-      userAgent: '*',     // อนุญาตบอททุกค่าย (Google, Bing, Yahoo)
-      allow: '/',         // อนุญาตให้เข้ามาอ่านได้ทุกหน้า
-      disallow: '/private/', // ห้ามเข้าหน้า private (ถ้ามี)
+      userAgent: '*',
+      allow: '/',
+      // ระบุหน้าที่ไม่ต้องการให้ Google ค้นหาเจอ (เช่น หน้า Admin หรือ API)
+      disallow: ['/private/', '/api/'], 
     },
-    sitemap: `${BASE_URL}/sitemap.xml`, // บอกว่าแผนที่เว็บอยู่ที่ไหน
+    // ชี้ตำแหน่ง Sitemap ให้บอทวิ่งตาม
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

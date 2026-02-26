@@ -2,14 +2,13 @@
 
 @theme {
   /* --- COLORS (Premium Soft Slate) --- */
-  /* พื้นหลังเปลี่ยนเป็นสีเทาอ่อน (Slate-50) ช่วยลดแสงจ้าและดูแพง */
   --color-background: #f8fafc; 
-  --color-foreground: #0f172a; /* Slate-900 */
+  --color-foreground: #0f172a; 
 
   /* Surface สีขาวสำหรับการ์ด */
   --color-surface: #ffffff;
   
-  /* Primary: ปรับให้เข้ากับพื้นหลังโทนเย็น */
+  /* Primary */
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
   --color-primary-200: #bfdbfe;
@@ -28,9 +27,18 @@
   --animate-float: float 10s ease-in-out infinite;
   --animate-pulse-slow: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   
+  /* ✅ เพิ่มคีย์เฟรมและแอนิเมชันสำหรับแถบสีไล่เฉดให้การ์ด */
+  --animate-gradient: gradient 3s ease infinite;
+
   @keyframes float {
     0%, 100% { transform: translateY(0) scale(1); }
     50% { transform: translateY(-20px) scale(1.05); }
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 }
 
@@ -41,7 +49,6 @@
 }
 
 @layer utilities {
-  /* พื้นหลัง Grid จางๆ แบบ Professional */
   .bg-grid-pattern {
     background-size: 60px 60px;
     background-image: linear-gradient(to right, rgba(226, 232, 240, 0.5) 1px, transparent 1px),
@@ -49,7 +56,6 @@
     mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
   }
 
-  /* Glassmorphism ที่ปรับให้เข้ากับพื้นหลัง Slate */
   .glass-card {
     @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)];
   }

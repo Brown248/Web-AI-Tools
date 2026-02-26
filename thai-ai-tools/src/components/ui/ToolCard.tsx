@@ -13,22 +13,29 @@ interface ToolCardProps {
 
 export default function ToolCard({ tool, variants }: ToolCardProps) {
   return (
-    <motion.div variants={variants} className="h-full">
+    <motion.div 
+      variants={variants} 
+      className="h-full"
+      // ✅ เพิ่ม Animation เวลา Hover และ Tap ทั้งตัวการ์ด
+      whileHover={{ y: -6, scale: 1.01 }} 
+      whileTap={{ scale: 0.98 }}
+    >
       <Link href={`/tool/${tool.slug}`} className="block h-full group">
-        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 h-full flex flex-col relative overflow-hidden transform-gpu">
+        <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm group-hover:shadow-2xl group-hover:shadow-blue-500/10 transition-all duration-500 h-full flex flex-col relative overflow-hidden transform-gpu">
           
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {/* ✅ แถบ Gradient ด้านบนเพิ่มเอฟเฟกต์สีวิ่งไปมาเมื่อ Hover */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-[length:200%_100%] animate-gradient" />
           
           <div className="flex justify-between items-start mb-5">
-            {/* โชว์โลโก้ AI */}
-            <div className="w-14 h-14 relative bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 group-hover:border-blue-100 transition-colors shadow-sm overflow-hidden shrink-0">
+            <div className="w-14 h-14 relative bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 group-hover:border-blue-200 transition-colors shadow-sm overflow-hidden shrink-0">
                {tool.logoUrl ? (
                  <Image 
                    src={tool.logoUrl} 
                    alt={`${tool.name} logo`} 
                    fill
                    sizes="56px"
-                   className="object-contain p-1" // ✅ เปลี่ยนจาก object-cover เป็น object-contain พร้อมใส่ padding นิดๆ ให้โลโก้ไม่ชิดขอบ
+                   // ✅ เพิ่ม group-hover:scale-110 ให้โลโก้ซูมเข้าเล็กน้อย
+                   className="object-contain p-1 transform transition-transform duration-500 group-hover:scale-110" 
                  />
                ) : (
                  <span className="text-xl font-bold text-slate-900">{tool.name.charAt(0)}</span>

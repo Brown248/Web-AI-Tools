@@ -29,11 +29,9 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   
-  // ✅ เพิ่ม State สำหรับคัดกรองเพิ่มเติมและการเรียงลำดับ
-  const [priceFilter, setPriceFilter] = useState<string>("all"); // "all" | "free" | "paid"
-  const [sortBy, setSortBy] = useState<string>("recommended"); // "recommended" | "a-z" | "z-a" | "rating"
+  const [priceFilter, setPriceFilter] = useState<string>("all");
+  const [sortBy, setSortBy] = useState<string>("recommended");
 
-  // ✅ ใช้ useEffect สำหรับจัดการ Smooth Scroll แทน setTimeout
   useEffect(() => {
     if (selectedCategory) {
       document.getElementById('tools-section')?.scrollIntoView({ 
@@ -43,20 +41,16 @@ export default function Home() {
     }
   }, [selectedCategory]);
 
-  // ✅ อัปเดต useMemo เพื่อรองรับ Price Filter และ Sorting
   const filteredTools = useMemo(() => {
     let result = tools.filter((tool) => {
-      // 1. กรองตามคำค้นหา (Search)
       const searchContent = query.toLowerCase();
       const matchesSearch = 
         tool.name.toLowerCase().includes(searchContent) ||
         tool.description.toLowerCase().includes(searchContent) ||
         tool.features.some(f => f.toLowerCase().includes(searchContent));
 
-      // 2. กรองตามหมวดหมู่ (Category)
       const matchesCategory = selectedCategory ? tool.category === selectedCategory : true;
 
-      // 3. กรองตามราคา (Price)
       let matchesPrice = true;
       if (priceFilter === "free") matchesPrice = tool.isFree === true;
       if (priceFilter === "paid") matchesPrice = tool.isFree === false;
@@ -64,13 +58,12 @@ export default function Home() {
       return matchesSearch && matchesCategory && matchesPrice;
     });
 
-    // 4. การเรียงลำดับ (Sorting)
     if (sortBy === "a-z") {
       result.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortBy === "z-a") {
       result.sort((a, b) => b.name.localeCompare(a.name));
     } else if (sortBy === "rating") {
-      result.sort((a, b) => b.rating - a.rating); // เรียงจากคะแนนมากไปน้อย
+      result.sort((a, b) => b.rating - a.rating);
     }
 
     return result;
@@ -95,8 +88,9 @@ export default function Home() {
       {/* Background & Hero Section */}
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.6] z-0" />
-        <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] animate-pulse-slow transform-gpu will-change-transform" />
-        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-purple-100/40 rounded-full blur-[120px] animate-pulse-slow animation-delay-2000 transform-gpu will-change-transform" />
+        {/* ✅ เพิ่ม animate-float เข้าไปใน Background */}
+        <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] animate-pulse-slow animate-[float_10s_ease-in-out_infinite] transform-gpu will-change-transform" />
+        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-purple-100/40 rounded-full blur-[120px] animate-pulse-slow animate-[float_12s_ease-in-out_infinite_reverse] animation-delay-2000 transform-gpu will-change-transform" />
       </div>
 
       <section className="relative pt-44 pb-32 px-6 z-10">
@@ -128,9 +122,12 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={itemVariants} className="w-full max-w-xl relative group mt-2">
-               <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-2xl blur opacity-40 group-hover:opacity-60 transition duration-500 transform-gpu"></div>
-               <div className="relative flex items-center bg-white p-2 rounded-2xl shadow-xl shadow-blue-900/5 border border-slate-100">
-                  <Search className="ml-4 text-slate-400" size={20} />
+               {/* ✅ แสง Glow ตอบสนองเมื่อ Focus */}
+               <div className="absolute -inset-1 bg-gradient-to-r from-blue-300 to-indigo-300 rounded-2xl blur opacity-30 group-focus-within:opacity-70 group-hover:opacity-60 transition duration-500 transform-gpu"></div>
+               
+               {/* ✅ กรอบค้นหาตอบสนองเมื่อ Focus */}
+               <div className="relative flex items-center bg-white p-2 rounded-2xl shadow-xl shadow-blue-900/5 border border-slate-100 focus-within:ring-4 focus-within:ring-blue-500/20 focus-within:border-blue-400 transition-all duration-300">
+                  <Search className="ml-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={20} />
                   <input 
                     type="text" 
                     value={query}
@@ -139,11 +136,16 @@ export default function Home() {
                     className="w-full p-3.5 bg-transparent outline-none text-slate-700 placeholder:text-slate-400"
                   />
                   {query && (
-                    <button onClick={() => setQuery("")} className="mr-2 p-1 text-slate-400 hover:text-slate-600">
+                    <motion.button 
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      onClick={() => setQuery("")} 
+                      className="mr-2 p-1 text-slate-400 hover:text-slate-600"
+                    >
                       <X size={16} />
-                    </button>
+                    </motion.button>
                   )}
-                  <button className="px-6 py-3 bg-slate-900 hover:bg-blue-600 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/30">
+                  <button className="px-6 py-3 bg-slate-900 hover:bg-blue-600 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 active:translate-y-0">
                     ค้นหา
                   </button>
                </div>
@@ -200,10 +202,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ✅ เพิ่ม Toolbar สำหรับ Filter ราคา และ Sorting */}
         <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           
-          {/* Tags หมวดหมู่ที่เลือก (ถ้ามี) */}
           <div className="flex-1 flex items-center gap-2 w-full">
             {selectedCategory && (
               <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-sm font-medium border border-blue-100">
@@ -215,7 +215,6 @@ export default function Home() {
             {!selectedCategory && <span className="text-sm text-slate-400 hidden sm:block">แสดงทุกหมวดหมู่</span>}
           </div>
 
-          {/* ฟอร์มคัดกรองและเรียงลำดับ */}
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="relative group">
               <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
@@ -250,7 +249,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ✅ แสดงผลเครื่องมือ */}
         {filteredTools.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
@@ -309,14 +307,17 @@ export default function Home() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
+                  // ✅ เพิ่ม Hover / Tap Effect ให้ปุ่ม Categories
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <button
                     onClick={() => handleCategorySelect(cat.slug)}
                     className={`
                       flex items-center gap-3 px-6 py-3.5 rounded-xl border shadow-sm transition-all duration-300
                       ${isActive 
-                        ? 'bg-blue-600 border-blue-600 text-white shadow-blue-500/25 ring-2 ring-blue-200 ring-offset-2' 
-                        : 'bg-white border-slate-200 text-slate-700 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/10'}
+                        ? 'bg-blue-600 border-blue-600 text-white shadow-blue-500/40 ring-4 ring-blue-500/20' 
+                        : 'bg-white border-slate-200 text-slate-700 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10'}
                     `}
                   >
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isActive ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-600'}`}>
