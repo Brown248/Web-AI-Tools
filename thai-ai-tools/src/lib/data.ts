@@ -3,6 +3,5 @@
 
 export { tools } from './data/tools';
 export { categories } from './data/categories';
-export { blogPosts } from './data/blog';
 
 export type { AITool, BlogPost } from '@/app/types';

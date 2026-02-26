@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { tools, categories } from '@/lib/data';
 import ToolCard from '@/components/ui/ToolCard';
-import { Search, ArrowRight, Sparkles, X } from 'lucide-react';
+import { Search, ArrowRight, Sparkles, X, SlidersHorizontal, ArrowDownAZ } from 'lucide-react';
 import { useState, useMemo, useEffect } from 'react';
 
 // --- Animation Config ---
@@ -28,6 +28,10 @@ const itemVariants: Variants = {
 export default function Home() {
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
+  // ✅ เพิ่ม State สำหรับคัดกรองเพิ่มเติมและการเรียงลำดับ
+  const [priceFilter, setPriceFilter] = useState<string>("all"); // "all" | "free" | "paid"
+  const [sortBy, setSortBy] = useState<string>("recommended"); // "recommended" | "a-z" | "z-a" | "rating"
 
   // ✅ ใช้ useEffect สำหรับจัดการ Smooth Scroll แทน setTimeout
   useEffect(() => {
@@ -39,21 +43,40 @@ export default function Home() {
     }
   }, [selectedCategory]);
 
+  // ✅ อัปเดต useMemo เพื่อรองรับ Price Filter และ Sorting
   const filteredTools = useMemo(() => {
-    return tools.filter((tool) => {
+    let result = tools.filter((tool) => {
+      // 1. กรองตามคำค้นหา (Search)
       const searchContent = query.toLowerCase();
       const matchesSearch = 
         tool.name.toLowerCase().includes(searchContent) ||
         tool.description.toLowerCase().includes(searchContent) ||
         tool.features.some(f => f.toLowerCase().includes(searchContent));
 
+      // 2. กรองตามหมวดหมู่ (Category)
       const matchesCategory = selectedCategory ? tool.category === selectedCategory : true;
 
-      return matchesSearch && matchesCategory;
-    });
-  }, [query, selectedCategory]);
+      // 3. กรองตามราคา (Price)
+      let matchesPrice = true;
+      if (priceFilter === "free") matchesPrice = tool.isFree === true;
+      if (priceFilter === "paid") matchesPrice = tool.isFree === false;
 
-  const isFiltering = query.length > 0 || selectedCategory !== null;
+      return matchesSearch && matchesCategory && matchesPrice;
+    });
+
+    // 4. การเรียงลำดับ (Sorting)
+    if (sortBy === "a-z") {
+      result.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "z-a") {
+      result.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortBy === "rating") {
+      result.sort((a, b) => b.rating - a.rating); // เรียงจากคะแนนมากไปน้อย
+    }
+
+    return result;
+  }, [query, selectedCategory, priceFilter, sortBy]);
+
+  const isFiltering = query.length > 0 || selectedCategory !== null || priceFilter !== "all" || sortBy !== "recommended";
 
   const handleCategorySelect = (slug: string | null) => {
     setSelectedCategory(slug === selectedCategory ? null : slug);
@@ -62,13 +85,14 @@ export default function Home() {
   const clearFilters = () => {
     setQuery("");
     setSelectedCategory(null);
+    setPriceFilter("all");
+    setSortBy("recommended");
   };
 
   return (
     <main className="min-h-screen bg-background relative overflow-hidden">
       
       {/* Background & Hero Section */}
-      {/* ✅ ปรับปรุง Performance พื้นหลัง: เติม transform-gpu, will-change-transform และเอา mix-blend-multiply ออกเพื่อลดภาระเครื่อง */}
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.6] z-0" />
         <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] animate-pulse-slow transform-gpu will-change-transform" />
@@ -89,7 +113,7 @@ export default function Home() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                 </span>
-                AI Tools Updated 2025
+                AI Tools Updated 2026
               </span>
             </motion.div>
 
@@ -130,7 +154,7 @@ export default function Home() {
               {['ChatGPT', 'Midjourney', 'Canva', 'Notion'].map((tag) => (
                 <button 
                   key={tag}
-                  onClick={() => setQuery(tag)}
+                  onClick={() => { setQuery(tag); document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth' }); }}
                   className="text-sm px-3 py-1 rounded-full bg-white/60 border border-slate-200 text-slate-600 hover:bg-white hover:text-blue-600 hover:border-blue-200 cursor-pointer transition-all shadow-sm"
                 >
                   {tag}
@@ -146,7 +170,7 @@ export default function Home() {
       ========================================= */}
       <section id="tools-section" className="max-w-7xl mx-auto px-6 mb-32 relative z-10 min-h-[500px]">
         
-        <div className="flex flex-col md:flex-row justify-between items-end mb-10 px-2 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-6 px-2 gap-4">
           <div>
             <h2 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
               {isFiltering ? (
@@ -175,29 +199,69 @@ export default function Home() {
              )}
           </div>
         </div>
-        
-        {selectedCategory && (
-           <div className="mb-8 flex gap-2">
-              <span className="text-sm text-slate-500 py-1">หมวดหมู่:</span>
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-blue-50 text-blue-700 text-sm font-medium border border-blue-100">
-                {categories.find(c => c.slug === selectedCategory)?.name || selectedCategory}
-                <button onClick={() => setSelectedCategory(null)} className="hover:text-blue-900"><X size={14}/></button>
-              </span>
-           </div>
-        )}
 
-        {/* ✅ ปรับปรุง Performance: เปลี่ยน div ธรรมดาเป็น container (ลบ layout ตรงก้อนใหญ่ออก) */}
+        {/* ✅ เพิ่ม Toolbar สำหรับ Filter ราคา และ Sorting */}
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          
+          {/* Tags หมวดหมู่ที่เลือก (ถ้ามี) */}
+          <div className="flex-1 flex items-center gap-2 w-full">
+            {selectedCategory && (
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-sm font-medium border border-blue-100">
+                <Sparkles size={14} />
+                {categories.find(c => c.slug === selectedCategory)?.name || selectedCategory}
+                <button onClick={() => setSelectedCategory(null)} className="ml-1 hover:text-blue-900 bg-white/50 rounded-full p-0.5"><X size={12}/></button>
+              </span>
+            )}
+            {!selectedCategory && <span className="text-sm text-slate-400 hidden sm:block">แสดงทุกหมวดหมู่</span>}
+          </div>
+
+          {/* ฟอร์มคัดกรองและเรียงลำดับ */}
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="relative group">
+              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
+                <SlidersHorizontal size={16} />
+              </div>
+              <select 
+                value={priceFilter}
+                onChange={(e) => setPriceFilter(e.target.value)}
+                className="appearance-none bg-slate-50 border border-slate-200 text-slate-600 text-sm rounded-xl pl-9 pr-8 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer w-full"
+              >
+                <option value="all">ทุกราคา</option>
+                <option value="free">ใช้งานฟรี (Free)</option>
+                <option value="paid">มีค่าใช้จ่าย (Paid)</option>
+              </select>
+            </div>
+
+            <div className="relative group">
+              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
+                <ArrowDownAZ size={16} />
+              </div>
+              <select 
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="appearance-none bg-slate-50 border border-slate-200 text-slate-600 text-sm rounded-xl pl-9 pr-8 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer w-full"
+              >
+                <option value="recommended">แนะนำ</option>
+                <option value="rating">คะแนนรีวิวสูงสุด</option>
+                <option value="a-z">ตัวอักษร (A-Z)</option>
+                <option value="z-a">ตัวอักษร (Z-A)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* ✅ แสดงผลเครื่องมือ */}
         {filteredTools.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {filteredTools.map((tool) => (
                 <motion.div 
                   key={tool.id} 
-                  layout="position" // ✅ ใช้ layout="position" ช่วยลดการคำนวณของเบราว์เซอร์
+                  layout="position"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.2 }} // ลดเวลาแอนิเมชันให้ฉับไวขึ้น
+                  transition={{ duration: 0.2 }}
                   className="h-full" 
                 >
                    <ToolCard tool={tool} />
@@ -218,9 +282,9 @@ export default function Home() {
                  <Search size={32} />
                </div>
                <h3 className="text-xl font-bold text-slate-900">ไม่พบเครื่องมือที่คุณค้นหา</h3>
-               <p className="text-slate-500 mt-2">ลองใช้คำค้นหาอื่น หรือเลือกหมวดหมู่ใหม่</p>
+               <p className="text-slate-500 mt-2">ลองเปลี่ยนเงื่อนไขการกรอง หรือใช้คำค้นหาอื่น</p>
                <button onClick={clearFilters} className="mt-6 text-blue-600 hover:underline">
-                 กลับไปดูทั้งหมด
+                 ล้างตัวกรองทั้งหมด
                </button>
             </motion.div>
           </AnimatePresence>
