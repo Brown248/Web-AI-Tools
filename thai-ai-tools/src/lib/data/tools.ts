@@ -5,1305 +5,2307 @@ export interface AITool {
   logoUrl: string;
   description: string;
   longDescription: string;
-  origin: string; 
+  origin: string;
   category: string;
   priceModel: string;
   isFree: boolean;
   externalUrl: string;
-  rating: number; 
+  rating: number;
   reviewCount: number;
   updatedAt: string;
   features: string[];
   pros: string[];
   cons: string[];
   steps: { title: string; desc: string }[];
-  prompts: { 
-    purpose: string; 
-    promptTh: string; 
-    promptEn: string; 
-  }[]; 
+  prompts: { purpose: string; promptTh: string; promptEn: string; }[];
   faqs: { question: string; answer: string }[];
 }
 
 export const tools: AITool[] = [
-  // ==========================================
-  // 🔹 1) AI แชท / ผู้ช่วยอัจฉริยะ (Conversational AI)
-  // ==========================================
-  {
-    id: "1",
-    slug: "chatgpt",
-    name: "ChatGPT (OpenAI)",
-    logoUrl: "/logos/OpenAI – ChatGPT.png",
-    description: "AI แชทบอทอัจฉริยะอันดับ 1 เขียนบทความ โค้ด และอธิบายเรื่องยากให้เข้าใจง่าย",
-    longDescription: "ChatGPT เปรียบเสมือนเลขาหรือผู้เชี่ยวชาญส่วนตัวที่มีความรู้ครอบคลุมแทบทุกศาสตร์บนโลก มันถูกออกแบบมาให้โต้ตอบด้วยภาษาธรรมชาติที่ใกล้เคียงมนุษย์ที่สุด คุณสามารถสั่งให้มันช่วยวางแผนการตลาด เขียนโค้ดโปรแกรมมิ่ง แต่งนิยาย แปลภาษา หรือแม้แต่วิเคราะห์ข้อมูลจากไฟล์ Excel ความเก่งของมันอยู่ที่การ 'เข้าใจบริบท (Context)' ทำให้คุณสามารถพิมพ์คุยต่อเนื่องเพื่อปรับแต่งผลลัพธ์ (Refine) จนกว่าจะพอใจได้",
-    origin: "พัฒนาโดย OpenAI เปิดตัวสะเทือนโลกในเดือนพฤศจิกายน 2022 ขับเคลื่อนด้วยสถาปัตยกรรม LLM รุ่นล่าสุดอย่าง GPT-4o ซึ่งมีความสามารถแบบ Multimodal สามารถมองเห็นรูปภาพ ฟังเสียงพูด และตอบกลับด้วยเสียงที่มีอารมณ์ความรู้สึกได้",
-    category: "Conversational AI",
-    priceModel: "Free / $20 ต่อเดือน",
-    isFree: true,
-    externalUrl: "https://chat.openai.com",
-    rating: 4.9,
-    reviewCount: 25420,
-    updatedAt: "Feb 2025",
-    features: [
-      "Data Analysis: อัปโหลดไฟล์ Excel/CSV เพื่อสร้างกราฟและหา Insight เชิงลึก", 
-      "Advanced Voice Mode: สนทนาโต้ตอบด้วยเสียงแบบเรียลไทม์เหมือนคุยกับมนุษย์", 
-      "Custom GPTs: สร้างแชทบอทเทรนข้อมูลเฉพาะทางของตัวเองได้โดยไม่ต้องเขียนโค้ด"
-    ],
-    pros: [
-      "ความเข้าใจภาษาไทย (Thai NLP) เก่งและเป็นธรรมชาติที่สุดในตลาด พิมพ์ผิดก็ยังเข้าใจ",
-      "มีความยืดหยุ่นสูงระดับจักรวาล ใช้ประยุกต์ได้กับทุกสายอาชีพ",
-      "จดจำบริบทย้อนหลังได้ยอดเยี่ยม อ้างอิงสิ่งที่เคยคุยกันไว้เมื่อชั่วโมงที่แล้วได้อย่างแม่นยำ"
-    ],
-    cons: [
-      "หากเจอคำถามเฉพาะทางที่มันไม่รู้จริง มันมักจะ 'มั่วข้อมูล' (Hallucination) อย่างมั่นใจ",
-      "เวอร์ชันฟรีจะถูกจำกัดความฉลาดลงหากใช้งานหนักเกินโควต้าต่อวัน"
-    ],
-    steps: [
-      { title: "กำหนดบทบาท", desc: "เช่น 'จงทำหน้าที่เป็นผู้เชี่ยวชาญด้านการเงิน...'" },
-      { title: "ระบุคำสั่งและบริบท", desc: "สั่งงานชัดเจน เช่น 'ช่วยวางแผนออมเงินสำหรับคนเงินเดือน 2 หมื่น'" },
-      { title: "กำหนดรูปแบบลัพธ์", desc: "เช่น 'ขอเป็นตารางแจกแจงรายจ่ายรายเดือน'" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 ให้ AI สวมบทบาทเป็นที่ปรึกษาธุรกิจ (Business Strategy)", 
-        promptTh: "จงสวมบทบาทเป็นที่ปรึกษาธุรกิจระดับโลก ฉันมีไอเดียธุรกิจคือ [ระบุไอเดีย เช่น ทำแอปพลิเคชันหาเพื่อนวิ่งออกกำลังกาย] กลุ่มเป้าหมายของฉันคือ [ระบุกลุ่มเป้าหมาย] ช่วยสร้างแผนกลยุทธ์ Go-to-Market แบบ Step-by-step โดยระบุ: 1. จุดขายที่แตกต่าง (USP) 2. ช่องทางการตลาดที่ควรเน้น 3. ความเสี่ยงที่อาจเกิดขึ้นและวิธีป้องกัน 4. ตัวชี้วัดความสำเร็จ (KPIs) ใน 3 เดือนแรก ขอผลลัพธ์เป็นตารางและ Bullet points ให้อ่านง่าย",
-        promptEn: "Act as a world-class Business Consultant. My business idea is [Insert idea e.g., a matchmaking app for running partners]. My target audience is [Insert target audience]. Create a comprehensive step-by-step Go-to-Market strategy. Include: 1. Unique Selling Proposition (USP), 2. Primary marketing channels to focus on, 3. Potential risks and mitigation strategies, 4. Key Performance Indicators (KPIs) for the first 3 months. Format the output using tables and bullet points for readability."
-      },
-      { 
-        purpose: "💡 ให้ AI ช่วยสรุปและจัดระเบียบข้อมูลที่ซับซ้อน (Data Structuring)", 
-        promptTh: "จากข้อมูลดิบต่อไปนี้: [วางข้อมูลหรือ Text ยาวๆ ที่นี่] จงทำหน้าที่เป็นนักวิเคราะห์ข้อมูล ช่วยสรุปประเด็นสำคัญทั้งหมด จัดกลุ่มข้อมูลที่มีความเกี่ยวข้องกัน และสร้างตารางเปรียบเทียบข้อดี-ข้อเสีย (Pros & Cons) พร้อมทั้งเขียนสรุปสั้นๆ (Executive Summary) 1 ย่อหน้าสำหรับให้ผู้บริหารอ่าน",
-        promptEn: "Based on the following raw data: [Insert long text/data here]. Act as a Data Analyst. Summarize the key takeaways, group related information together logically, and create a comprehensive Pros & Cons comparison table. Finally, write a concise 1-paragraph Executive Summary suitable for C-level management."
-      }
-    ],
-    faqs: [
-      { question: "พิมพ์ความลับบริษัทลงไปได้ไหม?", answer: "แนะนำให้ไปที่ Settings > Data Controls แล้วปิดฟังก์ชัน 'Chat history & training' ก่อนพิมพ์ความลับขององค์กรลงไป เพื่อไม่ให้ AI นำไปเรียนรู้ต่อครับ" }
-    ]
-  },
-  {
-    id: "2",
-    slug: "gemini",
-    name: "Google Gemini",
-    logoUrl: "/logos/Google – Gemini.png",
-    description: "Multimodal LLM ที่เชื่อมกับ Google Ecosystem ค้นหาข้อมูลเรียลไทม์ได้เร็วที่สุด",
-    longDescription: "Gemini คือผลงานชิ้นเอกของ Google ที่ออกแบบมาให้เป็น 'Multimodal AI' มันสามารถดูวิดีโอ YouTube แล้วสรุปให้ฟัง หรือเชื่อมต่อเข้ากับ Google Drive, Docs และ Gmail ของคุณเพื่อดึงข้อมูลมาทำงานต่อได้อย่างไร้รอยต่อ หากคุณต้องการหาข้อมูลอัปเดตปัจจุบัน (Real-time) หรือข่าวสดร้อนๆ ตัวนี้คือคำตอบที่ดีที่สุด",
-    origin: "เดิมเปิดตัวในชื่อ 'Bard' ก่อนจะรีแบรนด์และเปลี่ยนสมองใหม่ทั้งหมดเป็น 'Gemini' จุดเด่นของรุ่น 1.5 Pro คือ 'Context Window' ขนาดมหึมา ทำให้มันสามารถรับเอกสารหรือข้อมูลได้มหาศาล (อ่านหนังสือได้ทั้งเล่ม) ในการประมวลผลครั้งเดียว",
-    category: "Conversational AI",
-    priceModel: "Free / 750 บาท ต่อเดือน (Advanced)",
-    isFree: true,
-    externalUrl: "https://gemini.google.com",
-    rating: 4.8,
-    reviewCount: 18300,
-    updatedAt: "Feb 2025",
-    features: [
-      "Google Workspace Integration: พิมพ์ '@Google Drive' เพื่อให้ AI ค้นหางานในไดรฟ์ของคุณมาสรุป", 
-      "YouTube Summarizer: แปะลิงก์คลิป YouTube ยาวๆ ให้มันดูและสรุปใจความสำคัญได้ทันที", 
-      "Export to Docs/Sheets: สร้างตารางเสร็จปุ๊บ กดปุ่มส่งออกไปทำงานต่อใน Google Sheets ได้เลย"
-    ],
-    pros: [
-      "รวดเร็วที่สุดในการหาข้อมูลอัปเดตปัจจุบัน ข่าวสาร หรือข้อมูลหุ้นแบบ Real-time",
-      "ผูกติดกับบัญชี Google ทำให้ไม่ต้องสร้างบัญชีใหม่ ทำงานร่วมกับแอปที่คุ้นเคยได้ลื่นไหล",
-      "ย่อยข้อมูลจากวิดีโอ YouTube ได้ลึกและแม่นยำมาก"
-    ],
-    cons: [
-      "ภาษาไทยบางครั้งยังเรียบเรียงประโยคใช้คำแปลกๆ หรือฟุ่มเฟือย สู้ ChatGPT ไม่ได้",
-      "มีอาการเซนเซอร์ตัวเองสูงมาก (Over-censorship) มักจะปฏิเสธการตอบคำถามที่สุ่มเสี่ยงทางการเมืองหรือศีลธรรม"
-    ],
-    steps: [
-      { title: "เรียกใช้เครื่องมือเสริม", desc: "พิมพ์ '@' ลงในช่องแชท เพื่อเรียกใช้เมนูเสริม เช่น YouTube หรือ Gmail" },
-      { title: "ป้อนคำสั่ง", desc: "เช่น '@YouTube คลิปนี้พูดถึงอะไรบ้าง [วางลิงก์]'" },
-      { title: "ใช้งานผลลัพธ์", desc: "กดปุ่มไอคอน Google Docs ด้านล่างเพื่อส่งเนื้อหาไปจัดหน้าต่อ" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 ให้ AI ดึงข้อมูลอัปเดตล่าสุดและสร้างตารางเปรียบเทียบ (Real-time Search)", 
-        promptTh: "ช่วยค้นหาข้อมูลล่าสุดบนอินเทอร์เน็ตของวันนี้ และสร้างตารางเปรียบเทียบสเปคระหว่าง [ระบุสินค้า 1 เช่น iPhone 15 Pro] และ [ระบุสินค้า 2 เช่น Samsung S24 Ultra] โดยแบ่งคอลัมน์เป็น: ฟีเจอร์เด่น, ราคาปัจจุบันโดยประมาณ, ข้อดี, และข้อเสีย พร้อมสรุปตอนท้ายว่าสินค้าไหนเหมาะกับไลฟ์สไตล์แบบใด",
-        promptEn: "Browse the web for the most up-to-date information as of today. Create a detailed comparison table between [Insert Item 1] and [Insert Item 2]. The columns should include: Key Features, Current Estimated Price, Pros, and Cons. Conclude with a recommendation on which product suits different lifestyles."
-      },
-      { 
-        purpose: "💡 สรุปแก่นสำคัญจากวิดีโอ YouTube แบบลึกซึ้ง (YouTube Extension)", 
-        promptTh: "@YouTube จากลิงก์วิดีโอนี้: [ใส่วางลิงก์ YouTube] จงสวมบทบาทเป็นนักสรุปเนื้อหามืออาชีพ ช่วยสรุปประเด็นหลักทั้งหมด โดยแบ่งโครงสร้างเป็น: 1) สรุปใจความสำคัญใน 3 บรรทัด (TL;DR) 2) ไทม์ไลน์หัวข้อสำคัญพร้อมประเด็นย่อย (Bullet points) และ 3) ข้อคิด (Actionable advice) ที่ฉันสามารถนำไปปรับใช้กับ [ระบุงานของคุณ เช่น การทำธุรกิจ] ได้ทันที",
-        promptEn: "@YouTube Based on this video link: [Insert YouTube Link]. Act as an expert content summarizer. Provide a highly structured summary including: 1) A 3-sentence TL;DR overview. 2) A timeline of key topics with detailed bullet points. 3) 3-5 actionable pieces of advice from the video that I can immediately apply to [Insert your field e.g., my small business]."
-      }
-    ],
-    faqs: [
-      { question: "มันเอาข้อมูลใน Google Drive เราไปทำอะไรไหม?", answer: "Google ระบุว่าฟีเจอร์ Workspace Extension จะอ่านข้อมูลเพื่อตอบคำถามคุณในแชทนั้นๆ เท่านั้น และจะไม่นำข้อมูลส่วนตัวไปเทรนโมเดลสาธารณะครับ" }
-    ]
-  },
-  {
-    id: "3",
-    slug: "claude",
-    name: "Claude AI (Anthropic)",
-    logoUrl: "/logos/Anthropic – Claude.png",
-    description: "AI ที่สำนวนการเขียนเป็นธรรมชาติที่สุด เก่งวิเคราะห์เอกสารยาวๆ ระดับเทพ",
-    longDescription: "หากคุณเบื่อสำนวน AI ที่ดู 'แข็งเหมือนหุ่นยนต์' คุณต้องลอง Claude! นี่คือแชทบอทที่เขียนหนังสือได้เหมือนมนุษย์ที่สุด จุดแข็งที่โหดที่สุดคือการย่อยเอกสารขนาดยักษ์ คุณสามารถโยนไฟล์ PDF รายงานการเงิน หรือสคริปต์โค้ดยาวนับหมื่นบรรทัดให้มันอ่าน มันสามารถสรุป จับใจความ และเขียนออกมาได้อย่างสละสลวยโดยไม่หลุดโฟกัส",
-    origin: "พัฒนาโดยบริษัท Anthropic สตาร์ทอัพที่ก่อตั้งโดยอดีตพนักงานระดับสูงของ OpenAI ที่ต้องการสร้าง AI ที่มี 'ความปลอดภัยและจริยธรรมสูงสุด' ปัจจุบันรุ่น Claude 3.5 Sonnet ได้รับความนิยมสูงสุดในหมู่นักพัฒนาและนักเขียน เพราะโค้ดเก่งและเขียนบทความได้เนียนกริบ",
-    category: "Conversational AI",
-    priceModel: "Free / $20 ต่อเดือน (Pro)",
-    isFree: true,
-    externalUrl: "https://claude.ai",
-    rating: 4.8,
-    reviewCount: 12100,
-    updatedAt: "Feb 2025",
-    features: [
-      "Massive Context Window: อัปโหลดเอกสาร โค้ด หรืองานวิจัยหลายสิบหน้าให้วิเคราะห์พร้อมกันได้สบาย", 
-      "Artifacts: ฟีเจอร์สุดล้ำ เมื่อสั่งเขียนโค้ด (เช่น หน้าเว็บ) มันจะแสดงผลลัพธ์พรีวิวให้ดูด้านขวาจอทันที", 
-      "Human-like Tone: สำนวนการเขียนไหลลื่น ไม่ใช้คำเชื่อมน่าเบื่อแบบ AI ยุคเก่า"
-    ],
-    pros: [
-      "เขียนบทความ อีเมล หรืองาน PR ได้เนียนตามาก นำไปใช้งานต่อได้แทบจะ 100% โดยไม่ต้องเกลาใหม่",
-      "ระบบ Artifacts เปลี่ยนคนเขียนโค้ดไม่เป็น ให้สามารถสร้างแอปหรือกราฟิกจำลองได้",
-      "วิเคราะห์และเทียบเคียงข้อมูลจากเอกสารหลายๆ ไฟล์ได้อย่างแม่นยำ (อัตราการมั่วข้อมูลต่ำมาก)"
-    ],
-    cons: [
-      "ไม่มีโหมดค้นหาอินเทอร์เน็ต (Web Search) อัตโนมัติ ข้อมูลจึงถูกจำกัดอยู่แค่วันที่เทรนโมเดล",
-      "จำกัดโควต้าในเวอร์ชันฟรีค่อนข้างโหด พิมพ์คุยต่อเนื่องแป๊บเดียวระบบก็จะบล็อกให้รอหลายชั่วโมง"
-    ],
-    steps: [
-      { title: "แนบเอกสาร", desc: "กดไอคอนคลิปหนีบกระดาษ อัปโหลดเอกสารที่ต้องการให้มันอ่าน" },
-      { title: "สั่งวิเคราะห์", desc: "พิมพ์คำสั่งให้มันเทียบข้อมูล สรุป หรือหาจุดอ่อนในเอกสารนั้นๆ" },
-      { title: "ใช้ Artifacts", desc: "หากสั่งเขียนหน้าเว็บ UI จะเด้งขึ้นมาให้คุณก๊อปปี้โค้ดไปใช้ต่อได้สะดวกมาก" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 ให้ AI เขียนบทความระดับมืออาชีพ สำนวนเหมือนมนุษย์ (Human-like Copywriting)", 
-        promptTh: "จงสวมบทบาทเป็นนักเขียน Copywriter มืออาชีพ ช่วยเขียนบทความบล็อกความยาว [ระบุจำนวน] คำ ในหัวข้อ '[ระบุหัวข้อ]' สำหรับกลุ่มเป้าหมายคือ [ระบุกลุ่มผู้อ่าน] \nกฎการเขียนที่ต้องทำตามอย่างเคร่งครัด:\n1. ใช้โทนภาษาแบบ [ระบุโทน เช่น เป็นกันเอง เล่าเรื่องเหมือนเพื่อนแชร์ประสบการณ์]\n2. ห้ามใช้คำเชื่อมแบบหุ่นยนต์ เช่น 'นอกจากนี้, อย่างไรก็ตาม, ท้ายที่สุดนี้'\n3. ให้มีการยกตัวอย่างสถานการณ์สมมติเพื่อให้เห็นภาพชัดเจน\n4. แทรกคีย์เวิร์ดต่อไปนี้ให้เนียนที่สุด: [ใส่คีย์เวิร์ด 1, 2, 3]",
-        promptEn: "Act as a highly persuasive, expert copywriter. Write a blog article of approximately [Insert number] words on the topic '[Insert Topic]'. Target audience: [Insert Target Audience].\nStrict constraints:\n1. Tone must be [Insert tone e.g., conversational, engaging storytelling].\n2. Do NOT use typical AI transition words like 'Furthermore, In conclusion, Ultimately'.\n3. Use a real-world hypothetical scenario to illustrate the main point.\n4. Naturally embed these SEO keywords: [Insert keywords]."
-      },
-      { 
-        purpose: "💡 ให้ AI สร้างหน้าเว็บแอปพลิเคชันจำลองด้วยโค้ด (ใช้คู่กับฟีเจอร์ Artifacts)", 
-        promptTh: "ฉันต้องการสร้างหน้า Dashboard แอดมินสำหรับ [ระบุประเภทธุรกิจ เช่น ระบบจัดการร้านกาแฟ] ช่วยเขียนโค้ด React (ใช้ Tailwind CSS) เพื่อสร้างหน้า UI ที่ประกอบด้วย: 1) แถบเมนูด้านซ้าย 2) การ์ดแสดงยอดขายรวม 3) กราฟเส้นแสดงยอดขาย 7 วันล่าสุด (Mock ข้อมูลสมมติขึ้นมาเลย) และ 4) ตารางแสดงออเดอร์ล่าสุด ขอดีไซน์ที่ดู Modern สว่าง และมินิมอล",
-        promptEn: "I need a fully responsive Admin Dashboard for a [Insert business type e.g., Coffee Shop Management System]. Write the complete React code using Tailwind CSS. Include the following UI components: 1) A left sidebar navigation, 2) Summary cards for Total Revenue and Orders, 3) A line chart showing the last 7 days of sales (use mock data), and 4) A table showing recent orders. Make the design modern, clean, and highly professional."
-      }
-    ],
-    faqs: [
-      { question: "Artifacts คืออะไร?", answer: "คือหน้าต่างด้านข้างแชท ที่เวลา AI เขียนโค้ด UI (อย่างหน้าเว็บหรือกราฟ) มันจะเรนเดอร์ภาพหน้าเว็บของจริงออกมาให้เรากดพรีวิวและเล่นได้เลยครับ" }
-    ]
-  },
-  {
-    id: "4",
-    slug: "grok",
-    name: "Grok (xAI)",
-    logoUrl: "/logos/grok.png",
-    description: "AI สายกวนที่เข้าถึงข้อมูลด่วน Real-time บน X (Twitter) ได้ลึกและไวที่สุด",
-    longDescription: "หากคุณเป็นสายเกาะติดเทรนด์โลก หรือต้องการรู้ข้อมูลเหตุการณ์ที่เพิ่งเกิดขึ้นเมื่อ 5 นาทีที่แล้ว Grok คือ AI ที่ตอบโจทย์ที่สุด! มันถูกออกแบบมาให้มีอารมณ์ขัน กวนประสาต และกล้าตอบคำถามที่ AI ค่ายอื่นมักจะเซนเซอร์ จุดแข็งที่ไม่มีใครเลียนแบบได้คือการ 'เสียบสายตรง' เข้ากับฐานข้อมูลของแพลตฟอร์ม X (Twitter) ทำให้มันรับรู้กระแสสังคมแบบเรียลไทม์",
-    origin: "พัฒนาโดย xAI บริษัทของ Elon Musk มีจุดประสงค์สร้าง AI ที่ 'แสวงหาความจริง' และมีสไตล์ตลกร้าย (Dark humor) การที่ Elon Musk เป็นเจ้าของ X ทำให้ Grok ได้อภิสิทธิ์ในการดึงทวีตสาธารณะมาวิเคราะห์ ทำให้ฉลาดและทันกระแสโลกมากที่สุด",
-    category: "Conversational AI",
-    priceModel: "Free สำหรับผู้ใช้ X Premium (เริ่มราว 300 บาท/เดือน)",
-    isFree: false,
-    externalUrl: "https://x.com/grok",
-    rating: 4.6,
-    reviewCount: 9500,
-    updatedAt: "Feb 2025",
-    features: [
-      "Real-time X Data: เข้าถึงและสรุปกระแสสังคม แฮชแท็ก หรือข่าวด่วนบน X ได้ทันที", 
-      "Fun Mode: โหมดการตอบคำถามแบบมีอารมณ์ขัน กวนๆ ไม่ซีเรียส", 
-      "Unfiltered (Anti-woke): ยอมตอบคำถามล่อแหลม ประเด็นอ่อนไหว หรือเรื่องการเมืองแบบตรงไปตรงมา"
-    ],
-    pros: [
-      "ตามกระแสโลกไวที่สุด เหมาะสำหรับนักข่าว ครีเอเตอร์เพจดราม่า ที่ต้องตามเรื่องให้ทัน",
-      "มีอารมณ์ขันและสไตล์การพูดที่เป็นเอกลักษณ์ อ่านแล้วได้รอยยิ้ม ไม่น่าเบื่อ",
-      "มีอิสระในการตั้งคำถามสูง ไม่โดนแบนหรือบล็อกคำตอบง่ายๆ แบบค่ายอื่น"
-    ],
-    cons: [
-      "ไม่มีเวอร์ชันฟรีสำหรับคนทั่วไป ต้องสมัครสมาชิก X Premium ก่อนเท่านั้น",
-      "การเขียนโค้ดหรือตรรกะเชิงลึกยังเป็นรอง ChatGPT และ Claude",
-      "มีความเสี่ยงที่จะนำ 'ข่าวปลอม' จากโซเชียลมาสรุปให้ฟัง หากเรื่องนั้นกำลังถูกปั่นกระแส"
-    ],
-    steps: [
-      { title: "สมัคร X Premium", desc: "ต้องมีบัญชี X (Twitter) และอัปเกรดเป็น Premium ขึ้นไป" },
-      { title: "เลือกโหมด", desc: "เลือกระหว่าง Regular (ตอบจริงจัง) หรือ Fun Mode (ตอบแบบกวนประสาต)" },
-      { title: "สั่งงาน", desc: "ถามเกี่ยวกับแฮชแท็กที่กำลังติดเทรนด์ หรือข่าวด่วนวันนี้ได้เลย" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 ให้ AI สรุปข่าวสารหรือแฮชแท็กดราม่าแบบเรียลไทม์ (Real-time Trend)", 
-        promptTh: "ตอนนี้บนแพลตฟอร์ม X กำลังมีประเด็นร้อนแรงเกี่ยวกับ [ระบุคีย์เวิร์ด หรือ แฮชแท็ก เช่น #แบน...] ช่วยรวบรวมทวีตล่าสุดและสรุปเหตุการณ์ทั้งหมดให้ฟังหน่อยว่าต้นสายปลายเหตุคืออะไร? และวิเคราะห์ความเห็นของชาวเน็ตว่าแบ่งเป็นกี่ฝั่ง แต่ละฝั่งกำลังถกเถียงเรื่องอะไรกันอยู่ ขอคำตอบแบบเป็นกลางและตรงไปตรงมา",
-        promptEn: "Analyze the current trending topic on X regarding [Insert keyword or hashtag]. Compile the latest tweets and provide a comprehensive summary of the timeline of events. Also, analyze the public sentiment: how are netizens divided, and what are the main arguments for each side? Give me a direct and unfiltered analysis."
-      },
-      { 
-        purpose: "💡 ให้ AI คิดแคปชั่นปั่นๆ สไตล์ตลกร้าย (Fun Mode Copywriting)", 
-        promptTh: "[แนะนำให้เปิด Fun Mode]\nช่วยคิดแคปชั่นสำหรับไปโพสต์ลงโซเชียลในหัวข้อ '[ระบุหัวข้อ เช่น วันจันทร์ที่ฝนตกและรถติดหนัก]' ขอสไตล์การเขียนแบบตลกร้าย (Dark Humor) กวนประสาต จิกกัดชีวิตวัยทำงาน สร้างมาให้ [ระบุจำนวน] รูปแบบ ที่อ่านแล้วเพื่อนร่วมงานต้องกดขำและแชร์ต่อ",
-        promptEn: "[Enable Fun Mode]\nWrite a viral social media post about '[Insert topic e.g., working a 9-to-5 job and being broke]'. Use a highly sarcastic, witty, and dark humor tone. Do not hold back on the snark. Generate [Insert number] different variations that the average burned-out employee would instantly retweet."
-      }
-    ],
-    faqs: [
-      { question: "ทำไมหาปุ่ม Grok ไม่เจอ?", answer: "ปุ่มจะขึ้นตรงแถบเมนูด้านล่างหรือด้านข้าง เฉพาะผู้ใช้ที่สมัคร X Premium เรียบร้อยแล้วเท่านั้นครับ" }
-    ]
-  },
-
-  // ==========================================
-  // 🔹 2) AI เขียนบทความ / SEO / การตลาด (AI Writing)
+    // ==========================================
+  // 🔹 หมวด AI เขียนโค้ด (Coding & Development) - อัปเดตใหม่ 10 ตัวท็อป
   // ==========================================
   {
-    id: "5",
-    slug: "jasper-ai",
-    name: "Jasper AI",
-    logoUrl: "/logos/Jasper AI.png",
-    description: "สุดยอด AI Copywriter ทำคอนเทนต์การตลาด เขียนบล็อก และคุม Brand Voice ระดับองค์กร",
-    longDescription: "Jasper (เดิมชื่อ Jarvis) คือ AI สายนักเขียนตัวท็อป มันไม่ได้ถูกสร้างมาเพื่อคุยเล่น แต่ถูกจูนสมองมาเพื่อ 'ทำคอนเทนต์เชิงพาณิชย์และการตลาด' โดดเด่นสุดๆ ตรงฟีเจอร์ Brand Voice ที่คุณสามารถให้มันอ่านสไตล์การเขียนของแบรนด์คุณ แล้วมันจะจำลักษณะการพูดนั้นไปเขียนบทความหรือยิงแอดโฆษณาต่อได้เนียนกริบ แถมยังเชื่อมกับ SurferSEO เพื่อปรับแต่งบทความให้ติดหน้าแรก Google ได้สบายๆ",
-    origin: "มุ่งเป้าเป็นโซลูชันสำหรับ Marketing Team Jasper ใช้ขุมพลังจากการดึงโมเดลที่ดีที่สุดหลายตัวมารวมกัน เพื่อรีดประสิทธิภาพงานเขียนเชิงโน้มน้าวใจและขายของออกมาให้ดีที่สุด",
-    category: "AI Writing & SEO",
-    priceModel: "Starts at $39 ต่อเดือน (มีให้ทดลองใช้ฟรี 7 วัน)",
-    isFree: false,
-    externalUrl: "https://www.jasper.ai",
-    rating: 4.7,
-    reviewCount: 14500,
-    updatedAt: "Feb 2025",
-    features: [
-      "Brand Voice: จดจำลักษณะการพูดและข้อมูลสไตล์แบรนด์คุณ เพื่อใช้เขียนคอนเทนต์",
-      "50+ Templates: มีสูตรการเขียนสำเร็จรูป เช่น AIDA, PAS, โพสต์ IG, สคริปต์ YouTube",
-      "SEO Integration: เชื่อมต่อ SurferSEO เพื่อวิเคราะห์ Keyword ให้ติดอันดับต้นๆ"
-    ],
-    pros: [
-      "คุณภาพงานเขียนโฆษณา (Copywriting) กินขาด AI แชทบอททั่วไป รู้วิธีใช้จิตวิทยาจูงใจคนอ่าน",
-      "เหมาะมากสำหรับทีม Marketing ที่ต้องทำคอนเทนต์ปริมาณมากๆ และไม่อยากให้แบรนด์หลุดโทนเสียง",
-      "ไม่ต้องนั่งคิด Prompt ยาวๆ แค่กรอกฟอร์มสั้นๆ AI ก็ทำงานให้เลย"
-    ],
-    cons: [
-      "ราคาเริ่มต้นค่อนข้างสูง (เกือบ 1,500 บาทต่อเดือน)",
-      "แม้จะรองรับภาษาไทย แต่สำนวนบางครั้งยังดูแปลเป็นภาษาอังกฤษอยู่บ้าง ต้องปรับแก้คำเชื่อม"
-    ],
-    steps: [
-      { title: "เลือก Template", desc: "เลือกประเภทงานเขียนที่ต้องการ เช่น 'Facebook Ad Headline'" },
-      { title: "ป้อนข้อมูลเบื้องต้น", desc: "ใส่ชื่อสินค้า รายละเอียดสั้นๆ และเลือกโทนเสียง (Tone of voice)" },
-      { title: "Generate & เลือก", desc: "AI จะพ่นตัวเลือกมาให้ 3-4 แบบ ให้คุณกดก๊อปปี้ไปใช้งานได้ทันที" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 เขียนแคปชั่นโฆษณาขายของด้วยสูตรจิตวิทยา PAS", 
-        promptTh: "[ใช้ในหน้า Document หรือ Chat ของ Jasper]\nจงเขียนโฆษณา Facebook สำหรับสินค้า '[ระบุชื่อและจุดขายของสินค้า]' โดยบังคับใช้โครงสร้างจิตวิทยา PAS Framework ดังนี้:\n1. Problem (ปัญหา): เปิดเรื่องด้วยปัญหาที่กลุ่มเป้าหมาย [ระบุกลุ่มเป้าหมาย] กำลังเจอและเจ็บปวด\n2. Agitate (ขยี้ปัญหา): เล่าให้เห็นความรุนแรงของปัญหาหากไม่รีบแก้ไข\n3. Solution (ทางออก): นำเสนอสินค้าของเราว่าเป็นทางแก้ปัญหาที่ง่ายและดีที่สุด พร้อมใส่ Call to Action ที่กระตุ้นให้อยากซื้อทันที",
-        promptEn: "Write a high-converting Facebook Ad copy for '[Insert Product Name & Main Benefit]'. Strictly follow the PAS framework:\n1. Problem: Hook the reader by stating a painful problem faced by [Insert Target Audience].\n2. Agitate: Amplify the pain points and the consequences of not solving the problem.\n3. Solution: Introduce our product as the ultimate, easy solution. End with a strong, urgent Call-To-Action (CTA)."
-      },
-      { 
-        purpose: "💡 ร่างโครงสร้างบทความ SEO แบบเจาะลึก (Blog Outline)", 
-        promptTh: "ช่วยเขียนโครงร่าง (Outline) ระดับพรีเมียม สำหรับบทความบล็อกในหัวข้อ '[ระบุหัวข้อ]' เพื่อให้ติดอันดับหน้าแรก Google เป้าหมายคือเพื่อให้ความรู้และแสดงความเชี่ยวชาญ (Authority) \nขอโครงสร้างดังนี้: \n- ชื่อบทความ (Clickbait แต่ไม่หลอกลวง) จำนวน 3 ตัวเลือก\n- หัวข้อหลัก H2 จำนวน 5-7 หัวข้อ เรียงลำดับตรรกะ\n- ภายใต้ H2 แต่ละข้อ ให้ระบุหัวข้อย่อย H3 และคีย์เวิร์ดที่ควรมีแทรกอยู่ด้วย",
-        promptEn: "Create an exhaustive SEO blog post outline for the target keyword '[Insert Keyword/Topic]'. The goal is to rank #1 on Google and establish topical authority.\nStructure requirements:\n- 3 Catchy SEO-optimized Title options.\n- 5 to 7 H2 Main Headings in a logical flow.\n- Under each H2, provide H3 subheadings and list 2-3 LSI keywords that should be naturally integrated into that section."
-      }
-    ],
-    faqs: [
-      { question: "Brand Voice คืออะไร?", answer: "ฟีเจอร์ที่คุณสามารถก๊อปปี้แคปชั่นเก่าๆ ในเพจไปวางให้มันอ่าน แล้วมันจะจำไว้ว่าเพจคุณชอบใช้คำแบบไหน เพื่อเอาไปใช้เขียนงานต่อๆ ไปแบบไม่ผิดเพี้ยนครับ" }
-    ]
-  },
-  {
-    id: "6",
-    slug: "copy-ai",
-    name: "Copy.ai",
-    logoUrl: "/logos/Copy.ai.png",
-    description: "AI สายปั่นคอนเทนต์ เขียนโฆษณา Sales page แคปชั่นโซเชียล ง่ายและรวดเร็วสุดๆ",
-    longDescription: "Copy.ai ถูกออกแบบมาเพื่อจัดการอาการ 'คิดไม่ออก (Writer's block)' ไม่ว่าคุณจะเขียน Sales Page ยาวๆ เขียนอีเมลไปหาลูกค้า (Cold Email) หรือคิดแคปชั่น Instagram Copy.ai จะช่วยปั่นไอเดียออกมาให้คุณเลือกในพริบตา จุดเด่นคือความง่ายในการใช้งาน และมีระบบ Workflow อัตโนมัติที่ช่วยปั่นคอนเทนต์ปริมาณมากๆ (Bulk generation) ได้ดีเยี่ยม",
-    origin: "เน้นแก้ปัญหาให้นักการตลาด ฟรีแลนซ์ และแม่ค้าออนไลน์ที่ต้องการตัวช่วยคิดคำโฆษณา ปัจจุบันถูกพัฒนาให้มีฟีเจอร์ GTM (Go-To-Market) ที่ทีมเซลส์สามารถใช้ออโตเมชันหาข้อมูลลูกค้าแล้วส่งอีเมลหาอัตโนมัติได้ด้วย",
-    category: "AI Writing & SEO",
-    priceModel: "Free (จำกัดเครดิต) / Starts at $49 ต่อเดือน",
-    isFree: true,
-    externalUrl: "https://www.copy.ai",
-    rating: 4.6,
-    reviewCount: 9800,
-    updatedAt: "Feb 2025",
-    features: [
-      "90+ Copywriting Tools: ครอบคลุมตั้งแต่งานคิดชื่อแบรนด์ ยันเขียนจดหมายขอโทษลูกค้า",
-      "Automated Workflows: สั่งให้ AI ทำงานต่อเนื่อง เช่น สรุปข่าวแล้วแปลงเป็นโพสต์แชร์ต่อ",
-      "Infobase: บันทึกข้อมูลบริษัทและจุดขายสินค้าไว้ล่วงหน้า AI จะได้เขียนไม่ผิดสเปค"
-    ],
-    pros: [
-      "หน้าต่างใช้งาน (UI) เป็นมิตรมาก มือใหม่ที่ไม่เก่งเขียน Prompt ก็ใช้ได้ทันที",
-      "ให้ผลลัพธ์ทีละหลายทางเลือก ทำให้เรานำท่อนนั้นมาผสมกับท่อนนี้ได้ง่าย",
-      "มีเวอร์ชันให้ใช้ฟรีตลอดชีพ (แค่จำกัดจำนวนคำต่อเดือน)"
-    ],
-    cons: [
-      "ในงานเขียนบทความเชิงลึกหรือเชิงวิชาการ ยังสู้พวก ChatGPT หรือ Claude ไม่ได้",
-      "ราคาแพ็กเกจเสียเงินเริ่มต้นแอบแรงกว่าคู่แข่งรายอื่น"
-    ],
-    steps: [
-      { title: "เลือกประเภทงาน", desc: "เช่น เลือกเครื่องมือ 'Product Description' (รายละเอียดสินค้า)" },
-      { title: "กรอกรายละเอียด", desc: "พิมพ์ชื่อสินค้าและจุดขายสั้นๆ เป็นประโยคธรรมดา" },
-      { title: "เลือกไอเดีย", desc: "AI จะ Generate ออกมา 5 แบบ ให้คุณกด Copy อันที่ชอบไปใช้" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 เขียนหัวข้ออีเมล (Subject Line) กระตุ้นให้คนเปิดอ่าน", 
-        promptTh: "[ใช้ใน Chat ของ Copy.ai]\nฉันกำลังจะส่งอีเมลแคมเปญการตลาดเกี่ยวกับ '[ระบุเรื่อง เช่น โปรลด 50% วันเกิดแบรนด์]' ไปยังฐานลูกค้าเก่าของฉัน ช่วยคิดหัวข้ออีเมล (Subject line) จำนวน [ระบุจำนวน] แบบ \nเงื่อนไข: ต้องดึงดูดความสนใจขั้นสุด, กระตุ้นความอยากรู้ (Curiosity), สร้างความรู้สึกกลัวพลาดโอกาส (FOMO), และมีความยาวไม่เกิน 10 คำ",
-        promptEn: "I am preparing an email marketing campaign regarding '[Insert topic e.g., 50% Flash Sale for Brand Anniversary]' targeting my existing customer base. Generate [Insert number] highly compelling email subject lines.\nConstraints: They must spike curiosity, create a strong sense of urgency (FOMO), drive high open rates, and be under 10 words long."
-      },
-      { 
-        purpose: "💡 เขียนรายละเอียดสินค้าบนเว็บ ให้น่าหยิบใส่ตะกร้า (Benefit-driven)", 
-        promptTh: "เขียนคำอธิบายสินค้า (Product Description) สำหรับร้านค้าออนไลน์ E-commerce สินค้าคือ '[ระบุชื่อสินค้า]' ฟีเจอร์หลักคือ [ระบุสเปคหรือฟีเจอร์] \nกฎการเขียน: อย่าเขียนแค่สเปคแข็งๆ แต่ให้เน้นการเขียนแบบ Benefit-driven คือแปลง 'สเปค' ให้เป็น 'ประโยชน์' ที่ลูกค้าจะได้รับ ทำให้ลูกค้าจินตนาการเห็นภาพว่าชีวิตเขาจะดีขึ้นอย่างไรถ้าซื้อสิ่งนี้",
-        promptEn: "Write an e-commerce product description for '[Insert Product Name]'. Key features include: [Insert technical features].\nRule: Do not just list the boring specs. Translate every 'Feature' into a compelling 'Benefit' (Benefit-driven copywriting). Paint a vivid picture in the customer's mind of how their life will improve after purchasing this product. Make it highly persuasive."
-      }
-    ],
-    faqs: [
-      { question: "Workflow คืออะไร?", answer: "ฟีเจอร์ที่คุณสามารถตั้งค่าให้ AI ทำงานเป็นสายพาน เช่น ให้ดึงข้อมูลคู่แข่งจากเว็บ -> วิเคราะห์จุดอ่อน -> สรุปใส่ตารางส่งเข้าอีเมล" }
-    ]
-  },
-  {
-    id: "7",
-    slug: "writesonic",
-    name: "Writesonic",
-    logoUrl: "/logos/Writesonic.png",
-    description: "เครื่องมือปั่นบทความ SEO อัตโนมัติ ดึงข้อมูลหน้าแรก Google มาปรับใช้เพื่อติดหน้าแรก",
-    longDescription: "Writesonic คืออาวุธลับของนักทำ SEO มันผสานความสามารถของ AI เข้ากับการดึงข้อมูล (Scrape) แบบเรียลไทม์จาก Google เพื่อวิเคราะห์ว่า 'บทความแบบไหนที่ Google ชอบ' แล้วนำมาเขียนเป็นบทความใหม่ให้คุณ มีโหมด AI Article Writer 5.0 ที่สร้างบทความยาว 2,000 คำ พร้อมรูปภาพประกอบและอ้างอิงแหล่งที่มาได้ในคลิกเดียว",
-    origin: "สร้างขึ้นเพื่อเน้นแก้ปัญหา 'การทำ SEO ที่ใช้เวลานาน' โดยชูจุดเด่นเรื่องการ Fact-check ข้อมูลอัปเดตบนเน็ต ผนวกกับ Chatsonic (แชทบอทของตัวเอง) ทำให้ Writesonic ครบเครื่องเรื่องงานคอนเทนต์เว็บไซต์",
-    category: "AI Writing & SEO",
-    priceModel: "Free (จำกัดเครดิต) / Starts at $20 ต่อเดือน",
-    isFree: true,
-    externalUrl: "https://writesonic.com",
-    rating: 4.7,
-    reviewCount: 11200,
-    updatedAt: "Feb 2025",
-    features: [
-      "AI Article Writer 5.0: ปั่นบทความ SEO ยาว 2,000+ คำ โดยมีโครงสร้างหัวข้อ (H2, H3) ชัดเจน",
-      "Real-time Data: ดึงข้อมูลและข่าวสารอัปเดตจาก Google ค้นหามาเขียนบทความ",
-      "SEO Checker: มีตัวประเมินคะแนน SEO ฝังอยู่ในตัว ช่วยบอกว่าต้องเติมคีย์เวิร์ดอะไรเพิ่ม"
-    ],
-    pros: [
-      "เป็นเครื่องมือที่จบกระบวนการทำ SEO ในตัวเดียว ตั้งแต่หา Keyword -> วางโครงร่าง -> เขียน",
-      "ข้อมูลสดใหม่กว่า AI ทั่วไป เพราะวิ่งไปอ่านหน้าค้นหา Google ทันที",
-      "จัดหน้าบทความมาให้สวยงาม นำไปก๊อปปี้ลง WordPress หรือบล็อกต่างๆ ได้เลยง่ายๆ"
-    ],
-    cons: [
-      "ระบบการนับเครดิต (Premium Words) ค่อนข้างจุกจิกและหมดไวเมื่อสร้างบทความยาวๆ",
-      "บางครั้งบทความยาวเกินไปจนมีเนื้อหา 'น้ำๆ' (Fluff) ปะปนมาด้วย ต้องอ่านทบทวนก่อนลง",
-      "อินเทอร์เฟซมีปุ่มเยอะและเชียร์ให้อัปเกรดแพ็กเกจบ่อย"
-    ],
-    steps: [
-      { title: "ป้อน Keyword", desc: "เข้าไปที่ Article Writer ป้อนคีย์เวิร์ดหลักที่อยากให้บทความติดอันดับ" },
-      { title: "เลือก Outline", desc: "AI จะดึงหัวข้อจากคู่แข่งในหน้าแรก Google มาเสนอ ให้เราเลือกปรับแต่ง" },
-      { title: "กด Generate", desc: "ระบบจะเขียนบทความทั้งหมดพร้อมแทรกรูปภาพ AI ให้เสร็จสิ้น" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 เขียนบทความรีวิวสินค้ายาวๆ เพื่อทำ SEO", 
-        promptTh: "[ใช้ใน Chatsonic]\nจงทำหน้าที่เป็น Blogger รีวิวสินค้าสาย Tech จงเขียนบทความรีวิวสินค้า '[ระบุชื่อสินค้า]' ความยาวอย่างน้อย [ระบุจำนวน] คำ \nโครงสร้างที่ต้องการ: \n1. บทนำที่ดึงดูด \n2. สเปคเด่นที่คนอยากรู้ \n3. เปรียบเทียบข้อดี-ข้อเสียชัดเจน \n4. เหมาะกับใคร? ไม่เหมาะกับใคร? \n5. บทสรุปและให้คะแนน \nคำสั่งเพิ่มเติม: แทรกคีย์เวิร์ด '[ระบุคีย์เวิร์ดหลัก]' อย่างน้อย 3 ครั้งให้ดูเป็นธรรมชาติที่สุด",
-        promptEn: "Act as an expert Tech Blogger. Write an in-depth, SEO-optimized product review for '[Insert Product Name]', approximately [Insert number] words long.\nRequired Structure:\n1. Engaging Intro.\n2. Key Features people actually care about.\n3. Honest Pros & Cons comparison.\n4. Who is this for? Who should avoid it?\n5. Final Verdict and Rating.\nAdditional instruction: Naturally integrate the primary keyword '[Insert Primary Keyword]' at least 3 times."
-      },
-      { 
-        purpose: "💡 เขียนเนื้อหาหน้าเว็บขายบริการ (Landing Page Copy)", 
-        promptTh: "ช่วยเขียนข้อความสำหรับใช้บนหน้า Landing Page ของบริการ '[ระบุชื่อ/ประเภทบริการ]' ของบริษัทฉัน \nกรุณาแบ่งข้อความออกเป็นส่วนๆ ดังนี้: \n1) Headline ตัวใหญ่ที่อ่านปุ๊บรู้ปั๊บว่าเราแก้ปัญหาอะไรให้เขา \n2) Sub-headline อธิบายขยายความ \n3) 3 ประโยชน์หลัก (Benefits) ไม่ใช่แค่บอกว่าเราทำอะไร แต่บอกว่าลูกค้าจะได้อะไร \n4) Social Proof หรือคำเคลมที่ทำให้ดูน่าเชื่อถือ \n5) ปุ่ม Call to action (CTA) ที่กระตุ้นให้กดซื้อทันที",
-        promptEn: "Write highly persuasive copy for a Landing Page offering '[Insert Service Name/Type]'.\nStructure the copy into these exact sections:\n1) A powerful Hero Headline that immediately addresses the customer's core problem.\n2) A supportive Sub-headline explaining HOW we solve it.\n3) 3 Core Benefits (focus on what the customer gains, not just features).\n4) A section for Social Proof or an authority claim to build trust.\n5) A strong, urgent Call-to-Action (CTA) button text."
-      }
-    ],
-    faqs: [
-      { question: "บทความจาก AI จะโดน Google แบนไหม?", answer: "Google ยืนยันแล้วว่าไม่แบนบทความ AI 'หากเนื้อหานั้นมีประโยชน์จริง' แนะนำให้อ่านทบทวนและใส่ประสบการณ์ส่วนตัวลงไปด้วยเพื่อให้บทความมีคุณภาพสูงสุดครับ" }
-    ]
-  },
-
-  // ==========================================
-  // 🔹 3) AI สร้างภาพ (Image Generation AI)
-  // ==========================================
-  {
-    id: "8",
-    slug: "dall-e-3",
-    name: "DALL·E 3 (OpenAI)",
-    logoUrl: "/logos/OpenAI – DALL·E.png",
-    description: "AI วาดภาพที่เข้าใจคำสั่งมนุษย์ได้เป๊ะที่สุด สั่งพิมพ์ข้อความลงไปในรูปได้แม่นยำ",
-    longDescription: "DALL·E 3 คือ AI สร้างภาพจากผู้สร้าง ChatGPT จุดเด่นที่โค่นคู่แข่งคือ 'ความเป๊ะในการทำตามคำสั่ง (Prompt Adherence)' ถ้าคุณสั่งวาด 'แมวส้มใส่หมวกกันน็อกขี่มอเตอร์ไซค์ถือพิซซ่า' AI ตัวอื่นมักจะวาดองค์ประกอบตกหล่น แต่ DALL·E 3 จะวาดครบเป๊ะๆ ยิ่งไปกว่านั้น มันยังเก่งเรื่องการเรนเดอร์ 'ตัวหนังสือ' ลงบนป้ายหรือเสื้อผ้าในรูป ซึ่งเป็นจุดบอดของ AI ค่ายอื่นมาตลอด",
-    origin: "ถูกผนวกรวมเข้ากับ ChatGPT Plus โดยตรง ทำให้คุณสามารถพิมพ์สั่งวาดรูปเป็นภาษาไทยคล้ายคุยกับเพื่อน แล้ว ChatGPT จะแอบแปลงข้อความนั้นเป็น Prompt ภาษาอังกฤษที่สมบูรณ์แบบส่งไปให้ DALL·E 3 จัดการต่อให้เอง",
-    category: "Image Generation",
-    priceModel: "รวมอยู่ใน ChatGPT Plus ($20/เดือน) / ใช้ฟรีบน Microsoft Copilot",
-    isFree: true,
-    externalUrl: "https://openai.com/dall-e-3",
-    rating: 4.7,
-    reviewCount: 13200,
-    updatedAt: "Feb 2025",
-    features: [
-      "ผสานกับ ChatGPT ทำให้สั่งงานเป็น 'ภาษาไทย' ได้สบายๆ คุยโต้ตอบสั่งให้แก้รูปได้",
-      "เรนเดอร์ Text ลงในภาพได้ (เช่น สั่งให้เขียนคำว่า 'Sale 50%' บนป้ายในรูป)",
-      "เข้าใจ Context ยาวๆ ทำตามคำสั่งที่มีองค์ประกอบยิบย่อยเยอะๆ ได้แม่นยำที่สุด"
-    ],
-    pros: [
-      "ใช้งานง่ายที่สุดในโลก ไม่ต้องเรียนรู้สูตรลับหรือโค้ดลับแบบค่ายอื่น",
-      "สามารถสั่งแก้ไขเฉพาะจุดได้ด้วยแชท (เช่น 'ช่วยเปลี่ยนสีเสื้อแมวเป็นสีแดงให้หน่อย')",
-      "หาใช้งานได้ฟรีๆ ผ่านเว็บ Microsoft Designer (Copilot)"
-    ],
-    cons: [
-      "สไตล์ภาพมักจะดูออกชัดเจนว่าเป็น 'ภาพ AI' (ดูเป็นแนว Digital Art 3D หรือภาพเงาวับๆ) ความสมจริงของผิวคนสู้ Midjourney ไม่ได้",
-      "ระบบเซนเซอร์เข้มงวดมาก (Over-censorship) ไม่ยอมวาดภาพบุคคลที่มีชื่อเสียงหรือภาพรุนแรงใดๆ",
-      "ปรับแต่งสัดส่วนภาพ (Aspect Ratio) ได้จำกัด (หลักๆ คือ 1:1, 16:9, 9:16)"
-    ],
-    steps: [
-      { title: "เปิด ChatGPT", desc: "ล็อกอินเข้า ChatGPT Plus หรือเว็บ Microsoft Copilot" },
-      { title: "สั่งวาดรูป", desc: "พิมพ์คำว่า 'ช่วยวาดรูป...' ตามด้วยคำอธิบายภาษาไทยหรืออังกฤษ" },
-      { title: "ปรับแก้", desc: "หากไม่ถูกใจ พิมพ์บอกให้มันเพิ่ม/ลดสิ่งของในรูปเดิมได้ทันที" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 ออกแบบโลโก้แบรนด์พร้อมตัวหนังสือเป๊ะๆ", 
-        promptTh: "ช่วยออกแบบโลโก้สไตล์ [ระบุสไตล์ เช่น Minimalist / Vintage / Cyberpunk] สำหรับแบรนด์ธุรกิจ [ระบุประเภทธุรกิจ เช่น ร้านเบเกอรี่ออร์แกนิก] โดยตรงกลางโลโก้ให้มีตัวหนังสือเขียนคำว่า '[ระบุชื่อแบรนด์เป็นภาษาอังกฤษ]' อย่างชัดเจน โทนสีหลักคือ [ระบุสี เช่น น้ำตาลอ่อนและเขียวพาสเทล] ขอพื้นหลังสีขาวสะอาดตา",
-        promptEn: "Design a [Insert style e.g., minimalist, vintage, flat vector] logo for a [Insert business type e.g., organic bakery brand]. The logo MUST boldly feature the exact text '[Insert Brand Name]' in a readable, aesthetic font. Use a color palette consisting of [Insert colors e.g., pastel green and earthy brown] on a clean white background."
-      },
-      { 
-        purpose: "💡 สร้างภาพ 3D Character น่ารักสไตล์ Pixar", 
-        promptTh: "สร้างภาพประกอบ 3D Animation สไตล์ภาพยนตร์ค่าย Pixar เป็นรูป [ระบุตัวละคร เช่น หมีแพนด้าอ้วนตุ๊ต๊ะ] กำลังสวมใส่ [ระบุเสื้อผ้า/เครื่องแต่งกาย] และกำลังทำท่าทาง [ระบุท่าทาง เช่น นั่งพิมพ์งานบนแล็ปท็อปด้วยสีหน้าเคร่งเครียด] บรรยากาศแวดล้อมคือ [ระบุสถานที่ เช่น ในออฟฟิศที่เต็มไปด้วยกองเอกสาร] จัดแสงไฟสว่างสดใส (Studio lighting) ขอสัดส่วนภาพแนวนอนแบบ 16:9",
-        promptEn: "Create a highly detailed 3D animation style illustration, resembling a Pixar movie. The subject is an adorable [Insert character e.g., chubby panda] wearing [Insert clothing]. They are currently [Insert action e.g., furiously typing on a laptop with a stressed expression]. The environment is [Insert setting e.g., a messy office desk covered in papers]. Use bright, cheerful studio lighting. 16:9 aspect ratio."
-      }
-    ],
-    faqs: [
-      { question: "ทำไมสั่งวาดรูปดาราแล้วระบบปฏิเสธ?", answer: "OpenAI มีนโยบายด้านความปลอดภัยเข้มงวด ป้องกันการสร้าง Deepfake จึงบล็อกคำสั่งที่มีชื่อบุคคลสาธารณะ ศิลปิน หรือนักการเมืองที่มีอยู่จริงครับ" }
-    ]
-  },
-  {
-    id: "9",
-    slug: "midjourney",
-    name: "Midjourney",
-    logoUrl: "/logos/Midjourney.png",
-    description: "AI เสกรูปภาพคุณภาพสูงระดับงานศิลป์ สวยสมจริง ถ่ายทอดอารมณ์ได้ดีที่สุด",
-    longDescription: "ในบรรดา AI สร้างรูปภาพทั้งหมด Midjourney ถูกยกย่องให้เป็น 'เบอร์ 1 ด้านความสวยงามและสุนทรียภาพทางศิลปะ' เพียงแค่พิมพ์อธิบายสิ่งที่คุณจินตนาการไว้ (ภาษาอังกฤษ) มันจะเสกภาพขึ้นมาพร้อมรายละเอียดแสง เงา และพื้นผิวที่สมบูรณ์แบบจนแทบแยกไม่ออกว่านี่คือภาพที่วาดโดย AI หรือถ่ายด้วยกล้องโปรจริงๆ",
-    origin: "พัฒนาโดยห้องปฏิบัติการวิจัยอิสระ นำโดย David Holz พวกเขาเลือกวิธีเปิดให้ใช้งานผ่านแอปแชท Discord เพื่อสร้างชุมชน (Community) ศิลปิน ปัจจุบันถึงเวอร์ชัน 6 ที่เก่งเรื่องภาพถ่ายเสมือนจริง (Photorealism) และคุมลายเส้นศิลปินได้เนียนมาก",
-    category: "Image Generation",
-    priceModel: "Starts at $10 ต่อเดือน",
-    isFree: false,
-    externalUrl: "https://midjourney.com",
-    rating: 4.8,
-    reviewCount: 15850,
-    updatedAt: "Feb 2025",
-    features: [
-      "Photorealistic: ความสมจริงขั้นสุด แสงเงาสะท้อนสวยงามเหมือนจัดไฟในสตูดิโอ",
-      "Style Reference (--sref): ฟีเจอร์ดูดสไตล์ คัดลอกลายเส้นหรือโทนสีจากรูปต้นแบบมาใส่ในรูปใหม่",
-      "Character Reference (--cref): ล็อกหน้าตาตัวละครให้เหมือนเดิม เพื่อไปสร้างเป็นภาพในอิริยาบถอื่นๆ",
-      "Vary Region: ไฮไลต์แก้ไขรูปภาพเฉพาะจุด (Inpainting) เช่น สั่งเปลี่ยนชุด เปลี่ยนทรงผม"
-    ],
-    pros: [
-      "คุณภาพรูปภาพกินขาด AI ทุกตัวบนโลก โดยเฉพาะภาพคน (Portrait) และงานศิลปะแนว Cinematic",
-      "มีเครื่องมือขั้นสูง ควบคุมสัดส่วนภาพ พารามิเตอร์กล้อง และความแปลกประหลาดได้ละเอียด",
-      "รูปภาพที่สร้างสามารถนำไปใช้ในงานเชิงพาณิชย์ ทำโฆษณา หรือทำอาร์ตเวิร์คขายได้อย่างถูกลิขสิทธิ์"
-    ],
-    cons: [
-      "ใช้งานผ่านแอป Discord มีความซับซ้อนและเรียนรู้ยาก (Learning Curve สูง) สำหรับมือใหม่",
-      "ไม่มีโควต้าให้ทดลองใช้ฟรีแล้ว ต้องจ่ายเงินก่อนเท่านั้น",
-      "พิมพ์คำสั่ง (Prompt) เป็นภาษาไทยไม่ได้ ต้องใช้ภาษาอังกฤษเท่านั้น"
-    ],
-    steps: [
-      { title: "เข้า Discord", desc: "สมัครแพ็กเกจที่เว็บ แล้วเข้าไปที่แอป Discord ของ Midjourney" },
-      { title: "ใช้คำสั่ง /imagine", desc: "เข้าไปที่ห้องแชท พิมพ์ /imagine ตามด้วยคำอธิบายภาพภาษาอังกฤษ" },
-      { title: "อัปสเกลรูปภาพ", desc: "ได้ภาพมา 4 ช่อง กดปุ่ม U1-U4 เพื่อขยายรูปที่ถูกใจให้คมชัดความละเอียดสูง" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 ภาพถ่ายคนสมจริงระดับนิตยสาร (Photorealistic Portrait)", 
-        promptTh: "[Midjourney รับคำสั่งภาษาอังกฤษเท่านั้น กรุณาคัดลอกโครงสร้างด้านล่างไปประยุกต์ใช้]",
-        promptEn: "A photorealistic, highly detailed portrait of a [Insert subject description e.g., beautiful Thai woman in her mid-20s with short hair], wearing [Insert clothing e.g., a stylish oversized blazer]. She is standing in [Insert location e.g., a dimly lit, cozy Tokyo cafe]. The scene features cinematic lighting, neon reflections on a wet window, shot on 35mm lens, f/1.8 aperture, 8k resolution, ultra-realistic textures. --ar 4:5 --style raw --v 6.0"
-      },
-      { 
-        purpose: "💡 งานกราฟิกเวกเตอร์สไตล์มินิมอล (Flat Vector Illustration)", 
-        promptTh: "[Midjourney รับคำสั่งภาษาอังกฤษเท่านั้น]",
-        promptEn: "A flat vector illustration of [Insert action e.g., a young entrepreneur working on a laptop with a cute cat sleeping next to it]. Corporate Memphis style, minimal and clean lines, soft pastel color palette consisting of [Insert 2-3 colors e.g., peach and mint green], isolated on a pure white background. No gradients, high quality graphic design. --ar 16:9 --v 6.0"
-      }
-    ],
-    faqs: [
-      { question: "ทำยังไงให้สร้างภาพในเว็บ Midjourney ได้โดยตรง?", answer: "ทาง Midjourney เริ่มเปิดให้ใช้ผ่านหน้าเว็บไซต์อัลฟ่า (Alpha Website) สำหรับผู้ใช้งานที่เคยสร้างภาพบน Discord ครบ 100 รูปขึ้นไปแล้วครับ ทำให้ใช้งานง่ายขึ้นมาก" }
-    ]
-  },
-  {
-    id: "10",
-    slug: "stable-diffusion",
-    name: "Stable Diffusion",
-    logoUrl: "/logos/Stability AI.png",
-    description: "AI สายเปิดกว้าง (Open-source) ปรับแต่งและคุมภาพได้ลึกระดับเส้นโครงกระดูก อิสระที่สุด",
-    longDescription: "Stable Diffusion คือ 'มหาเทพ' ของนักสร้างภาพ AI สายฮาร์ดคอร์ มันเป็นระบบ 'เปิด' แปลว่าคุณสามารถดาวน์โหลดโค้ดมาติดตั้งลงในคอมพิวเตอร์ของคุณเอง ใช้งานฟรี และไม่มีระบบเซนเซอร์ จุดแข็งที่สุดคือส่วนเสริมที่เรียกว่า 'ControlNet' ที่ทำให้คุณอัปโหลดรูปถ่ายห้องว่างๆ แล้วบังคับให้ AI สร้างเฟอร์นิเจอร์วางลงไปตามมุมของโครงสร้างรูปเดิมได้เป๊ะๆ ชนิดมิลลิเมตรต่อมิลลิเมตร",
-    origin: "เปิดตัวโดย Stability AI ด้วยการแจกโค้ดให้คนทั้งโลกใช้ฟรี ทำให้เกิดชุมชนนักพัฒนาสุดแกร่ง มีการสร้างโมเดลหลากหลายแนว (สมจริง, 3D, อนิเมะ) แจกฟรีบนเว็บอย่าง Civitai.com เป็นจำนวนมาก",
-    category: "Image Generation",
-    priceModel: "Free (รันออฟไลน์บนคอมตัวเอง) / มีแอปและเว็บ Third-party ให้บริการ",
-    isFree: true,
-    externalUrl: "https://stability.ai",
-    rating: 4.7,
-    reviewCount: 7600,
-    updatedAt: "Feb 2025",
-    features: [
-      "Open-source Offline: รันออฟไลน์บนการ์ดจอคอมพิวเตอร์ของคุณเอง ฟรี 100% (ไม่ต้องง้อเน็ต)",
-      "ControlNet: ควบคุมท่าทาง (Pose), เส้นขอบ (Edge), และแสงเงาจากภาพอ้างอิงได้อย่างสมบูรณ์",
-      "LoRA: ระบบเทรน AI ขนาดย่อม ให้เรียนรู้ใบหน้าคน สินค้า หรือสไตล์ศิลปินเฉพาะตัว ลงไปในโมเดลหลักได้ง่ายๆ"
-    ],
-    pros: [
-      "อิสระสูงสุด ปรับแต่ง (Customize) ได้ลึกที่สุด ไร้ขีดจำกัด และไม่มีเซนเซอร์คำสั่ง (Uncensored)",
-      "โมเดลและส่วนเสริมฟรีมีให้โหลดนับหมื่นรูปแบบในคอมมูนิตี้",
-      "ตอบโจทย์งานสายโปรดักชันอาชีพ เช่น งานออกแบบสถาปัตยกรรม (ArchViz) หรืองานแฟชั่นที่ต้องรักษาทรงเสื้อผ้าเดิมไว้เป๊ะๆ"
-    ],
-    cons: [
-      "การติดตั้งและใช้งานผ่าน UI (เช่น ComfyUI) ซับซ้อนมากราวกับควบคุมเครื่องบิน หน้าใหม่ท้อแน่นอน",
-      "ต้องใช้คอมพิวเตอร์สเปคสูงมาก (แนะนำการ์ดจอที่มี VRAM 8GB ขึ้นไป)",
-      "การจะเขียน Prompt ให้ออกมาสวยทันทีแบบ Midjourney เป็นไปได้ยาก ต้องรู้เทคนิคการใส่ Tag"
-    ],
-    steps: [
-      { title: "ติดตั้งโปรแกรม", desc: "โหลด UI เช่น ComfyUI หรือ Automatic1111 มาติดตั้งบนคอมพิวเตอร์" },
-      { title: "โหลดและเลือกโมเดล", desc: "ดาวน์โหลดสไตล์รูปภาพ (Checkpoint) จากเว็บ Civitai มาใส่ในโฟลเดอร์โปรแกรม" },
-      { title: "ตั้งค่าและ Generate", desc: "พิมพ์คำที่อยากเห็น (Positive) และคำที่ไม่อยากเห็น (Negative Prompt) แล้วรัน" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 สร้างภาพบุคคลสมจริงด้วยโครงสร้าง Tag มาตรฐาน (SDXL / SD 1.5)", 
-        promptTh: "[การพิมพ์ Prompt ใน SD นิยมพิมพ์เป็นกลุ่มคำสั้นๆ คั่นด้วยลูกน้ำ (Comma-separated Tags)]",
-        promptEn: "masterpiece, best quality, ultra-detailed, RAW photo, a portrait of [Insert subject e.g., a futuristic cyberpunk hacker], wearing [Insert clothing], [Insert setting e.g., glowing neon city street background], sharp focus, 8k uhd, dslr, soft lighting, detailed skin texture. \n\n[Negative Prompt - ใส่ช่องด้านล่าง]: (worst quality, low quality, illustration, 3d, 2d, painting, cartoons, sketch), bad anatomy, bad hands, missing fingers, blurry, ugly, disfigured."
-      },
-      { 
-        purpose: "💡 งานเรนเดอร์ตกแต่งภายในสถาปัตยกรรม (Architectural Rendering)", 
-        promptTh: "[พิมพ์เป็น Tags ภาษาอังกฤษ]",
-        promptEn: "interior design, hyper-realistic architectural render of a [Insert room type e.g., modern cozy living room], [Insert lighting e.g., warm afternoon sunlight] casting shadows through large floor-to-ceiling windows, [Insert elements e.g., indoor plants, a minimalist grey sofa, wooden coffee table], highly detailed, octane render, unreal engine 5, ray tracing. \n\n[Negative Prompt]: blurry, cartoon, unproportional, messy, distorted perspective, text, watermark."
-      }
-    ],
-    faqs: [
-      { question: "ถ้าคอมพิวเตอร์สเปคไม่แรง ใช้ได้ไหม?", answer: "แนะนำให้ใช้บริการผ่านเว็บ Third-party เช่น Leonardo.ai, SeaArt.ai หรือ Tensor.art ที่เขานำเอนจินของ Stable Diffusion ไปครอบหน้าตาเว็บสวยๆ ให้คลิกใช้ง่ายๆ บน Cloud ครับ" }
-    ]
-  },
-
-  // ==========================================
-  // 🔹 4) AI ตัดต่อวิดีโอ (Video AI)
-  // ==========================================
-  {
-    id: "11",
-    slug: "runway",
-    name: "Runway (Gen-3 Alpha)",
-    logoUrl: "/logos/Runway-ai.png",
-    description: "AI ผู้สร้างวิดีโอระดับภาพยนตร์ฮอลลีวูด แปลงภาพนิ่งและข้อความให้เคลื่อนไหวสมจริง",
-    longDescription: "Runway ไม่ใช่แค่โปรแกรมตัดต่อวิดีโอธรรมดา แต่เป็น AI ที่ 'เสกภาพเคลื่อนไหวขึ้นมาจากอากาศ' คุณสามารถพิมพ์ข้อความสั่งให้สร้างฉาก 'มังกรบินผ่านตึกเอ็มไพร์สเตท' หรืออัปโหลดภาพถ่ายนิ่งๆ เข้าไป แล้วสั่งให้ AI ทำให้ภาพนั้นขยับกลายเป็นวิดีโอ (Image-to-Video) โมเดลล่าสุดอย่าง Gen-3 Alpha ได้สร้างมาตรฐานใหม่เรื่องความเนียนตา การเคลื่อนไหวของมุมกล้อง และหลักฟิสิกส์ของสิ่งของ จนคุณนำคลิปไปใช้ประกอบเป็น B-Roll โฆษณาได้สบายๆ",
-    origin: "Runway เป็นสตาร์ทอัพที่มุ่งสร้าง Tools ให้นักสร้างฟิล์มและวิดีโอครีเอเตอร์ พวกเขาก้าวขึ้นสู่จุดสูงสุดด้าน Generative Video ด้วยการปล่อยโมเดล Gen-2 และ Gen-3 ซึ่งได้รับการยอมรับอย่างกว้างขวางในอุตสาหกรรมภาพยนตร์",
-    category: "Video Generation",
-    priceModel: "Free (ให้เครดิตน้อยมาก) / Starts at $15 ต่อเดือน",
-    isFree: false,
-    externalUrl: "https://runwayml.com",
-    rating: 4.7,
-    reviewCount: 5100,
-    updatedAt: "Feb 2025",
-    features: [
-      "Text-to-Video & Image-to-Video: แปลงข้อความและภาพนิ่งให้เป็นวิดีโอเคลื่อนไหว",
-      "Motion Brush: เครื่องมือสุดเจ๋ง ระบายพู่กันเลือกจุดที่อยากให้ขยับ เช่น ระบายที่ก้อนเมฆเพื่อให้เมฆไหล แต่ตึกยังคงอยู่นิ่งๆ",
-      "Camera Controls: สั่งให้กล้องแพนซ้าย-ขวา ซูมเข้า-ออก (Zoom/Pan/Tilt) ได้ตามต้องการดั่งผู้กำกับ"
-    ],
-    pros: [
-      "ความเนียนของการขยับภาพ (Temporal consistency) สมจริงและดูมีความเป็นภาพยนตร์สูงมาก (ลดปัญหาฉากหลังเบี้ยวยึกยือ)",
-      "มีแผงควบคุมที่ออกแบบมาสำหรับมืออาชีพ ให้สั่งงานทิศทางกล้องได้ละเอียด",
-      "หน้าตา UI บนเว็บสวยงาม ทันสมัย ใช้งานง่าย"
-    ],
-    cons: [
-      "ราคาแพงและเครดิตละลายไวมาก! สร้างวิดีโอความยาว 10 วินาทีใช้เครดิตมหาศาล",
-      "การเคลื่อนไหวของ 'มนุษย์' หรือ 'สรีระมือ' ในบางมุมบางแอคชันยังดูหลอกตา (Uncanny valley)",
-      "เมื่อเซิร์ฟเวอร์มีคนใช้งานหนัก อาจจะต้องรันคิวประมวลผลนาน"
-    ],
-    steps: [
-      { title: "เลือกเครื่องมือ", desc: "ล็อกอินเข้าเว็บ Runway แล้วเลือกโหมด Text/Image to Video" },
-      { title: "อัปโหลดภาพสารตั้งต้น", desc: "แนะนำให้อัปโหลดภาพนิ่งที่สร้างจาก Midjourney เข้าไปตั้งต้น (ภาพวิดีโอจะออกมาสวยกว่าพิมพ์ Text สดๆ)" },
-      { title: "กำหนดการเคลื่อนไหว", desc: "ใช้ฟีเจอร์ Motion Brush หรือพิมพ์คำอธิบายฉาก แล้วกด Generate รอรับวิดีโอ 5-10 วินาที" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 สร้างช็อตมุมกล้องโดรน มุมกว้างอลังการ (Cinematic Drone B-Roll)", 
-        promptTh: "[แนะนำให้ป้อนคำสั่งเป็นภาษาอังกฤษเพื่อฟิสิกส์ที่สมจริงที่สุด]",
-        promptEn: "A cinematic, sweeping drone shot flying over a [Insert location e.g., misty lush green mountain valley at sunrise]. The camera pans slowly forward, revealing a [Insert key element e.g., hidden glowing waterfall]. Soft, golden morning light, hyper-realistic, 4k resolution, smooth motion."
-      },
-      { 
-        purpose: "💡 สร้างช็อตซูมหน้าบุคคลดราม่าแบบสโลว์โมชัน (Macro/Close-up)", 
-        promptTh: "[แนะนำให้ป้อนภาษาอังกฤษ]",
-        promptEn: "A dramatic extreme close-up of a [Insert subject e.g., tired marathon runner's face covered in sweat], looking intensely towards the horizon. Ultra slow motion (120fps), heavy rain pouring down, moody cinematic lighting, shallow depth of field, sharp focus on the eyes."
-      }
-    ],
-    faqs: [
-      { question: "ทำไมสร้างวิดีโอได้แค่ 5-10 วินาที?", answer: "การประมวลผลวิดีโอทีละเฟรมต้องใช้พลังงานเซิร์ฟเวอร์สูงมากครับ AI ทุกค่ายตอนนี้จึงสร้างได้ทีละช็อตสั้นๆ ผู้ใช้ต้องนำช็อตไปตัดต่อประกอบกันในแอปเช่น Premiere Pro หรือ CapCut อีกที" }
-    ]
-  },
-  {
-    id: "12",
-    slug: "pika-labs",
-    name: "Pika Labs",
-    logoUrl: "/logos/Pika.png",
-    description: "AI เสกวิดีโอสุดเก่งสาย 3D/Anime ใช้งานง่ายและเด่นเรื่องการลิปซิงค์ขยับปาก",
-    longDescription: "Pika คือคู่แข่งตัวตึงที่สูสีที่สุดของ Runway จุดเด่นที่ทำให้ Pika ได้ใจผู้ใช้งานทั่วไปคือ 'ความง่าย' และ 'ความเก่งด้านสไตล์แอนิเมชัน' นอกจากจะสั่งให้ภาพขยับได้แล้ว Pika ยังมาพร้อมฟีเจอร์เด็ดอย่าง 'Lip Sync' ที่คุณสามารถอัปโหลดไฟล์เสียงพูดเข้าไป แล้ว AI จะขยับปากตัวละคร (ไม่ว่าจะคนหรือการ์ตูน) ให้ตรงกับเสียงของคุณเป๊ะๆ แถมยังสั่งเพิ่มความยาวคลิป (Extend) ขยายเฟรมวิดีโอ (Expand) หรือเติมเอฟเฟกต์ระเบิดตูมตามลงไปได้แบบง่ายดาย",
-    origin: "ก่อตั้งโดยอดีตนักศึกษาจากมหาวิทยาลัยสแตนฟอร์ด เปิดตัวให้ใช้งานผ่านแชท Discord คล้ายกับ Midjourney ก่อนจะขยายมาสร้างแพลตฟอร์มเว็บไซต์ (Pika.art) ที่สวยงาม Pika กลายเป็นไวรัลบ่อยครั้งบนอินเทอร์เน็ตด้วยความที่มันปั้นการ์ตูนน่ารักๆ ได้เก่งมาก",
-    category: "Video Generation",
-    priceModel: "Free (มีเครดิตเติมให้ฟรีทุกวัน) / Starts at $10 ต่อเดือน",
-    isFree: true,
-    externalUrl: "https://pika.art",
-    rating: 4.6,
-    reviewCount: 4200,
-    updatedAt: "Feb 2025",
-    features: [
-      "Lip Sync Audio: นำภาพนิ่งคนหรือการ์ตูนมาใส่เสียงพากย์ ให้ AI ทำให้ตัวละครขยับปากพูดตามคำเป๊ะๆ",
-      "Modify Region: ไฮไลต์เลือกบริเวณวิดีโอแล้วสั่งเปลี่ยนของ (เช่น เปลี่ยนเสื้อผ้า เปลี่ยนแว่น) ขณะที่วิดีโอยังเล่นอยู่",
-      "Expand Canvas: ขยายสัดส่วนภาพวิดีโอ (Outpainting) เช่น ขยายคลิปสี่เหลี่ยมจัตุรัสให้กว้างออกเป็นแนวนอน 16:9"
-    ],
-    pros: [
-      "เวอร์ชันฟรีใจดีมาก! มีเครดิตพื้นฐาน (Basic credits) เติมให้คุณเข้ามาเล่นสร้างวิดีโอได้ฟรีทุกวัน",
-      "เก่งเรื่องการทำภาพสไตล์ Anime, 3D Render และ Cartoon ให้ออกมาเคลื่อนไหวดูมีชีวิตชีวาสุดๆ",
-      "ฟีเจอร์ Lip Sync ช่วยให้ทำคลิปเล่าเรื่องแบบ Faceless YouTube ได้สบายๆ"
-    ],
-    cons: [
-      "ในแง่ของความสมจริงภาพถ่ายมนุษย์ (Photorealism) และหลักฟิสิกส์หนักๆ ยังดูแข็งและหลอกตากว่า Runway เล็กน้อย",
-      "วิดีโอที่มีฉากการเดินก้าวเท้าของมนุษย์ หรือการหันหน้าหมุนตัว มักจะเกิดอาการภาพเบี้ยวหรือบิดเบี้ยวได้ง่าย"
-    ],
-    steps: [
-      { title: "อัปโหลดภาพ (Image Prompt)", desc: "เปิดเว็บ Pika.art แล้วอัปโหลดภาพนิ่งที่คุณอยากให้มันขยับ" },
-      { title: "ใส่พารามิเตอร์การเคลื่อนไหว", desc: "กดไอคอนรูปกล้องใต้กล่องแชท เพื่อเลือกระดับความแรงของการแพนกล้อง หรือใส่เอฟเฟกต์ลมพัดผมปลิว" },
-      { title: "ใส่เสียงพูด (ถ้ามี)", desc: "กดปุ่ม Lip Sync อัปโหลดไฟล์เสียง MP3 เข้าไป แล้วปล่อย AI จัดการสร้างวิดีโอ" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 สร้างคลิปแอนิเมชัน 3D สุดน่ารัก (Pixar Vibe)", 
-        promptTh: "[พิมพ์คำสั่งต่อท้ายภาพนิ่งที่อัปโหลด หรือพิมพ์ Text สดๆ ด้วยภาษาอังกฤษ]",
-        promptEn: "High quality 3D animation, Pixar style. An adorable [Insert character e.g., fluffy ginger kitten wearing a tiny spacesuit] floating clumsily in zero gravity inside a futuristic spaceship. Bright, cheerful studio lighting, fluid motion, highly detailed fur."
-      },
-      { 
-        purpose: "💡 สร้างฉากแอคชันเคลื่อนไหวเร็วและเบลอ (Dynamic Action)", 
-        promptTh: "[แนะนำพิมพ์ภาษาอังกฤษ พร้อมใส่พารามิเตอร์มุมกล้องของ Pika]",
-        promptEn: "A [Insert character e.g., cyberpunk samurai] running rapidly through a wet, neon-lit futuristic alleyway. Dynamic motion blur, rain splashing, high energy action sequence. -camera pan right -motion 3"
-      }
-    ],
-    faqs: [
-      { question: "ทำวิดีโอแบบไหนที่มักจะเพี้ยนหรือพังบ่อยๆ?", answer: "ช็อตที่มีการเดิน/วิ่งแบบเต็มตัวเห็นขา หรือการหันหน้าหมุน 360 องศาครับ เพราะ AI ยังมีปัญหากับการเดาฉากหลังที่ถูกบัง แนะนำให้สร้างวิดีโอช็อตซูมครึ่งตัว (Close-up) ภาพจะออกมาสวยเนียนที่สุดครับ" }
-    ]
-  },
-  {
-    id: "13",
-    slug: "synthesia",
-    name: "Synthesia",
-    logoUrl: "/logos/Synthesia.png",
-    description: "AI จ้างคนจำลอง (Avatars) มาพรีเซนต์งานและอ่านสคริปต์วิดีโอแทนคุณ รองรับ 120 ภาษา",
-    longDescription: "หมดปัญหาการต้องจ้างสเปซถ่ายทำ ตั้งกล้อง เช่าไฟ และจ้างนักแสดงมาพูดนำเสนองาน! Synthesia คือแพลตฟอร์ม 'AI Video Generation' สำหรับองค์กรและคนทำธุรกิจ ที่คุณเพียงแค่พิมพ์สคริปต์ข้อความ (Text) เลือกร่างอวตารเสมือนจริง (AI Avatar) ที่มีให้เลือกกว่า 160 แบบ แล้ว AI จะขยับปากอ่านสคริปต์นั้นด้วยน้ำเสียง ท่าทาง และภาษากายที่ดูเป็นมืออาชีพ เหมาะมากสำหรับการทำวิดีโอสอนพนักงาน (Training), สื่อสารองค์กร, หรืองานนำเสนอสินค้า",
-    origin: "ก่อตั้งในปี 2017 โดยกลุ่มนักวิจัยจาก UCL, TUM และ Stanford โดยมุ่งเน้นการใช้เทคโนโลยี Deep Learning สังเคราะห์ใบหน้าและเสียงมนุษย์ Synthesia มุ่งตลาด B2B เพื่อช่วยบริษัทระดับโลก (เช่น Zoom, Heineken) ลดต้นทุนการผลิตสื่อวิดีโอลงได้อย่างมหาศาล",
-    category: "Video Generation",
-    priceModel: "Starts at $22 ต่อเดือน (ทดลองสร้างคลิปสั้นฟรีได้ที่หน้าเว็บ)",
-    isFree: false,
-    externalUrl: "https://www.synthesia.io",
-    rating: 4.8,
-    reviewCount: 6100,
-    updatedAt: "Feb 2025",
-    features: [
-      "160+ Diverse AI Avatars: มีพรีเซนเตอร์หลากหลายเชื้อชาติ อายุ การแต่งตัว (ชุดสูทยันเสื้อยืด)",
-      "120+ Languages: เสียงพากย์และซิงค์ปากรองรับกว่า 120 ภาษา สำเนียงภาษาไทยทำได้ค่อนข้างธรรมชาติ",
-      "Custom Avatars: จ่ายเงินเพิ่มเพื่อถ่ายคลิปตัวเองส่งไป แล้ว AI จะปั้น 'ร่างโคลน' ของคุณให้พิมพ์ข้อความสั่งพูดได้ตลอดชีพ",
-      "Video Editor: มีระบบจัดหน้าสไลด์ ใส่พื้นหลัง ข้อความ แทรกลูกศร และมีสต็อกวิดีโอให้ครบจบในแอปเดียว"
-    ],
-    pros: [
-      "ประหยัดต้นทุนและเวลาโปรดักชันมหาศาล (ไม่ต้องจ้างทีมกล้อง ช่างแต่งหน้า หรือเช่าสถานที่)",
-      "แก้ไขง่ายมาก! ถ้าอ่านสคริปต์ผิด ก็แค่กดเข้ามาแก้ตัวหนังสือแล้วกด Generate วิดีโอใหม่ได้เลย (ไม่ต้องเรียกคนมาถ่ายซ่อม)",
-      "อวตารรุ่นใหม่ๆ มีการกะพริบตา พยักหน้า เอียงคอ และขยับมือ (Micro-expressions) ดูเป็นมนุษย์ขึ้นมาก"
-    ],
-    cons: [
-      "แม้จะเนียนแค่ไหน แต่แววตาและการแสดงอารมณ์ดราม่ายังดูออกว่าเป็น AI (แอบตาลอยนิดๆ)",
-      "จำกัดนาทีการสร้างวิดีโอต่อเดือนค่อนข้างน้อยในแพ็กเกจเริ่มต้น",
-      "หากใช้ Avatar ฟรีที่มีในระบบ ผู้ชมอาจจะจำหน้าได้ว่าใช้ AI ทำให้ดูขาดความเป็นเอกลักษณ์ส่วนตัว"
-    ],
-    steps: [
-      { title: "เลือก Avatar และ Template", desc: "เลือกพรีเซนเตอร์ที่บุคลิกตรงกับแบรนด์ และเลือกรูปแบบฉากหลัง (เช่น ห้องข่าว, ออฟฟิศ)" },
-      { title: "พิมพ์สคริปต์ข้อความ", desc: "วางข้อความที่ต้องการให้ AI พูด (สามารถใส่แท็กบังคับหยุดพักหายใจ หรือปรับช้า/เร็วได้)" },
-      { title: "Generate วิดีโอ", desc: "กดปุ่มยืนยัน รอระบบเรนเดอร์ประมาณ 5-10 นาที จะได้ไฟล์ MP4 พร้อมโหลด" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 สคริปต์วิดีโอโปรโมตสินค้า/แอปพลิเคชัน (Product Promo)", 
-        promptTh: "สวัสดีค่ะผู้ใช้งานทุกท่าน! วันนี้เรามีความตื่นเต้นที่จะเปิดตัวฟีเจอร์ใหม่ล่าสุด นั่นก็คือ [ระบุชื่อฟีเจอร์] ซึ่งจะเข้ามาช่วยแก้ปัญหา [ระบุปัญหาเดิม] ของคุณให้หมดไป. ด้วยฟีเจอร์นี้ คุณจะสามารถ [ระบุประโยชน์หลัก เช่น ประหยัดเวลาทำงานได้ถึง 2 ชั่วโมงต่อวัน] ไปดูวิธีการตั้งค่าเริ่มต้นบนหน้าจอแดชบอร์ดของคุณพร้อมๆ กันในคลิปนี้เลยค่ะ!",
-        promptEn: "Hello everyone! Today, we are absolutely thrilled to introduce our newest and most requested feature: [Insert Feature Name]. This update is designed to completely eliminate [Insert old problem]. With this tool, you can now [Insert Core Benefit e.g., save up to 2 hours of manual work every single day]. Let's jump into your dashboard and see exactly how to set it up!"
-      },
-      { 
-        purpose: "💡 สคริปต์วิดีโอฝึกอบรมพนักงานองค์กร (Corporate Onboarding)", 
-        promptTh: "ยินดีต้อนรับพนักงานใหม่ทุกท่านเข้าสู่ครอบครัว [ระบุชื่อบริษัท] ของเรานะคะ! ในบทเรียนแรกนี้ เราจะมาทำความเข้าใจเกี่ยวกับวิสัยทัศน์ และค่านิยมหลักขององค์กร นั่นก็คือ [ระบุค่านิยม 1, 2, 3] ซึ่งเป็นหัวใจสำคัญในการทำงานร่วมกันที่นี่ หากคุณพร้อมที่จะเติบโตไปกับเราแล้ว เราไปเริ่มต้นเรียนรู้เนื้อหาในสไลด์ถัดไปพร้อมกันเลยค่ะ",
-        promptEn: "Welcome to the [Insert Company Name] family! We are so excited to have you on board. In this first training module, we are going to explore our company's core vision and values, which are [Insert Value 1, 2, 3]. These principles guide everything we do here. If you are ready to start this journey with us, let's dive right into the first lesson."
-      }
-    ],
-    faqs: [
-      { question: "การทำร่างโคลนอวตารตัวเอง (Custom Avatar) แพงไหม?", answer: "มีค่าธรรมเนียมรายปีเพิ่มเติมแยกต่างหากครับ (ประมาณหลายพันบาท) แลกกับการส่งวิดีโอตัวเราอ่านสคริปต์เข้าไประบบ เพื่อให้บริษัทสร้างหุ่นโมเดลหน้าเราให้ใช้ส่วนตัวตลอดไป" }
-    ]
-  },
-
-  // ==========================================
-  // 🔹 5) AI เขียนโค้ด (Coding AI)
-  // ==========================================
-  {
-    id: "14",
+    id: "c1",
     slug: "github-copilot",
     name: "GitHub Copilot",
     logoUrl: "/logos/github-copilot.png",
-    description: "AI คู่หูโปรแกรมเมอร์ ช่วยเขียนและเติมโค้ดอัตโนมัติ (Autocomplete) ภายใน IDE ของคุณ",
-    longDescription: "สำหรับสาย Dev นี่คือเครื่องมือที่ 'ต้องมี' ติดเครื่อง! GitHub Copilot ทำหน้าที่เป็น AI Pair Programmer ที่ฝังตัวอยู่ข้างในโปรแกรมเขียนโค้ด (เช่น VS Code, Visual Studio, IntelliJ) ในขณะที่คุณกำลังพิมพ์โค้ด มันจะคอยอ่านบริบทและบรรทัดก่อนหน้า เพื่อแนะนำ (Suggest) โค้ดบรรทัดถัดไปให้คุณแบบเรียลไทม์เป็นตัวหนังสือสีเทาๆ (เพียงแค่กด Tab บนคีย์บอร์ดเพื่อยอมรับ) นอกจากนี้ยังมีระบบ Copilot Chat ที่เป็นหน้าต่างแชทให้คุณคุยกับมัน สั่งให้มันอธิบายโค้ดที่ไม่เข้าใจ หรือหาจุดบั๊ก (Bug) ของไฟล์ที่เปิดอยู่ได้ทันที",
-    origin: "พัฒนาจากความร่วมมือของ GitHub (ค่าย Microsoft) และ OpenAI โดยนำเอาโมเดล LLM ตัวโหดไปฝึกฝน (Train) ให้กินข้อมูล Source Code สาธารณะหลายพันล้านบรรทัดบนแพลตฟอร์ม GitHub เป็นอาหารหลัก ผลลัพธ์คือ AI ที่เกิดมาเพื่อเข้าใจภาษาโปรแกรมมิ่งและตรรกะการแก้ปัญหาโดยเฉพาะ",
+    description: "AI คู่หูโปรแกรมเมอร์ยอดฮิต ช่วยเติมโค้ดอัตโนมัติ (Autocomplete) ใน IDE โคตรแม่นยำ",
+    longDescription: "GitHub Copilot คือผู้บุกเบิกวงการ AI Coding Assistant ที่ทรงพลังที่สุดตัวหนึ่ง มันทำงานแบบฝังตัวอยู่ใน IDE (เช่น VS Code, Visual Studio) คอยอ่านบริบทโค้ดที่คุณกำลังพิมพ์ และเสนอโค้ดบรรทัดต่อไป หรือแม้กระทั่งสร้างฟังก์ชันให้ทั้งก้อนเพียงแค่คุณพิมพ์คอมเมนต์อธิบาย (Ghost Text) เวอร์ชันล่าสุดมาพร้อม Copilot Chat ที่ให้คุณคุยกับ AI เพื่อสั่งแก้บั๊ก หรือให้อธิบายโค้ดที่ซับซ้อนได้โดยไม่ต้องสลับหน้าจอไปหา Google",
+    origin: "พัฒนาโดย GitHub ร่วมกับ OpenAI โดยเทรนจาก Source Code สาธารณะหลายพันล้านบรรทัดบน GitHub ทำให้มันเข้าใจบริบทของภาษาโปรแกรมมิ่งแทบทุกภาษาบนโลก",
     category: "Coding & Development",
-    priceModel: "$10 ต่อเดือน (ประมาณ 350 บาท) / ฟรีสำหรับนักศึกษา",
+    priceModel: "$10 ต่อเดือน (ฟรีสำหรับนักศึกษาและโปรเจกต์ Open Source)",
     isFree: false,
     externalUrl: "https://github.com/features/copilot",
     rating: 4.8,
-    reviewCount: 14300,
-    updatedAt: "Feb 2025",
+    reviewCount: 25400,
+    updatedAt: "Feb 2026",
     features: [
-      "Ghost Text Autocomplete: เติมโค้ดบรรทัดถัดไป หรือสร้างฟังก์ชันให้ทั้งก้อนเพียงแค่เราพิมพ์ Comment บอก",
-      "Copilot Chat: หน้าต่างแชทอัจฉริยะที่รู้ Context ว่าเราเปิดโค้ดไฟล์ไหนอยู่ สั่งให้แก้ไฟล์นั้นได้เลยไม่ต้องก๊อปไปก๊อปมา",
-      "Explain & Test: ไฮไลต์โค้ดเก่าๆ ที่คนอื่นเขียนไว้ให้มันอธิบาย และสั่งให้มันสร้าง Unit Test คลุมโค้ดเราอัตโนมัติ"
+      "Real-time Autocomplete: เสนอโค้ดล่วงหน้าขณะพิมพ์แบบเรียลไทม์ กด Tab เพื่อใช้งานได้ทันที",
+      "Inline Chat (Cmd/Ctrl + I): ไฮไลต์โค้ดแล้วกดคีย์ลัดเพื่อสั่งแก้โค้ดเฉพาะจุดแบบด่วนๆ",
+      "Test Generation: สั่งให้ AI เขียน Unit Test คลุมฟังก์ชันที่เพิ่งเขียนเสร็จได้ในคลิกเดียว"
     ],
     pros: [
-      "เพิ่ม Productivity ลดเวลาการพิมพ์โค้ดซ้ำซาก (Boilerplate) และการจำชื่อ Syntax ไลบรารีลงไปได้มหาศาล",
-      "รองรับภาษาโปรแกรมแทบทุกภาษาบนโลก (Python, JS, TS, Go, C++, PHP, ฯลฯ)",
-      "ฝังตัวในหน้าต่าง Editor ทำให้ Workflow การเขียนโค้ดไม่สะดุด ไม่ต้องสลับหน้าต่างไปถาม ChatGPT บ่อยๆ"
+      "ประหยัดเวลาพิมพ์โค้ดซ้ำซาก (Boilerplate) และเวลาค้นหา Syntax ทั่วไปได้มหาศาล",
+      "ทำงานร่วมกับ Ecosystem ของ GitHub และ VS Code ได้อย่างไร้รอยต่อที่สุด",
+      "รองรับภาษาโปรแกรมแทบทุกภาษา โดยเฉพาะ Python, JavaScript/TypeScript, Go และ C++"
     ],
     cons: [
-      "บางครั้งแนะนำโค้ดที่เรียกใช้งานฟังก์ชันเก่าที่โดนยกเลิกไปแล้ว (Deprecated) โปรแกรมเมอร์ต้องคอยตรวจสอบตรรกะก่อนใช้จริง",
-      "ไม่มีเวอร์ชันฟรีสำหรับบุคคลทั่วไปให้ทดลองใช้งาน"
+      "บางครั้งเสนอโค้ดที่ใช้ไลบรารีเวอร์ชันเก่า (Deprecated) ต้องคอยรีวิวตรรกะก่อนกดยอมรับเสมอ",
+      "ไม่มีโควต้าให้ใช้งานฟรีสำหรับบุคคลทั่วไป (ถ้าไม่ใช่นักศึกษา)"
     ],
     steps: [
-      { title: "ติดตั้ง Extension", desc: "เปิดโปรแกรม VS Code ไปที่ส่วน Extension พิมพ์หาคำว่า 'GitHub Copilot' แล้วกด Install" },
-      { title: "ล็อกอินเข้าระบบ", desc: "เชื่อมต่อกับบัญชี GitHub ของคุณที่ได้สมัครแพ็กเกจเสียเงินเอาไว้" },
-      { title: "ให้ AI ช่วยเขียน", desc: "ลองพิมพ์ Comment อธิบายสิ่งที่อยากได้ (เช่น // function to validate email format) กด Enter แล้ว AI จะป๊อปอัปโค้ดสีเทาขึ้นมา ให้กด Tab เพื่อยืนยันใช้งาน" }
+      { title: "ติดตั้ง Extension", desc: "ค้นหา 'GitHub Copilot' ในหน้า Extension ของ VS Code แล้วกดติดตั้ง" },
+      { title: "ล็อกอิน GitHub", desc: "เชื่อมต่อบัญชี GitHub ที่มีสิทธิ์ใช้งาน Copilot" },
+      { title: "พิมพ์ Comment", desc: "พิมพ์อธิบายสิ่งที่ต้องการ (เช่น // function to fetch user data) แล้วกด Enter รอ AI เสนอโค้ด" }
     ],
     prompts: [
       { 
-        purpose: "💡 พิมพ์ Comment สั่งสร้างฟังก์ชันที่รัดกุม (Inline Autocomplete)", 
-        promptTh: "// สร้างฟังก์ชันภาษา [ระบุภาษา เช่น TypeScript] เพื่อทำการดึงข้อมูลผู้ใช้งานจาก API endpoint: '[ระบุ URL]' \n// เงื่อนไข: ต้องมีการจัดการ Error (Try/Catch) อย่างรัดกุม, มีสถานะ Loading, และจัดรูปแบบผลลัพธ์ให้อยู่ในโครงสร้าง Array ของ Object",
-        promptEn: "// Write a [Insert Language e.g., TypeScript] function to fetch user data from the API endpoint: '[Insert URL]'.\n// Requirements: Implement robust error handling using Try/Catch block, manage loading states, and format the response payload into an Array of Objects."
+        purpose: "💡 สั่งสร้างฟังก์ชันดึงข้อมูล API ด้วย Python (Inline Prompt)", 
+        promptTh: "# สร้างฟังก์ชัน Python โดยใช้ไลบรารี requests เพื่อดึงข้อมูลสภาพอากาศจาก API url: [ระบุ URL]\n# เงื่อนไข: ต้องมี Try/Except จัดการ Error กรณีเน็ตหลุด และรีเทิร์นค่าออกมาเป็น JSON object",
+        promptEn: "# Create a Python function using the 'requests' library to fetch weather data from: [Insert URL]\n# Requirements: Include Try/Except blocks for network error handling, and return the parsed JSON object."
       },
       { 
-        purpose: "💡 ให้ AI รีวิวโค้ดและหาช่องโหว่ (Copilot Chat Panel)", 
-        promptTh: "[ไฮไลต์โค้ดบรรทัดที่มีปัญหา แล้วเปิดแผง Copilot Chat]\nช่วยรีวิวโค้ดบล็อกนี้ให้หน่อย ฉันเจอบั๊กขึ้น Error ว่า '[วางข้อความ Error ที่เจอ]' มันเกิดจากสาเหตุอะไร? ช่วยแนะนำวิธีแก้ไขที่ถูกต้องตามหลัก Best Practice และช่วยปรับปรุง (Refactor) โค้ดส่วนลูปนี้ให้ทำงานได้เร็วขึ้น (Optimize) ด้วย",
-        promptEn: "Please review this highlighted code block. I am getting this specific Error: '[Paste Error Message]'. What is causing this? Suggest a robust fix following modern best practices. Additionally, please refactor the loop in this code to optimize its performance and readability."
+        purpose: "💡 สั่งให้อธิบายโค้ดที่ซับซ้อนและหาบั๊ก (Copilot Chat)", 
+        promptTh: "[ไฮไลต์โค้ดที่พังแล้วเปิดแผง Chat]\nช่วยอธิบายหน่อยว่าฟังก์ชันนี้ทำงานยังไง? และตอนนี้ฉันเจอ Error ว่า 'TypeError: Cannot read properties of undefined' มันเกิดจากบรรทัดไหน ช่วยเขียนโค้ดแก้พร้อมใส่เงื่อนไขดัก Null ให้ด้วย",
+        promptEn: "Explain how this highlighted function works step-by-step. I am currently getting this Error: 'TypeError: Cannot read properties of undefined'. Which line is causing this? Please provide the fixed code with proper null-checking."
       }
     ],
     faqs: [
-      { question: "เป็นนักศึกษา ไม่อยากเสียเงินทำยังไง?", answer: "คุณสามารถเข้าไปสมัครโครงการ 'GitHub Student Developer Pack' ได้ฟรีครับ เพียงแค่ยืนยันตัวตนด้วยอีเมลสถาบันการศึกษา (เช่น .ac.th) ก็จะได้รับสิทธิ์ใช้ Copilot โหมดเต็มรูปแบบฟรีตลอดช่วงเป็นนักศึกษา" }
+      { question: "โค้ดบริษัทจะหลุดไปให้ AI เรียนรู้ไหม?", answer: "สำหรับแพ็กเกจ Copilot Business หรือ Enterprise ทาง GitHub ยืนยันว่าจะไม่มีการนำโค้ด (Source Code) หรือข้อมูลในแชทของคุณไปใช้เทรนโมเดลต่อครับ" }
     ]
   },
   {
-    id: "15",
-    slug: "replit",
-    name: "Replit",
+    id: "c2",
+    slug: "claude-code",
+    name: "Claude Code (Anthropic)",
+    logoUrl: "/logos/Anthropic – Claude.png",
+    description: "AI Coding Agent ตัวตึง ทำงานผ่าน Terminal ช่วยรันคำสั่งและแก้ไฟล์ได้อัตโนมัติ",
+    longDescription: "Claude Code ไม่ใช่แค่แชทบอทแนะนำโค้ด แต่เป็น 'AI Agent' ที่ฝังตัวอยู่ใน Terminal (Command Line) ของคุณ มันได้รับอนุญาตให้เข้าถึงไฟล์ในโปรเจกต์ รันสคริปต์ และค้นหาข้อผิดพลาดได้ด้วยตัวเอง คุณสามารถสั่งมันด้วยภาษามนุษย์ เช่น 'ช่วยหาว่าทำไมหน้า Login ถึงพัง แล้วแก้โค้ดให้หน่อย' มันจะทำการค้นหาไฟล์ที่เกี่ยวข้อง วิเคราะห์ตรรกะ (Reasoning) ด้วยโมเดล Claude รุ่นล่าสุด และลงมือแก้ไขไฟล์นั้นให้คุณจริงๆ ทันที",
+    origin: "พัฒนาโดย Anthropic เพื่อตอบโจทย์นักพัฒนาที่ต้องการลดภาระงานระดับโปรเจกต์ (Project-level tasks) โดยใช้ความสามารถด้านการวิเคราะห์ขั้นสูงของตระกูล Claude 3.5 ที่ขึ้นชื่อว่าฉลาดที่สุดในงานเขียนโปรแกรม",
+    category: "Coding & Development",
+    priceModel: "คิดเงินตามปริมาณการใช้งานจริง (Pay-per-use API)",
+    isFree: false,
+    externalUrl: "https://www.anthropic.com/claude-code",
+    rating: 4.8,
+    reviewCount: 8500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Terminal Native: ทำงานโดยตรงผ่าน Command Line อินเตอร์เฟซที่คุ้นเคยของ Dev",
+      "Agentic Workflow: สั่งงานทีเดียว AI สามารถวางแผน เปิดอ่านหลายไฟล์ แก้โค้ด และรันทดสอบได้เอง",
+      "Deep Reasoning: เก่งมากในการวิเคราะห์โครงสร้างโปรเจกต์ที่ซับซ้อน และหาสาเหตุของบั๊กลึกๆ"
+    ],
+    pros: [
+      "ไม่ต้องก๊อปปี้โค้ดแปะไปมา (No Copy-Pasting) เพราะ AI ลงมือแก้ไฟล์ในโปรเจกต์ให้คุณเลย",
+      "เข้าใจ Context ของโปรเจกต์ได้ลึกซึ้ง เหมาะกับการทำ Refactoring โค้ดชุดใหญ่",
+      "โมเดล Claude เขียนโค้ดได้คลีนและตรงตาม Best Practice ของแต่ละภาษามากๆ"
+    ],
+    cons: [
+      "การใช้งานผ่าน Terminal อาจจะดูน่ากลัวสำหรับมือใหม่ที่ชินกับการกดปุ่มบน UI",
+      "ต้องระวังเรื่องค่าใช้จ่าย (Cost) เพราะเป็นการเรียก API หลังบ้านโดยตรง หากสั่งงานที่ต้องอ่านไฟล์เยอะๆ บ่อยๆ อาจจะเปลือง",
+      "ต้องตรวจสอบความถูกต้องเสมอก่อนให้มันเซฟไฟล์ทับ (รัน git diff ดูก่อน commit)"
+    ],
+    steps: [
+      { title: "ติดตั้งผ่าน npm", desc: "เปิด Terminal พิมพ์คำสั่ง 'npm install -g @anthropic-ai/claude-code'" },
+      { title: "ล็อกอิน API", desc: "ใส่ API Key ของ Anthropic เพื่อเริ่มต้นการใช้งาน" },
+      { title: "รันคำสั่ง 'claude'", desc: "เข้าไปที่โฟลเดอร์โปรเจกต์ พิมพ์ 'claude' แล้วสั่งงานเป็นภาษามนุษย์ได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งให้ AI รื้อโครงสร้างและ Refactor โค้ด (Terminal Command)", 
+        promptTh: "claude 'ช่วยสแกนไฟล์ทั้งหมดในโฟลเดอร์ /components แล้วหาว่าไฟล์ไหนบ้างที่ยังมี React Class Component หลงเหลืออยู่ จากนั้นช่วยแปลงไฟล์เหล่านั้นให้เป็น Functional Component และใช้ React Hooks (useState, useEffect) ทั้งหมดให้หน่อย'",
+        promptEn: "claude 'Please scan all files in the /components directory. Identify any remaining React Class Components and refactor them into modern Functional Components using React Hooks (useState, useEffect). Save the changes.'"
+      },
+      { 
+        purpose: "💡 สั่งให้ AI ช่วยเขียนสคริปต์และรันทดสอบ (Agentic Task)", 
+        promptTh: "claude 'ช่วยสร้างไฟล์ Python ชื่อ data_cleaner.py สำหรับอ่านไฟล์ data.csv กำจัดแถวที่มีค่าว่าง (Null) และเซฟไฟล์ใหม่เป็น clean_data.csv เขียนเสร็จแล้วช่วยรันสคริปต์เพื่อทดสอบให้ดูหน่อยว่าได้ผลลัพธ์กี่บรรทัด'",
+        promptEn: "claude 'Create a Python script named data_cleaner.py that reads data.csv, drops any rows with Null values, and saves the output as clean_data.csv. Once written, execute the script and tell me the total row count of the cleaned file.'"
+      }
+    ],
+    faqs: [
+      { question: "มันจะลบไฟล์โปรเจกต์ฉันทิ้งไหม?", answer: "Claude Code จะถามยืนยัน (Confirmation) คุณก่อนเสมอเมื่อต้องทำการลบไฟล์ หรือเปลี่ยนแปลงโครงสร้างใหญ่ๆ ครับ แนะนำให้ใช้ Git ครอบโปรเจกต์ไว้ก่อนเสมอเพื่อความปลอดภัย" }
+    ]
+  },
+  {
+    id: "c3",
+    slug: "replit-ghostwriter",
+    name: "Replit Ghostwriter",
     logoUrl: "/logos/Replit.png",
-    description: "แพลตฟอร์มเขียนโค้ดบนเบราว์เซอร์ พร้อม AI ที่ช่วย Generate และช่วย Deploy ได้เบ็ดเสร็จ",
-    longDescription: "Replit ไม่ใช่แค่แชทบอท แต่เป็น 'Cloud IDE (พื้นที่เขียนโปรแกรมบนหน้าเว็บ)' แบบครบวงจรที่มี AI อัจฉริยะฝังเป็นเนื้อเดียวกัน คุณไม่ต้องมานั่งปวดหัวกับการติดตั้งโปรแกรม Node.js, Python หรือเซ็ตค่า Environment ในคอมตัวเองให้วุ่นวาย คุณแค่เปิดเว็บ สมัครใช้งาน สั่งให้ AI สร้างโครงสร้างโปรเจกต์ (Boilerplate) และพิมพ์โค้ดทำงานได้เลยจากทุกที่บนโลก เหมาะสุดๆ สำหรับมือใหม่ที่อยากเรียนเขียนโปรแกรม หรือนักธุรกิจที่ต้องการสร้างแอปพลิเคชัน MVP (Minimum Viable Product) ให้เสร็จไวๆ ภายในช่วงวันหยุดสุดสัปดาห์",
-    origin: "Replit ก่อตั้งในปี 2016 ด้วยวิสัยทัศน์ 'ทำให้อุปกรณ์ทุกชิ้นบนโลกเขียนโปรแกรมได้' เมื่อเทรนด์ AI มาถึง พวกเขาจึงปล่อยฟีเจอร์ AI (เดิมชื่อ Ghostwriter) ที่ปรับจูนมาเพื่อเข้าใจ 'Context ของโครงสร้างไฟล์ในโปรเจกต์' ทำให้ AI รู้ว่าไฟล์ไหนลิงก์กับไฟล์ไหน ซึ่งแม่นยำกว่าการก๊อปโค้ดไปถาม ChatGPT ห้วนๆ",
+    description: "AI คู่หูใน Cloud IDE เขียน รัน และ Deploy โค้ดได้จบบนเว็บเบราว์เซอร์",
+    longDescription: "Replit ไม่ใช่แค่แชทบอท แต่เป็นพื้นที่เขียนโค้ดบนคลาวด์ (Cloud IDE) ที่มี AI อัจฉริยะชื่อ Ghostwriter ฝังเป็นเนื้อเดียวกัน คุณไม่ต้องเสียเวลาติดตั้ง Node.js หรือ Python ในคอมพิวเตอร์ตัวเอง แค่เปิดเว็บก็เริ่มโปรเจกต์ได้เลย ความเจ๋งคือ AI ตัวนี้จะเห็นความเคลื่อนไหวทั้งหมดในโปรเจกต์ของคุณ ถ้ารันโค้ดแล้วติด Error ตัวแดงแจ้งเตือน AI จะเสนอตัวช่วยวิเคราะห์และกดปุ่ม 'Fix it' เพื่อแก้บั๊กให้ทันที เหมาะสุดๆ สำหรับการสร้างแอปแบบรวดเร็ว (MVP)",
+    origin: "Replit มีวิสัยทัศน์ที่จะทำให้ทุกคนเข้าถึงการเขียนโปรแกรมได้ง่ายที่สุด การนำ AI เข้ามาผสาน ทำให้กำแพงความรู้เรื่องการตั้งค่า Environment หายไปโดยสิ้นเชิง",
     category: "Coding & Development",
     priceModel: "Free (จำกัดพลัง AI) / Replit Core $20 ต่อเดือน",
     isFree: true,
     externalUrl: "https://replit.com",
-    rating: 4.7,
-    reviewCount: 3800,
-    updatedAt: "Feb 2025",
-    features: [
-      "Zero Setup IDE: เขียน รัน และกด Deploy โค้ดขึ้นเซิร์ฟเวอร์ออนไลน์ได้จบบนหน้าเว็บเดียว",
-      "Generate Code in Context: ไฮไลต์บล็อกโค้ดแล้วคลิกขวา สั่งให้ AI อธิบาย เพิ่มคอมเมนต์ หรือแปลงภาษา (เช่น แปลงโค้ด Python เป็น JS) ได้ทันที",
-      "Proactive Debugging: หากรันโปรแกรมแล้วเกิด Error ตัวแดงเด้งขึ้นมา AI จะเสนอตัวพร้อมปุ่ม 'Fix it' ช่วยวิเคราะห์และแก้บั๊กให้อัตโนมัติ"
-    ],
-    pros: [
-      "ทะลวงกำแพงการเริ่มต้นเขียนโปรแกรม ไม่ต้องเซ็ตเครื่องคอมให้เหนื่อย เปิดเบราว์เซอร์ปุ๊บพิมพ์ปั๊บ ใช้คอมสเปคต่ำก็เขียนแอปหนักๆ ได้",
-      "ฟีเจอร์ AI ช่วยหาและอธิบายสาเหตุของ Error (Debug) ลดอาการหัวร้อนของมือใหม่ได้ 100%",
-      "มีระบบ Multiplayer ลิงก์โปรเจกต์แชร์ให้เพื่อนหรือทีมงานเข้ามาพิมพ์โค้ดแก้บั๊กไปพร้อมกันได้ (เหมือนพิมพ์ Google Docs)"
-    ],
-    cons: [
-      "ในแพ็กเกจใช้งานฟรี (Free Tier) โปรเจกต์ที่คุณเขียนจะเป็นแบบ สาธารณะ (Public) คนทั่วไปสามารถเข้ามาดู Source code ของคุณได้",
-      "หากพัฒนาโปรเจกต์ที่มีขนาดใหญ่มากๆ การรันบนเบราว์เซอร์อาจจะเกิดอาการหน่วงหรือกินแรมเครื่อง",
-      "ความเก่งของ AI ในแง่การคิด Logic ทางสถาปัตยกรรมซอฟต์แวร์ซับซ้อน แอบเป็นรองรุ่นพี่อย่าง Claude 3.5 Sonnet อยู่เล็กน้อย"
-    ],
-    steps: [
-      { title: "สร้างโปรเจกต์ (Repl)", desc: "สมัครสมาชิกเว็บ กดปุ่ม Create Repl เลือกภาษาที่อยากเขียน (เช่น Python, HTML/CSS)" },
-      { title: "ใช้ AI สร้างโครงแอป", desc: "พิมพ์สั่งในช่องแชท AI ให้มันสร้างไฟล์ตั้งต้นให้ เช่น 'สร้างหน้าเว็บ Todo list พื้นฐานให้หน่อย'" },
-      { title: "รันและเปิดใช้จริง", desc: "กดปุ่ม 'Run' สีเขียวเพื่อดูแอปหน้าตาพรีวิว หากโอเคแล้วสามารถกดปุ่ม Deploy นำแอปขึ้นออนไลน์ให้คนอื่นเล่นได้เลย" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 สร้างโครงสร้างโปรเจกต์เริ่มต้นแบบรวดเร็ว (Boilerplate Generation)", 
-        promptTh: "[พิมพ์สั่งในแชท AI ของ Replit ทันทีที่เปิดโปรเจกต์ใหม่]\nฉันต้องการสร้างแอปพลิเคชัน [ระบุประเภทแอป เช่น สคริปต์ Python สำหรับดึงราคาหุ้นคริปโตจาก API สาธารณะ] ช่วยเขียนโครงสร้างโค้ดเริ่มต้น (Boilerplate) ให้หน่อย โดย 1) นำเข้า Library ที่จำเป็นให้ครบ 2) สร้างฟังก์ชันหลักสำหรับดึงข้อมูล และ 3) สร้างฟังก์ชันสำหรับเซฟข้อมูลที่ได้ออกมาเป็นไฟล์ .csv พร้อมจัดการ Error หากเน็ตหลุด",
-        promptEn: "I want to build a [Insert app type e.g., Python script to fetch live crypto prices from a public API]. Please generate the initial project boilerplate. Ensure you: 1) Import all necessary dependencies, 2) Write the core function to fetch the JSON data, and 3) Write a utility function to save that data into a .csv file. Include Try/Catch blocks for network errors."
-      },
-      { 
-        purpose: "💡 ให้ AI เพิ่มคอมเมนต์อธิบายโค้ดให้คนอื่นอ่านเข้าใจ (Code Explanation)", 
-        promptTh: "[ไฮไลต์โค้ดที่ซับซ้อน แล้วกดคลิกขวาเลือก AI]\nช่วยอธิบายการทำงานของโค้ดฟังก์ชัน [ระบุชื่อฟังก์ชัน] นี้แบบ Step-by-step ด้วยภาษาที่เข้าใจง่าย และช่วยเติม Inline Comments (//) เข้าไปในโค้ดแต่ละบรรทัดให้ด้วย เพื่อที่โปรแกรมเมอร์คนอื่นในทีมจะมาอ่านต่อได้ง่ายๆ",
-        promptEn: "Please explain the logic of this highlighted [Insert function name] function step-by-step in plain English. After explaining, inject clear and concise inline comments (//) into the code block itself so that junior developers on my team can easily understand how it works."
-      }
-    ],
-    faqs: [
-      { question: "ใช้งานฟรี AI ช่วยไหม?", answer: "มีครับ ในแพ็กเกจฟรีจะมีโควต้าให้ AI ช่วย Generate โค้ดได้จำนวนหนึ่ง แต่ความฉลาดของ AI ขั้นสูงและความเร็วเซิร์ฟเวอร์จะถูกจำกัดกว่าผู้ใช้เสียเงินครับ" }
-    ]
-  },
-
-  // ==========================================
-  // 🔹 6) AI ทำเสียง / พากย์เสียง (Voice AI)
-  // ==========================================
-  {
-    id: "16",
-    slug: "elevenlabs",
-    name: "ElevenLabs",
-    logoUrl: "/logos/ElevenLabs.png",
-    description: "AI พากย์เสียงและโคลนเสียงที่สมจริงที่สุดในโลก ให้น้ำเสียงและอารมณ์เหมือนมนุษย์ 100%",
-    longDescription: "หากคุณเคยฟังคลิปใน TikTok หรือ YouTube แล้วรู้สึกว่าเสียงพากย์มันดูเนียนจนแยกไม่ออกว่าใช้คนหรือ AI พากย์... โอกาส 99% คือเขาใช้ ElevenLabs ครับ! นี่คือซอฟต์แวร์ Text-to-Speech เบอร์หนึ่งของโลกในเวลานี้ จุดเด่นที่ทำให้มันทิ้งห่างคู่แข่งคือ 'การใส่อารมณ์ (Emotion & Intonation)' เสียงของมันมีการเว้นจังหวะหายใจ การเน้นคำ และการทอดเสียงที่ดูเป็นธรรมชาติมาก นอกจากนี้ยังมีฟีเจอร์ Voice Cloning ที่คุณอัปโหลดเสียงตัวเองแค่ 1 นาทีลงไป แล้วให้ AI สังเคราะห์เสียงคุณไปพูดภาษาอื่นได้เนียนกริบ",
-    origin: "ก่อตั้งในปี 2022 โดยอดีตวิศวกรจาก Google ที่เบื่อหน่ายกับเสียงพากย์วิดีโอ (Dubbing) ที่ฟังดูแข็งทื่อ พวกเขาเลยสร้างโมเดล AI ที่ทำความเข้าใจ 'บริบทของประโยค' ก่อนพูด ปัจจุบัน ElevenLabs กลายเป็น AI ระดับยูนิคอร์นที่ค่ายหนังและครีเอเตอร์ทั่วโลกขาดไม่ได้",
-    category: "Voice & Audio",
-    priceModel: "Free (จำกัด 10,000 ตัวอักษร/เดือน) / Starts at $5 ต่อเดือน",
-    isFree: true,
-    externalUrl: "https://elevenlabs.io",
-    rating: 4.9,
-    reviewCount: 18500,
-    updatedAt: "Feb 2025",
-    features: [
-      "Text-to-Speech: เปลี่ยนข้อความเป็นเสียงพูด รองรับกว่า 29 ภาษา (รวมภาษาไทย)",
-      "Voice Cloning: โคลนเสียงตัวเองหรือนักพากย์ด้วยคลิปเสียงความยาวแค่ 1-2 นาที",
-      "Speech-to-Speech: อัดเสียงพูดของคุณเข้าไป ให้ AI เปลี่ยนเสียงนั้นเป็นเสียงคนอื่น (อารมณ์และจังหวะเป๊ะตามคุณ)",
-      "Sound Effects (SFX): สั่งให้ AI สร้างเอฟเฟกต์เสียง เช่น 'เสียงดาบซามูไรฟันกัน' หรือ 'เสียงฝนตก'"
-    ],
-    pros: [
-      "ความสมจริงของเสียงคือ 'อันดับ 1 ของโลก' ไร้คู่แข่ง เสียงไม่แข็งเป็น Siri หรือ Google Translate หุ่นยนต์",
-      "รองรับภาษาไทยได้ดีเยี่ยม น้ำเสียงและการควบกล้ำมีความเป็นธรรมชาติสูงมาก",
-      "เหมาะสุดๆ กับการทำหนังสือเสียง (Audiobook) พอดแคสต์ หรือช่อง YouTube สายสปอยล์หนัง"
-    ],
-    cons: [
-      "โควต้าตัวอักษรหมดไวมาก (มันตัดโควต้าทุกครั้งที่กด Generate เพื่อฟังเสียง แม้ว่าเราจะไม่เซฟผลลัพธ์ก็ตาม)",
-      "มีความเสี่ยงที่จะถูกมิจฉาชีพนำไปโคลนเสียงคนดังหรือคนรู้จักเพื่อหลอกลวง (Deepfake audio)"
-    ],
-    steps: [
-      { title: "เลือกนักพากย์ (Voice)", desc: "เปิดหน้าเว็บ เลือกเสียงคนพากย์ที่ชอบจากคลัง (มีให้เลือกเป็นพันๆ เสียงทั้งชายหญิง วัยรุ่นยันคนแก่)" },
-      { title: "ป้อนข้อความ", desc: "วางสคริปต์ที่ต้องการ สามารถใส่จุด (...) หรือตกใจ (!) เพื่อบังคับให้ AI เว้นจังหวะหายใจหรือกระแทกเสียงได้" },
-      { title: "Generate เสียง", desc: "กดปุ่มสร้างเสียง ฟังความพอใจ แล้วดาวน์โหลดเป็น MP3 ออกไปตัดต่อใส่วิดีโอ" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 สคริปต์เล่าเรื่องให้ AI อ่านแบบมีอารมณ์ร่วม (Storytelling / Hook)", 
-        promptTh: "[เลือกเสียงพากย์โทนตื่นเต้น แล้ววางข้อความนี้]\nคุณรู้ความลับนี้ไหมครับ? ... [เว้นวรรคด้วยจุด 3 จุดเพื่อให้ AI ถอนหายใจ] ... ที่จริงแล้ว [ระบุเรื่องเล่าที่น่าตื่นเต้น เช่น พีระมิดไม่ได้ถูกสร้างโดยทาสอย่างที่เราเคยเรียนมา]! 😱 วันนี้ผมจะพาไปเจาะลึกความจริงที่ถูกซ่อนไว้ครับ. อันดับแรกเลยนะ... [ระบุเนื้อหา]. ถ้าคุณรู้สึกช็อกเหมือนผม อย่าลืมกดหัวใจและแชร์คลิปนี้ด่วนๆ เลยครับ!",
-        promptEn: "[Select a dynamic, high-energy voice actor]\nDid you know this massive secret? ... [The ellipses force a natural pause] ... It turns out that [Insert intriguing fact e.g., the pyramids weren't actually built by slaves as we were taught]! 😱 Today, we are uncovering the hidden truth. First off... [Insert main story]. If this blew your mind, hit that like button and share this video immediately!"
-      },
-      { 
-        purpose: "💡 สร้างเสียงเอฟเฟกต์ประกอบคลิป (Sound Effects - SFX)", 
-        promptTh: "[ฟีเจอร์นี้ต้องใช้ภาษาอังกฤษเท่านั้นถึงจะเป๊ะ]\nCinematic heavy impact sound, deep bass boom followed by a high-pitched sci-fi whoosh, reverberating in a large empty cave. Include a [ระบุรายละเอียดเพิ่มเติม เช่น slightly echoing water drop at the very end].",
-        promptEn: "Cinematic heavy impact sound, deep bass boom followed by a high-pitched sci-fi whoosh, reverberating in a large empty metal hangar. Include a [Insert specific detail e.g., crisp, echoing glass shatter at the very end]."
-      }
-    ],
-    faqs: [
-      { question: "ทำเสียงพากย์คลิปเอาไปลง YouTube หาเงินได้ไหม?", answer: "ได้แน่นอนครับ! แต่ต้องสมัครแพ็กเกจเสียเงินแบบ Creator Tier ($22/เดือน) ขึ้นไป คุณถึงจะได้รับสิทธิ์ในการนำเสียงไปใช้งานเชิงพาณิชย์ (Monetization) แบบถูกลิขสิทธิ์" }
-    ]
-  },
-  {
-    id: "17",
-    slug: "murf-ai",
-    name: "Murf AI",
-    logoUrl: "/logos/Murf AI.png",
-    description: "AI พากย์เสียงระดับสตูดิโอ เกิดมาเพื่องานธุรกิจ พรีเซนเทชัน และ E-Learning",
-    longDescription: "หาก ElevenLabs คือจ้าวแห่งเสียงดราม่าที่เต็มไปด้วยอารมณ์ Murf AI ก็คือ 'นักพากย์เสียงมืออาชีพสายธุรกิจ' แพลตฟอร์มนี้ถูกออกแบบมาเพื่อองค์กร ครีเอเตอร์ และนักการศึกษาที่ต้องการทำวิดีโอพรีเซนเทชัน, โฆษณาองค์กร, หรือสื่อการสอน (E-Learning) จุดแข็งของ Murf คือมันไม่ได้มีแค่ช่องให้พิมพ์ข้อความ แต่มันให้ 'หน้าต่างตัดต่อวิดีโอ (Studio)' มาในเว็บเลย คุณสามารถอัปโหลดสไลด์ หรือวิดีโอเข้าไป แล้วเลื่อนขยับบล็อกเสียงพากย์ให้ตรงกับภาพ (Timeline Sync) ได้แบบเฟรมต่อเฟรม",
-    origin: "ก่อตั้งขึ้นในปี 2020 โดยนักพัฒนาที่ต้องการลดความยุ่งยากและต้นทุนที่แพงหูฉี่ของการจ้างห้องอัดและนักพากย์อาชีพ Murf มุ่งเน้นไปที่ตลาด B2B (ลูกค้าองค์กร) เสียงที่คัดมาให้ในแอปจึงมักจะเป็นเสียงทุ้มลึก น่าเชื่อถือ อ่านชัดถ้อยชัดคำ เหมาะกับการทำ Presentation เสนอผู้บริหาร",
-    category: "Voice & Audio",
-    priceModel: "Free (จำกัด ฟังเสียงได้อย่างเดียว) / Starts at $19 ต่อเดือน",
-    isFree: false,
-    externalUrl: "https://murf.ai",
     rating: 4.6,
-    reviewCount: 5400,
-    updatedAt: "Feb 2025",
+    reviewCount: 6800,
+    updatedAt: "Feb 2026",
     features: [
-      "Voiceover Studio: มีหน้าต่าง Timeline ตัดต่อปรับขยับเสียงให้เข้ากับวิดีโอจบในเว็บเดียว",
-      "Pitch & Speed Control: สามารถลากเส้นปรับกราฟความสูง-ต่ำของเสียง (Pitch) และการเน้นคำเฉพาะจุด (Emphasis) ได้ละเอียดยิบ",
-      "120+ Professional Voices: เสียงนักพากย์ AI ถูกคัดมาแล้วว่าดูภูมิฐาน น่าเชื่อถือ ชัดเจน",
-      "Pronunciation Builder: ระบบแก้ไขการออกเสียงคำศัพท์เฉพาะ (Jargon) หรือชื่อแบรนด์แบบคาราโอเกะ"
+      "Zero Setup: เปิดเบราว์เซอร์แล้วพิมพ์โค้ดได้เลย ไม่ต้องลงโปรแกรมในเครื่อง",
+      "Proactive Debugging: เมื่อโปรแกรมแครช AI จะป๊อปอัปขึ้นมาบอกสาเหตุและวิธีแก้ทันที",
+      "Generate Code in Context: ไฮไลต์โค้ดแล้วคลิกขวา สั่งให้แปลงภาษา (เช่น แปลง Python เป็น JS) หรือให้มันเติมคอมเมนต์อธิบายโค้ดให้"
     ],
     pros: [
-      "มีระบบ Sync ลากกล่องเสียงให้ตรงกับภาพในวิดีโอง่ายมากๆ ไม่ต้องไปนั่งเดาจังหวะในแอปอื่น",
-      "เหมาะที่สุดสำหรับวิดีโอสอนงานพนักงาน (Training Course) ที่เนื้อหายาวๆ และต้องการเสียงสม่ำเสมอ",
-      "บังคับให้ AI ออกเสียงคำศัพท์แปลกๆ ได้ตรงเป๊ะ 100% ผ่านระบบ Pronunciation"
+      "เหมาะกับมือใหม่มากที่สุด ลดอาการหัวร้อนจากการตั้งค่าเครื่อง (Environment Setup) ไม่ผ่าน",
+      "มีระบบ Multiplayer ลิงก์โปรเจกต์ส่งให้เพื่อนเข้ามาช่วยกันพิมพ์โค้ดแก้บั๊กแบบเรียลไทม์ได้",
+      "กดปุ่มเดียว Deploy นำแอปขึ้นออนไลน์ให้คนอื่นใช้งานได้เลย"
     ],
     cons: [
-      "การแสดงอารมณ์ความรู้สึกตื่นเต้น ดีใจ เสียใจ ยังสู้ความสมจริงของ ElevenLabs ไม่ได้ (เสียงแอบเนี๊ยบเหมือนผู้ประกาศข่าวไปนิด)",
-      "แพ็กเกจฟรีแทบจะเอาไปใช้งานจริงไม่ได้เลย (เพราะล็อกไม่ให้ดาวน์โหลดไฟล์ MP3 ต้องจ่ายเงินเปิดแพ็กเกจก่อน)"
+      "แพ็กเกจฟรีจะถูกบังคับให้โปรเจกต์เป็นแบบสาธารณะ (Public) คนอื่นเห็น Source Code เราได้",
+      "หากพัฒนาโปรเจกต์ระบบใหญ่มากๆ การเขียนและรันบนเบราว์เซอร์อาจจะเกิดอาการหน่วงได้"
     ],
     steps: [
-      { title: "สร้างโปรเจกต์", desc: "เข้าไปที่หน้า Murf Studio เลือกว่าจะทำโปรเจกต์แบบ Audio หรือ Video" },
-      { title: "วางสคริปต์รายบรรทัด", desc: "วางข้อความลงไป ระบบจะหั่นข้อความเป็นบล็อกบรรทัดย่อยๆ ให้คุณปรับความเร็ว แยกเสียงผู้ชาย/ผู้หญิงสลับกันได้" },
-      { title: "ซิงค์ภาพและเสียง", desc: "ลากคลิปวิดีโอมาใส่ในเลเยอร์ด้านบน ปรับขยับเสียงบรรทัดนั้นให้ตรงกับภาพประกอบ เสร็จแล้วกด Export ออกไปพรีเซนต์ได้เลย" }
+      { title: "สร้าง Repl (โปรเจกต์)", desc: "สมัครสมาชิก กดปุ่ม Create Repl เลือกภาษาที่อยากเขียน เช่น Python หรือ Next.js" },
+      { title: "ใช้ AI สร้างโครง", desc: "เปิดช่องแชทด้านขวา พิมพ์สั่งให้ AI สร้างไฟล์ตั้งต้นและไลบรารีที่จำเป็น" },
+      { title: "รันและแก้บั๊ก", desc: "กดปุ่ม 'Run' หากมี Error ให้กดปุ่ม 'Explain Error' เพื่อให้ AI ช่วยแก้ไข" }
     ],
     prompts: [
       { 
-        purpose: "💡 สคริปต์ทางการสำหรับวิดีโอเปิดตัวบริษัท (Corporate Presentation)", 
-        promptTh: "[เลือกเสียงโทน Authority หรือ Professional]\nในโลกธุรกิจที่หมุนไปอย่างรวดเร็ว, การปรับตัวคือหัวใจสำคัญ. [ใช้ฟีเจอร์ Pause เว้นวรรค 1 วินาที] ที่ [ระบุชื่อบริษัท], เราเชื่อมั่นในการส่งมอบนวัตกรรมเพื่อช่วยให้ธุรกิจของคุณเติบโต. [ไฮไลต์คำเพื่อใช้ฟีเจอร์ Emphasis เน้นเสียง] ด้วยประสบการณ์กว่า [ระบุตัวเลข] ปี, เราพร้อมแล้วที่จะเป็นพาร์ทเนอร์เคียงข้างความสำเร็จของคุณ.",
-        promptEn: "[Select an 'Authoritative' or 'Professional' voice style]\nIn today's fast-paced, ever-changing business landscape, adaptability is the key to survival. [Add 1-second Pause] At [Insert Company Name], we strongly believe in delivering cutting-edge innovations designed to help your business scale efficiently. [Apply 'Emphasis' feature on the next phrase] With over [Insert Number] years of industry experience, we are ready to be your ultimate partner in success."
+        purpose: "💡 สร้างโครงแอปขูดข้อมูลเว็บไซต์ด้วย Python (Web Scraping)", 
+        promptTh: "ฉันต้องการสร้างสคริปต์ Python เพื่อขูดข้อมูล (Scrape) ราคาสินค้าจากเว็บไซต์ [ระบุ URL] ช่วยเขียนโครงสร้างโค้ดเริ่มต้นโดยใช้ BeautifulSoup ให้หน่อย และเขียนฟังก์ชันสำหรับเซฟข้อมูลที่ได้ลงไฟล์ CSV ด้วย",
+        promptEn: "I want to build a Python script to scrape product prices from [Insert URL]. Please generate the boilerplate code using the BeautifulSoup library. Also, include a function to save the extracted data into a CSV file."
       },
       { 
-        purpose: "💡 สคริปต์สำหรับวิดีโอสอนใช้งานซอฟต์แวร์ (E-Learning / Tutorial)", 
-        promptTh: "[เลือกเสียงโทน Friendly หรือ Conversational]\nสวัสดีค่ะ! ยินดีต้อนรับเข้าสู่วิดีโอสอนการใช้งานระบบ. วันนี้เราจะมาเรียนรู้วิธีตั้งค่าฟีเจอร์ [ระบุชื่อฟีเจอร์] กันแบบง่ายๆ นะคะ. ขั้นตอนแรก ให้คุณคลิกที่เมนู '[ระบุชื่อปุ่ม]' ทางด้านซ้ายของหน้าจอ. หลังจากนั้น ระบบจะพาคุณไปที่หน้าต่างใหม่ ให้คุณกรอกข้อมูล [ระบุข้อมูล]. เพียงเท่านี้ก็เสร็จเรียบร้อยค่ะ! ไปลองทำกันดูนะคะ",
-        promptEn: "[Select a 'Friendly' or 'Conversational' voice style]\nHello and welcome! We are glad you're here. Today, we're going to learn exactly how to set up the [Insert Feature Name] feature in just a few simple steps. First, simply click on the '[Insert Button Name]' menu located on the left side of your dashboard. Once there, you will be prompted to enter your [Insert required info]. And you're all set! Give it a try now."
+        purpose: "💡 ให้ AI เติมคอมเมนต์อธิบายโค้ดให้คนอื่นเข้าใจ (Code Documentation)", 
+        promptTh: "[ไฮไลต์บล็อกโค้ดแล้วเลือก AI]\nช่วยอธิบายการทำงานของลูปนี้แบบทีละสเต็ปด้วยภาษาที่เข้าใจง่าย และช่วยเติม Inline Comments (// หรือ #) เข้าไปในโค้ดแต่ละบรรทัดให้ด้วย เพื่อให้เพื่อนร่วมทีมมาอ่านต่อได้",
+        promptEn: "Please explain the logic of this highlighted loop step-by-step in plain English. After explaining, inject clear inline comments into the code block so that junior developers on my team can easily understand it."
       }
     ],
     faqs: [
-      { question: "อัปโหลดเสียงที่อัดมาจากบ้าน ให้ AI ทำให้เสียงใสขึ้นได้ไหม?", answer: "มีโหมด Voice Changer ครับ คุณสามารถอัดเสียงอู้อี้ๆ ก้องๆ จากไมค์บ้านๆ ของคุณเข้าไป แล้ว AI จะกรองเสียงรบกวน เปลี่ยนโทนเสียงของคุณให้กลายเป็นเสียงนักพากย์เกรดพรีเมียมได้เลยครับ" }
-    ]
-  },
-
-  // ==========================================
-  // 🔹 7) AI ทำเพลง (Music Generation AI)
-  // ==========================================
-  {
-    id: "18",
-    slug: "suno-ai",
-    name: "Suno AI",
-    logoUrl: "/logos/Suno AI.png",
-    description: "นักแต่งเพลงอัจฉริยะ เสกเนื้อร้อง ดนตรี และเสียงร้องแบบ Full Song จบได้ใน 1 นาที",
-    longDescription: "Suno AI ถือเป็นผู้เปลี่ยนเกม (Game Changer) ในวงการเพลงอย่างแท้จริง! คุณไม่จำเป็นต้องเล่นดนตรีเป็น ไม่ต้องอ่านโน้ตออก เพียงแค่คุณพิมพ์อธิบายแนวเพลงและเรื่องราวที่อยากได้ (เช่น 'เพลงแนวร็อกจังหวะสนุกๆ เกี่ยวกับคนทำงานออฟฟิศที่อยากกลับบ้านไปนอน') Suno จะทำการแต่งเนื้อร้องภาษาไทย, เรียบเรียงเครื่องดนตรี, และ 'ร้องเพลง' ออกมาเป็นเพลงเต็มๆ ที่มีความไพเราะระดับเปิดฟังในสตรีมมิ่งได้เลย มันสามารถแต่งท่อน Intro, ท่อน Verse, ไปจนถึงท่อนฮุค (Chorus) ได้กลมกล่อมจบใน 2-4 นาที",
-    origin: "Suno ก่อตั้งโดยทีมวิจัยที่หลงใหลในเสียงดนตรี เป้าหมายของพวกเขาคือการ 'ทำลายกำแพงการเข้าถึงดนตรี' ให้ทุกคนบนโลกสร้างเพลงของตัวเองได้ (Democratize Music) โมเดลรุ่น v3.5 ได้สร้างความฮือฮาไปทั่วโลก เพราะคุณภาพเสียงที่ได้ทะลุขีดจำกัด AI รุ่นเก่าที่เสียงมักจะอู้อี้เหมือนวิทยุติดๆ ดับๆ ไปได้อย่างสิ้นเชิง",
-    category: "Music Generation",
-    priceModel: "Free (50 เครดิตต่อวัน) / Starts at $10 ต่อเดือน (Pro)",
-    isFree: true,
-    externalUrl: "https://suno.com",
-    rating: 4.8,
-    reviewCount: 15400,
-    updatedAt: "Feb 2025",
-    features: [
-      "Text-to-Song: พิมพ์ Prompt แล้วได้เพลงเต็มรูปแบบพร้อมเสียงร้องทันที (Generate ทีละ 2 ทางเลือกให้ลองฟัง)",
-      "Custom Lyrics Mode: คุณสามารถแต่งเนื้อร้องของคุณใส่เข้าไปเอง แล้วบอกให้ AI ใส่ดนตรีและร้องเนื้อหาของคุณเป๊ะๆ",
-      "Audio Input: อัดเสียงฮัมเพลงในห้องน้ำ หรือเคาะโต๊ะ แล้วสั่งให้ Suno นำจังหวะนั้นไปขยายเป็นเพลงฉบับสมบูรณ์",
-      "Extend Song: หากเพลงจบที่นาทีที่ 2 แล้วยังไม่สุด สามารถกดปุ่ม Extend เพื่อสร้างดนตรีท่อนโซโล่ หรือท่อนจบต่อไปได้"
-    ],
-    pros: [
-      "ความง่ายระดับ 10/10 แค่พิมพ์ประโยคเดียวปุ๊บ ได้เพลงที่เอาไปฟังเล่น หรือแกล้งเปิดเซอร์ไพรส์เพื่อนได้เลย",
-      "รองรับ 'ภาษาไทย' ได้ดีมาก! แม้บางคำอาจจะรวบคำหรือมีสำเนียงแปร่งๆ บ้าง แต่ก็ถือว่าเก่งที่สุดในค่าย AI เพลงตอนนี้",
-      "เวอร์ชันฟรีใจดีมาก ให้เครดิต 50 หน่วยทุกวัน (สร้างเพลงได้ประมาณวันละ 10 เพลง)"
-    ],
-    cons: [
-      "คุณภาพไฟล์เสียง (Audio Fidelity) ในบางครั้งยังมีอาการขุ่นๆ เสียงสแนร์กลองแตก หรือฟังดูเหมือนเปิดในกล่องทึบๆ",
-      "โครงสร้างการเรียบเรียงเพลงบางครั้งเดาใจยาก AI อาจจะร้องรวบท่อนฮุค หรือตัดจบดนตรีแบบดื้อๆ",
-      "ลิขสิทธิ์เพลงบัญชีฟรี จะเป็นของ Suno (ห้ามนำไปอัปโหลดขาย) ต้องใช้บัญชี Pro เท่านั้นถึงจะเป็นผู้ถือลิขสิทธิ์เพลง"
-    ],
-    steps: [
-      { title: "เลือกโหมดสร้าง", desc: "กดปุ่ม Create เลือกว่าจะพิมพ์แนวเพลงรวมๆ ให้มันคิดเนื้อให้ (Description) หรือเปิดโหมด Custom เพื่อใส่เนื้อเอง" },
-      { title: "ใส่แนวเพลง", desc: "พิมพ์แนวเพลงที่อยากได้ เช่น Thai Pop, Acoustic Guitar, EDM" },
-      { title: "ดาวน์โหลด/ขยายต่อ", desc: "ระบบจะให้เพลงมา 2 ชิ้น ฟังแล้วชอบอันไหน กดโหลด MP3/MP4 ไปแชร์ลงโซเชียลได้เลย หรือกด Extend เพื่อเพิ่มความยาว" }
-    ],
-    prompts: [
-      { 
-        purpose: "💡 สั่ง AI แต่งเพลงให้เพื่อนแบบไวๆ (โหมด Description)", 
-        promptTh: "A highly energetic and upbeat [ระบุแนวเพลง เช่น Thai Pop, Acoustic Guitar, K-pop] song about a person named '[ระบุชื่อเพื่อน]' who always [ระบุเรื่องขำๆ เช่น มาทำงานสายแต่รอดตัวตลอดเพราะซื้อขนมมาฝากบอส]. The mood is extremely feel-good, funny, and catchy. Wishing them a happy birthday.",
-        promptEn: "A highly energetic and upbeat [Insert genre e.g., Indie Pop, Acoustic Guitar, 80s Synth] song about a person named '[Insert Name]' who always [Insert funny trait e.g., drinks 5 cups of coffee before noon but still falls asleep]. The mood is extremely feel-good, funny, and catchy. Wishing them an amazing happy birthday."
-      },
-      { 
-        purpose: "💡 คุมท่อนฮุคและเนื้อร้องด้วยตัวเอง (โหมด Custom Lyrics)", 
-        promptTh: "[ใส่เนื้อในช่อง Lyrics]\n[Verse 1]\nตื่นเช้ามาเจอแต่กองงาน\nบอสก็ทักมาสั่งงานแต่เช้า\nฉันแค่อยากจะกลับไปนอนยาวๆ\n\n[Chorus]\nโอ้ ชีวิตออฟฟิศซินโดรม [ระบุอารมณ์ความรู้สึก]\nปวดหลังปวดคอไปหมดแล้ว\nอยากจะลาออกไปเปิดร้าน [ระบุความฝัน]\n\n[ใส่ในช่อง Style of Music]: Thai Indie Pop, Lo-Fi Beat, Chill vibe, Beautiful Female Vocalist",
-        promptEn: "[Insert into the Lyrics box]\n[Verse 1]\nWaking up to a mountain of tasks,\nBoss is texting me before I even ask.\nAll I want is to stay in bed,\n\n[Chorus]\nOh, this corporate life is a mess, [Insert emotion e.g., feeling so exhausted]\nMy back hurts and I'm stressed.\nI just want to quit and [Insert dream e.g., open a quiet bookshop on the beach].\n\n[Insert into the Style of Music box]: Upbeat Indie Rock, Energetic, Raspy Male Vocalist"
-      }
-    ],
-    faqs: [
-      { question: "เอาเพลงไปเปิดทำคลิป Reels หรือ TikTok โดนแบนไหม?", answer: "ถ้าเป็นบัญชีฟรี ห้ามนำไปสร้างรายได้โดยตรงครับ (แต่ลงเล่นๆ ได้) ถ้าจะนำเพลงไปเปิดสร้างรายได้ Monetize หรือลง Spotify ต้องจ่ายเงินสมัครแพ็กเกจ Pro ขั้นต่ำครับ แล้วลิขสิทธิ์เพลงนั้นจะเป็นของคุณ 100%" }
+      { question: "สามารถโหลดโค้ดที่เขียนบนเว็บกลับมาลงคอมตัวเองได้ไหม?", answer: "ได้ครับ สามารถกดดาวน์โหลดโปรเจกต์ออกมาเป็นไฟล์ .zip หรือจะเชื่อมต่อกับ GitHub Repository ของคุณเพื่อ Push โค้ดเก็บไว้ก็ได้เช่นกัน" }
     ]
   },
   {
-    id: "19",
-    slug: "udio",
-    name: "Udio",
-    logoUrl: "/logos/Udio.png",
-    description: "AI ผลิตดนตรีระดับ Hi-Res Audio คุมโครงสร้างและท่อนฮุคเพลงได้ดั่งใจนึก",
-    longDescription: "หาก Suno ตอบโจทย์เรื่องความง่ายและเร็ว Udio ก็คือ 'สตูดิโอโปรดิวเซอร์เพลงระดับโปร' ของแท้! เครื่องมือนี้อัดแน่นไปด้วยคุณภาพเสียง (Audio Fidelity) ที่ใสแจ๋วและมีมิติของเครื่องดนตรีที่แยกเลเยอร์ชัดเจนที่สุดในวงการ Udio ทำเสียงเครื่องเป่า เบส และคอรัสประสานเสียงได้ชนิดที่ว่านักดนตรียังต้องอ้าปากค้าง ความล้ำลึกของ Udio คือมันเปิดให้คุณควบคุม 'โครงสร้าง' ได้ละเอียดยิบ คุณสร้างท่อน Intro ความยาว 30 วินาทีก่อน จากนั้นค่อยกดเพิ่มท่อน Verse 1 แล้วเติมท่อน Solo กีตาร์ต่อท้าย เรียงตัวต่อกันไปเรื่อยๆ จนจบเพลงได้สมบูรณ์แบบ",
-    origin: "ก่อตั้งโดยอดีตนักวิจัยมือพระกาฬจาก Google DeepMind ผู้เชี่ยวชาญด้าน AI เสียง เปิดตัวแบบเซอร์ไพรส์ในต้นปี 2024 ด้วยเป้าหมายสุดทะเยอทะยานที่ต้องการสร้างเครื่องมือทำเพลงที่เสียงออกมาเหมือนไป 'เช่าห้องอัดในสตูดิโอ' จริงๆ ดนตรีไม่แบน และไม่มีนอยส์รบกวน",
-    category: "Music Generation",
-    priceModel: "Free (10 เครดิต/วัน) / Starts at $10 ต่อเดือน",
+    id: "c4",
+    slug: "blackbox-ai",
+    name: "Blackbox AI",
+    logoUrl: "/logos/blackbox.png",
+    description: "เครื่องมือวิเคราะห์และแนะนำโค้ดที่ครอบคลุม ช่วยหาโค้ด Snippet ตอบโจทย์ได้ไว",
+    longDescription: "Blackbox AI เริ่มต้นจากการเป็นเครื่องมือยอดฮิตที่ให้คุณก๊อปปี้ข้อความโค้ดจากวิดีโอ (Video to Text) ก่อนจะพัฒนาตัวเองมาเป็น AI Coding Assistant เต็มรูปแบบ จุดเด่นของ Blackbox คือมีระบบ 'AI Code Search' ที่ทรงพลัง เหมือนเป็น Google สำหรับโปรแกรมเมอร์โดยเฉพาะ เมื่อคุณถามวิธีแก้ปัญหา มันจะดึงตัวอย่างโค้ด (Snippets) ที่ใช้งานได้จริงจากฐานข้อมูลขนาดใหญ่มาให้ พร้อมมี Extension สำหรับผูกกับ IDE เพื่อช่วยแนะนำโค้ดและเขียนเอกสารประกอบ (Documentation) ได้อัตโนมัติ",
+    origin: "สร้างขึ้นเพื่อแก้ปัญหานักพัฒนาที่ใช้เวลาหลายชั่วโมงในการค้นหาวิธีแก้บั๊กบน StackOverflow โดย Blackbox รวบรวมคำตอบที่ดีที่สุดมาเสิร์ฟให้ในหน้าต่างเดียว",
+    category: "Coding & Development",
+    priceModel: "Free (ฟีเจอร์พื้นฐาน) / Starts at $0.99/เดือน สำหรับ Pro",
     isFree: true,
-    externalUrl: "https://www.udio.com",
-    rating: 4.7,
+    externalUrl: "https://www.blackbox.ai",
+    rating: 4.5,
     reviewCount: 9200,
-    updatedAt: "Feb 2025",
+    updatedAt: "Feb 2026",
     features: [
-      "Ultra High-Quality Audio: เสียงใส คมชัด แยกชิ้นดนตรีออกมาชัดเจน เสียงร้องมีไดนามิกพ่นลมหายใจสมจริง",
-      "Section-by-Section Building: ต่อเพลงทีละท่อน (ท่อนละ 32 วินาที) ขยายไปข้างหน้า (Add Forward) หรือย้อนเติม Intro (Add Backward) ก็ได้",
-      "Audio Inpainting (Remix): ฟีเจอร์ระดับเทพ! หากมีข้อผิดพลาดแค่ 1 คำ (ร้องเนื้อผิด) คุณไฮไลต์ท่อนนั้น แล้วสั่งให้ AI อัดเสียงร้องซ่อมแซมแค่เฉพาะจุดนั้นได้เลย (ไม่ต้องทิ้งเพลงทั้งก้อน)",
-      "Advanced Tags: รองรับการใช้โครงสร้างปีกกาเพื่อสั่งเครื่องดนตรี เช่น [Guitar Solo], [Beat Drop], [Choir]"
+      "Code Search Engine: ค้นหาวิธีแก้ปัญหาและสคริปต์โค้ดจากคำถามภาษามนุษย์",
+      "Auto Documentation: กดคลิกเดียวเพื่อสแกนโค้ดและสร้างเอกสาร README หรือ Comment อธิบายโค้ด",
+      "Image to Code: อัปโหลดภาพหน้าจอ UI (Screenshot) แล้วให้ AI เขียนโค้ด HTML/CSS จำลองตามภาพนั้น"
     ],
     pros: [
-      "เรื่องคุณภาพการมิกซ์เสียง (Mixing/Mastering) ชนะ AI ทุกตัวในตลาด ณ ปัจจุบัน ฟังแล้วอิ่ม",
-      "มีอิสระในการวางแพทเทิร์นเพลงสูงมาก โปรดิวเซอร์สามารถปั้นเพลงให้พีคตรงจุดที่ต้องการได้",
-      "Inpainting คือเครื่องช่วยชีวิตคนทำเพลงอย่างแท้จริง"
+      "หาตัวอย่างโค้ด (Snippets) มาใช้งานได้เร็วมาก ประหยัดเวลาค้นหา",
+      "ฟีเจอร์ Image to Code ทำงานได้น่าประทับใจ ช่วยขึ้นโครงหน้าเว็บได้รวดเร็ว",
+      "ราคาแพ็กเกจพรีเมียมค่อนข้างถูกเมื่อเทียบกับคู่แข่งในตลาด"
     ],
     cons: [
-      "หน้าต่างผู้ใช้งาน (UI) และระบบปุ่มต่อเพลง มีความซับซ้อนมาก! มือใหม่เข้าไปจะงงเป็นไก่ตาแตกทันที (Learning Curve สูง)",
-      "แม้จะร้องภาษาไทยได้ แต่สำเนียงและวรรณยุกต์มักจะเพี้ยน หรือร้องรัวคำ (เก่งและเพราะสุดๆ กับเพลงภาษาอังกฤษ)",
-      "เครดิตรายวันในโควต้าฟรีให้น้อยมาก (แค่วันละ 10 เครดิต) ต่อเพลง 2-3 ทีก็หมดโควต้าแล้ว"
+      "ความสามารถในการเข้าใจ Context โปรเจกต์ขนาดใหญ่ยังเป็นรอง Copilot และ Cursor",
+      "UI บนหน้าเว็บอาจจะดูรกๆ ไปบ้างในบางฟีเจอร์"
     ],
     steps: [
-      { title: "สร้างท่อน 30 วิแรก", desc: "ใส่แนวเพลง/บรรยากาศที่อยากได้ลงไป AI จะแต่งท่อนความยาวสั้นๆ 32 วินาทีมาให้ 2 ชิ้น" },
-      { title: "เลือกชิ้นงานที่ดีที่สุด", desc: "ฟังดูว่าชอบเมโลดี้ไหนที่สุด แล้วกดไอคอนลูกศร 'Extend' เพื่อสร้างท่อนต่อไป" },
-      { title: "ต่อเติมท่อนเพลง", desc: "เลือก 'Add Section After' ใส่เนื้อเพลงท่อนฮุคลงไป แล้วทำสเต็ปนี้วนไปเรื่อยๆ จนจบเพลง" }
+      { title: "ค้นหาปัญหา", desc: "เข้าไปที่หน้าเว็บ Blackbox.ai แล้วพิมพ์ปัญหาที่คุณเจอ เช่น 'how to connect MongoDB in Next.js'" },
+      { title: "เลือก Snippet", desc: "AI จะพ่นตัวอย่างโค้ดมาให้ คุณสามารถก๊อปปี้ไปปรับใช้ได้เลย" },
+      { title: "ใช้งานใน IDE", desc: "โหลด Extension มาติดตั้งใน VS Code เพื่อใช้งานฟีเจอร์ Autocomplete" }
     ],
     prompts: [
       { 
-        purpose: "💡 สร้างเพลงบรรเลงประกอบคลิปแนวอลังการ (Instrumental BGM)", 
-        promptTh: "[แนะนำพิมพ์ภาษาอังกฤษล้วน เพื่อให้ AI จัดการมิกซ์เสียงได้เต็มประสิทธิภาพสูงสุด]",
-        promptEn: "An epic, sweeping cinematic orchestral soundtrack, Hans Zimmer style. Featuring [Insert main instruments e.g., heavy brass horns, a highly emotional cello solo, and building tribal percussion]. The atmosphere starts dark and tense, slowly transitioning into a triumphant, heroic climax. Instrumental only, no vocals."
+        purpose: "💡 สั่งสร้างเอกสาร Readme สำหรับโปรเจกต์ (Documentation)", 
+        promptTh: "ช่วยเขียนไฟล์ README.md สำหรับโปรเจกต์ Next.js ของฉันหน่อย โครงการนี้คือ [ระบุเป้าหมาย เช่น เว็บแอปพลิเคชันสำหรับเรียนภาษาอังกฤษ] โดยต้องมีหัวข้อ: วิธีการติดตั้ง (Installation), ตัวแปร Environment (.env) ที่ต้องใช้, และโครงสร้างโฟลเดอร์",
+        promptEn: "Generate a professional README.md file for my Next.js project. The project is a [Insert goal e.g., platform for learning English]. Include the following sections: Installation Guide, Required Environment Variables (.env), and Folder Structure overview."
       },
       { 
-        purpose: "💡 สร้างเพลงแนวสากลแจ๊ซ พร้อมเนื้อร้อง (Custom Lyrics)", 
-        promptTh: "[ควรใช้เนื้อร้องภาษาอังกฤษ เพื่อดึงศักยภาพเสียงร้องที่สมจริงที่สุดของ Udio ออกมา]\n[Verse 1]\nSitting at the bar at 2 AM,\nThinking about [ระบุเรื่องเศร้า เช่น the promotion I didn't get].\nThe whiskey's gone and the rain falls down.\n\n[Chorus]\nOh, [ระบุความรู้สึก เช่น these city blues are driving me crazy].\n\n[ใส่ในช่อง Tags]: Smooth Jazz, melancholic, saxophone solo, deep raspy male vocals, acoustic bass, smoky bar atmosphere.",
-        promptEn: "[Verse 1]\nSitting at the bar at 2 AM,\nThinking about [Insert sad topic e.g., the love I just lost].\nThe whiskey's gone and the rain falls down.\n\n[Chorus]\nOh, [Insert feeling e.g., these midnight blues are tearing me apart].\n\n[Insert into Tags box]: Smooth Jazz, melancholic, saxophone solo, deep male vocals, acoustic bass, smoky bar atmosphere."
+        purpose: "💡 ให้หาโค้ดเชื่อมต่อฐานข้อมูลแบบเร็วๆ (Code Search)", 
+        promptTh: "ขอตัวอย่างโค้ด (Snippet) ที่สั้นและกระชับที่สุด สำหรับการเชื่อมต่อฐานข้อมูล PostgreSQL โดยใช้ Prisma ORM ในโปรเจกต์ TypeScript",
+        promptEn: "Provide the most concise code snippet to establish a connection to a PostgreSQL database using Prisma ORM in a TypeScript project."
       }
     ],
     faqs: [
-      { question: "ทำไมพอกด Extend ต่อเพลงแล้ว จังหวะมันเปลี่ยนไปคนละม้วนเลย?", answer: "คุณต้องรักษา Prompt Tags ต้นฉบับ (แนวเพลงเดิม) เอาไว้ในช่องด้วยครับ และตรงช่องเนื้อร้อง ควรใส่วงเล็บกำกับบอก AI ด้วย เช่น [Chorus] หรือ [Drop] เพื่อเป็นไกด์ไลน์ว่าเราอยากให้ท่อนถัดไปออกมาดุเดือด หรือเบาลงครับ" }
+      { question: "ฟีเจอร์ Image to Code รองรับภาษาอะไรบ้าง?", answer: "รองรับการแปลงรูปภาพเป็นโค้ด HTML, CSS, Tailwind CSS และ React (JSX) เป็นหลักครับ เหมาะกับการร่าง UI พื้นฐาน" }
+    ]
+  },
+  {
+    id: "c5",
+    slug: "amazon-q-developer",
+    name: "Amazon Q Developer",
+    logoUrl: "/logos/Amazon.png", // สมมติโลโก้ Amazon (ถ้ามี)
+    description: "ผู้ช่วยเขียนโค้ดสาย Cloud และ Enterprise จาก AWS โดดเด่นเรื่องการทำ Code Review และ Security",
+    longDescription: "Amazon Q Developer (รีแบรนด์และอัปเกรดจาก CodeWhisperer) คือ AI ที่เกิดมาเพื่อ 'องค์กรและสายคลาวด์' แม้จะช่วยเติมโค้ดและแชทได้เหมือน Copilot แต่ไม้ตายของมันคือ 'ความเชี่ยวชาญในระบบ AWS' ถ้าคุณเขียนโค้ดเพื่อ Deploy บน AWS มันจะแนะนำวิธีที่ดีที่สุด (Best Practices) ให้ นอกจากนี้ยังมีระบบสแกนความปลอดภัย (Security Scan) ที่คอยตรวจจับโค้ดของคุณว่ามีช่องโหว่ (Vulnerability) หรือมีเผลอพิมพ์รหัสผ่านฝังไว้ในโค้ดหรือไม่ พร้อมแนะนำวิธีอุดรอยรั่วนั้นให้เสร็จสรรพ",
+    origin: "สร้างโดย Amazon Web Services (AWS) โดยเน้นจุดขายเรื่องความปลอดภัยระดับ Enterprise และเป็น AI ตัวเดียวที่กล้าการันตีเรื่องลิขสิทธิ์ (Reference Tracker) ว่าโค้ดที่ AI แนะนำมานั้นไปซ้ำกับ Open Source ตัวไหนไหม เพื่อป้องกันบริษัทถูกฟ้อง",
+    category: "Coding & Development",
+    priceModel: "Free (สำหรับผู้ใช้รายบุคคล) / $19 ต่อเดือน สำหรับ Pro",
+    isFree: true,
+    externalUrl: "https://aws.amazon.com/q/developer/",
+    rating: 4.7,
+    reviewCount: 5100,
+    updatedAt: "Feb 2026",
+    features: [
+      "Security Scans: สแกนโค้ดในโปรเจกต์เพื่อหาช่องโหว่ความปลอดภัยแบบเรียลไทม์",
+      "AWS Expert: สั่งให้เขียนสคริปต์ Infrastructure (เช่น Terraform, CloudFormation) ได้แม่นยำมาก",
+      "Legacy Code Upgrade: ฟีเจอร์ขั้นเทพที่ช่วยอัปเกรดโค้ดเวอร์ชันเก่า (เช่น อัปเกรด Java 8 เป็น 17) ให้ทั้งโปรเจกต์"
+    ],
+    pros: [
+      "เวอร์ชัน Free Tier ให้มาคุ้มค่ามาก (มีระบบสแกนความปลอดภัยให้ใช้ฟรีด้วย)",
+      "มีระบบ Reference Tracker แจ้งเตือนลิขสิทธิ์โค้ด ทำให้องค์กรนำไปใช้ได้อย่างสบายใจ",
+      "ใครที่ทำงานสาย DevOps หรือใช้ AWS เป็นประจำ ตัวนี้คือผู้ช่วยที่เก่งที่สุด"
+    ],
+    cons: [
+      "การแนะนำโค้ดฝั่ง Frontend (เช่น UI สวยๆ) ยังไม่ลื่นไหลเท่า Copilot หรือ Cursor",
+      "การตั้งค่าเข้าใช้งานครั้งแรก (Authentication) แอบมีความซับซ้อนตามสไตล์เครื่องมือ AWS"
+    ],
+    steps: [
+      { title: "โหลด Extension", desc: "ติดตั้ง AWS Toolkit ใน VS Code หรือ JetBrains" },
+      { title: "ล็อกอิน AWS Builder ID", desc: "สมัครและล็อกอินด้วยบัญชี AWS Builder ID (ใช้งานได้ฟรี)" },
+      { title: "ใช้งานคู่กับ AWS", desc: "พิมพ์ขอสคริปต์เซ็ตอัปเซิร์ฟเวอร์ หรือกดปุ่มสแกน Security ในแผงควบคุม" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งให้เขียนสคริปต์อัปโหลดไฟล์ขึ้น AWS S3", 
+        promptTh: "ช่วยเขียนฟังก์ชันภาษา Python โดยใช้ไลบรารี boto3 เพื่ออัปโหลดไฟล์รูปภาพจากเครื่องโลคอล ขึ้นไปยัง AWS S3 Bucket ที่ชื่อ '[ระบุชื่อ Bucket]' โดยให้ตั้งค่าสิทธิ์ไฟล์เป็นแบบ Private และคืนค่า URL กลับมา",
+        promptEn: "Write a Python function using the boto3 library to upload a local image file to an AWS S3 Bucket named '[Insert Bucket Name]'. Ensure the uploaded file permissions are set to Private, and return the presigned URL."
+      },
+      { 
+        purpose: "💡 สั่งสแกนหาจุดอ่อนความปลอดภัย (Security Check)", 
+        promptTh: "[ใช้แผงควบคุม Q Developer]\nช่วยสแกนไฟล์ authentication.js นี้ให้หน่อยว่ามีช่องโหว่ความปลอดภัยประเภท SQL Injection หรือ XSS หลุดรอดอยู่ไหม? ถ้าเจอช่วยเขียนโค้ดอัปเดตเพื่อป้องกันการโจมตีให้ด้วย",
+        promptEn: "Scan this authentication.js file for any security vulnerabilities, particularly SQL Injection or Cross-Site Scripting (XSS). If found, provide the remediated code to secure the inputs."
+      }
+    ],
+    faqs: [
+      { question: "ถ้าไม่ได้ใช้ AWS เลย ใช้ตัวนี้จะคุ้มไหม?", answer: "ยังคุ้มค่าครับ เพราะฟีเจอร์พื้นฐานอย่าง Autocomplete และหน้าต่าง Chat ก็ใช้งานกับโปรเจกต์ทั่วไป (เช่น สร้างเว็บ React) ได้ดี แถมใช้ฟรีด้วยครับ" }
+    ]
+  },
+  {
+    id: "c6",
+    slug: "cursor",
+    name: "Cursor",
+    logoUrl: "/logos/cursor.png", // สมมติโลโก้
+    description: "Code Editor ขุมพลัง AI แห่งยุค เข้าใจโค้ดทั้งโปรเจกต์ สั่งแก้บั๊กข้ามไฟล์ได้สุดโหด",
+    longDescription: "Cursor คือดาวรุ่งพุ่งแรงที่สุดในวงการตอนนี้! มันไม่ใช่แค่ Extension แต่เป็นโปรแกรม Code Editor (ที่ Fork มาจาก VS Code ทำให้ใช้ Extension เดิมได้หมด) แต่ฝังขุมพลัง AI เข้าไปลึกถึงแก่น จุดแข็งที่คู่แข่งต้องยอมแพ้คือฟีเจอร์ 'Composer' และคำสั่ง 'Cmd+K' ที่คุณสามารถไฮไลต์โค้ด แล้วสั่งให้ AI แก้ไข หรือสั่งให้มัน 'สร้างฟีเจอร์ใหม่ที่ต้องแก้ไฟล์ 5 ไฟล์พร้อมกัน' มันก็สามารถเปิดไฟล์และแก้โค้ดให้สัมพันธ์กันทั้งโปรเจกต์ได้ (Project-wide Understanding) ถือเป็นอาวุธลับของ Startup ยุคนี้",
+    origin: "สร้างโดยทีม Anysphere ด้วยความเชื่อที่ว่า การพึ่งพาแค่ Extension บน IDE ตัวเก่านั้นมีข้อจำกัด พวกเขาจึงสร้าง Editor ตัวใหม่ที่ให้ AI เป็นศูนย์กลางการทำงาน (AI-First) โดยมีผู้สนับสนุนหลักคือ OpenAI",
+    category: "Coding & Development",
+    priceModel: "Free (จำกัดการเรียกโมเดลเทพ) / Pro $20 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://cursor.com",
+    rating: 4.9,
+    reviewCount: 31000,
+    updatedAt: "Feb 2026",
+    features: [
+      "Cmd+K (Ctrl+K): ไฮไลต์โค้ด กดคีย์ลัด แล้วพิมพ์สั่งแก้โค้ดตรงนั้นได้เลย AI จะขึ้นแถบสีเทียบ Before/After ให้ดู",
+      "Cursor Composer: แผงควบคุมใหญ่ที่คุณสั่งงานระดับโปรเจกต์ เช่น 'เพิ่มระบบ Login' AI จะร่างไฟล์ทั้ง Frontend/Backend มาให้ทีเดียว",
+      "Codebase Indexing: AI อ่านและจำโค้ดของคุณทั้งโปรเจกต์ ถามคำถามข้ามโฟลเดอร์ก็ตอบได้แม่นยำ"
+    ],
+    pros: [
+      "ประสบการณ์ใช้งาน (UX) ไหลลื่นที่สุด สั่งแก้โค้ดได้รวดเร็วเหมือนมีโปรแกรมเมอร์ซีเนียร์มานั่งพิมพ์ให้",
+      "หน้าตาและคีย์ลัดเหมือน VS Code 100% กดย้ายมาใช้ได้เลยโดยไม่ต้องปรับตัว",
+      "สามารถเลือกโมเดล AI ตัวท็อปได้ตามใจชอบ (เช่น GPT-4o, Claude 3.5 Sonnet)"
+    ],
+    cons: [
+      "แพ็กเกจฟรีให้โควต้าใช้โมเดลระดับสูง (Premium Models) น้อยไปหน่อย ถ้าใช้เต็มที่ต้องจ่ายรายเดือน",
+      "การจัดการ Indexing กับโปรเจกต์ที่มีขนาดมโหฬารมากๆ (ระดับ Enterprise) อาจจะกินแรมเครื่อง"
+    ],
+    steps: [
+      { title: "ดาวน์โหลดโปรแกรม", desc: "โหลด Cursor จากเว็บมาติดตั้ง (มันจะถามว่าอยาก Import การตั้งค่าจาก VS Code มาเลยไหม ให้กด Yes)" },
+      { title: "สร้าง/เปิดโปรเจกต์", desc: "ลากโฟลเดอร์งานเข้าไป แล้วปล่อยให้ Cursor ทำการ Index โค้ดสักครู่" },
+      { title: "ใช้คำสั่ง Cmd+K", desc: "ไฮไลต์บรรทัดโค้ด กด Cmd+K (หรือ Ctrl+K) แล้วสั่งให้ AI ปรับแก้โค้ดได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งทำ Refactoring ยกแผง (ใช้ฟีเจอร์ Composer)", 
+        promptTh: "โปรเจกต์นี้ใช้ CSS ธรรมดาอยู่ ฉันต้องการย้ายไปใช้ Tailwind CSS ทั้งหมด ช่วยสแกนไฟล์หน้าเว็บในโฟลเดอร์ /pages แล้วเปลี่ยน Class name ทั้งหมดให้เป็น Tailwind โดยคุมโทนสีให้เป็นสไตล์ [ระบุสไตล์ เช่น Minimal ขาวดำ] จัดการแก้ทุกไฟล์ที่เกี่ยวข้องให้หน่อย",
+        promptEn: "This project currently uses standard CSS. I want to migrate entirely to Tailwind CSS. Scan all web pages in the /pages directory and convert all styling into equivalent Tailwind utility classes. Maintain a [Insert style e.g., minimalist black-and-white] aesthetic. Apply changes across all relevant files."
+      },
+      { 
+        purpose: "💡 สั่งสร้าง Component ใหม่ (Cmd+K)", 
+        promptTh: "[ไฮไลต์พื้นที่ว่างในไฟล์ หน้า Layout]\nสร้าง Navigation Bar ด้านบน ประกอบด้วยโลโก้ฝั่งซ้าย ลิงก์เมนู 3 อันตรงกลาง และปุ่ม Login ฝั่งขวา ทำให้เป็นแบบ Responsive (พับเป็นเมนูแฮมเบอร์เกอร์ในมือถือ) ใช้ Next.js และ Tailwind",
+        promptEn: "Create a top Navigation Bar component. It should have a logo on the left, 3 menu links in the center, and a Login button on the right. Make it fully responsive (collapsing into a hamburger menu on mobile devices). Use Next.js and Tailwind CSS."
+      }
+    ],
+    faqs: [
+      { question: "ต้องเลิกใช้ VS Code ไหมถ้ามาใช้ Cursor?", answer: "สามารถใช้สลับกันได้ครับ เพราะโฟลเดอร์งานคือที่เดียวกัน แต่ส่วนใหญ่คนที่ลองใช้ Cursor แล้ว มักจะลบ VS Code ทิ้งเพราะติดใจความไวของ AI ครับ" }
+    ]
+  },
+  {
+    id: "c7",
+    slug: "codeium",
+    name: "Codeium",
+    logoUrl: "/logos/codeium.png", // สมมติโลโก้
+    description: "ทางเลือกฟรีที่ท้าชน Copilot ปั่นโค้ดไวทะลุนรก รองรับ IDE แทบทุกสำนัก",
+    longDescription: "หากคุณเป็นนักศึกษาหรือ Dev ที่ไม่อยากเสียเงินรายเดือน Codeium คือ 'ของฟรีที่ดีที่สุด' ในตลาดตอนนี้! มันคือ AI Code Autocomplete ที่เคลมว่าทำงานได้เร็วกว่าคู่แข่ง และให้ความแม่นยำสูงลิ่ว Codeium ให้ฟีเจอร์หลักๆ มาครบ ทั้งการเติมโค้ด แชทถามตอบ และการอธิบายโค้ด แถมยังใจกว้างรองรับ IDE มากกว่า 40 ตัว (ตั้งแต่ตัวฮิตๆ ไปจนถึง Vim หรือ Emacs) ทำให้คอมมูนิตี้ผู้ใช้งานเติบโตอย่างก้าวกระโดด",
+    origin: "พัฒนาโดยทีมวิศวกรที่เชี่ยวชาญด้าน Deep Learning Infrastructure ทำให้พวกเขาสามารถรีดประสิทธิภาพการประมวลผล (Latency) ให้เสิร์ฟโค้ดถึงมือโปรแกรมเมอร์ได้รวดเร็วปานสายฟ้า ในขณะที่ยังคงให้ใช้งานแพ็กเกจส่วนบุคคล (Individual) ได้ฟรีตลอดชีพ",
+    category: "Coding & Development",
+    priceModel: "Free ตลอดชีพ (สำหรับรายบุคคล) / Teams $12/เดือน",
+    isFree: true,
+    externalUrl: "https://codeium.com",
+    rating: 4.7,
+    reviewCount: 15200,
+    updatedAt: "Feb 2026",
+    features: [
+      "Lightning Fast Autocomplete: เสนอโค้ดล่วงหน้าด้วยความเร็วที่แทบไม่มีดีเลย์",
+      "Universal Compatibility: มี Extension รองรับ IDE และโปรแกรม Editor ยิบย่อยแทบทุกตัวบนโลก",
+      "Codeium Chat: หน้าต่างแชทใน IDE ที่ให้ใช้ฟรีแบบไม่มีกั๊กโควต้า"
+    ],
+    pros: [
+      "ของฟรีที่คุณภาพระดับ Enterprise คุ้มค่าที่สุดสำหรับผู้ใช้งานทั่วไป",
+      "ความเร็วในการเสนอโค้ด (Suggestion) ไวมาก ทำให้ Flow การพิมพ์ไม่สะดุด",
+      "ติดตั้งง่าย ไม่ต้องผูกบัตรเครดิตเพื่อทดลองใช้"
+    ],
+    cons: [
+      "ความเก่งในการทำความเข้าใจโครงสร้างโปรเจกต์ใหญ่ๆ (Context Awareness) อาจจะยังตามหลัง Cursor เล็กน้อย",
+      "หากใช้ภาษาโปรแกรมที่เฉพาะกลุ่มมากๆ อาจจะเสนอโค้ดได้ไม่แม่นยำเท่าภาษาหลัก (Python/JS)"
+    ],
+    steps: [
+      { title: "เลือก IDE ของคุณ", desc: "เข้าไปที่เว็บ Codeium เพื่อดูลิสต์ IDE แล้วกดโหลด Extension ที่ตรงกับโปรแกรมคุณ" },
+      { title: "สร้างบัญชี", desc: "สมัครสมาชิก Codeium ฟรีเพื่อรับสิทธิ์การใช้งาน" },
+      { title: "เริ่มพิมพ์โค้ด", desc: "พิมพ์คอมเมนต์หรือฟังก์ชัน AI จะพ่นข้อความสีเทามาให้ กด Tab เพื่อใช้งาน" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สร้าง API Endpoint อย่างรวดเร็วด้วย Python (FastAPI)", 
+        promptTh: "# สร้าง FastAPI endpoint (เมธอด GET) ที่ path '/users/{user_id}'\n# หน้าที่: ค้นหา user จาก database (สมมติข้อมูลขึ้นมา) ถ้าไม่เจอให้โยน Error 404\n# รีเทิร์นผลลัพธ์: คืนค่าเป็น JSON อิงตาม Pydantic model",
+        promptEn: "# Create a FastAPI GET endpoint at the path '/users/{user_id}'.\n# Functionality: Search for the user in a mock database. If not found, raise an HTTP 404 Exception.\n# Return: Return the user data serialized via a Pydantic model."
+      },
+      { 
+        purpose: "💡 ให้ AI เขียน Regular Expression (Regex) ที่แสนน่าปวดหัว", 
+        promptTh: "[เปิดหน้าแชท Codeium]\nช่วยเขียน Regex ในภาษา JavaScript สำหรับตรวจสอบรูปแบบ 'รหัสผ่าน' โดยมีเงื่อนไขคือ: ต้องยาว 8-20 ตัวอักษร, มีตัวพิมพ์ใหญ่อย่างน้อย 1 ตัว, ตัวพิมพ์เล็ก 1 ตัว, ตัวเลข 1 ตัว และสัญลักษณ์พิเศษ 1 ตัว พร้อมยกตัวอย่างโค้ดทดสอบให้ดูด้วย",
+        promptEn: "Write a Regular Expression (Regex) in JavaScript to validate a password. Conditions: It must be 8-20 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character. Provide test cases as well."
+      }
+    ],
+    faqs: [
+      { question: "ทำไมเขาถึงให้ใช้ฟรี เขาแอบเอาโค้ดเราไปขายไหม?", answer: "Codeium ยืนยันใน Privacy Policy ว่าจะไม่นำโค้ดของผู้ใช้แบบรายบุคคล (Individual) ไปฝึกฝนโมเดลสร้างรายได้ครับ โมเดลธุรกิจเขาคือการแจกฟรีให้คนทั่วไป เพื่อให้คนนำไปบอกต่อให้ 'บริษัท' มาซื้อแพ็กเกจ Teams ครับ" }
+    ]
+  },
+  {
+    id: "c8",
+    slug: "tabnine",
+    name: "Tabnine",
+    logoUrl: "/logos/tabnine.png", // สมมติโลโก้
+    description: "AI คู่ใจองค์กรใหญ่ เน้นความเป็นส่วนตัว รันแบบ Local ได้ ข้อมูลไม่รั่วไหลชัวร์ 100%",
+    longDescription: "ในโลกธุรกิจที่ Source Code คือความลับขั้นสูงสุด การส่งโค้ดผ่านเน็ตไปให้ AI ของบริษัทอื่นประมวลผลคือเรื่องต้องห้าม Tabnine จึงเกิดมาเพื่อปิดจุดอ่อนนี้! มันคือ AI Coding Assistant ที่มีจุดเด่นระดับเทพคือ 'Privacy-First' บริษัทสามารถเลือกที่จะรัน Tabnine บนเซิร์ฟเวอร์ส่วนตัว (On-Premises) หรือรันบนคอมพิวเตอร์ของโปรแกรมเมอร์ (Local) ได้เลย แปลว่าโค้ดทุกบรรทัดจะไม่ถูกส่งออกสู่อินเทอร์เน็ต ทำให้องค์กรระดับธนาคารหรือหน่วยงานรัฐกล้าใช้งาน",
+    origin: "เป็นหนึ่งในผู้เล่นยุคแรกสุดของวงการ AI Autocomplete (ก่อตั้งมาก่อน Copilot) Tabnine ค่อยๆ ปรับตัวจากการเป็นแค่เอนจินเดาคำ ไปสู่เป้าหมายในการเป็นโซลูชันระดับ Enterprise ที่ปรับแต่ง AI ให้เรียนรู้เฉพาะโค้ดภายในของบริษัท (Custom Models) ได้",
+    category: "Coding & Development",
+    priceModel: "Free (Basic) / Pro $12/เดือน / Enterprise",
+    isFree: true,
+    externalUrl: "https://www.tabnine.com",
+    rating: 4.5,
+    reviewCount: 4800,
+    updatedAt: "Feb 2026",
+    features: [
+      "Total Privacy: โหมด Local ทำงานแบบออฟไลน์ โค้ดไม่หลุดออกจากเครื่อง",
+      "Highly Personalized: AI จะเรียนรู้สไตล์การเขียนโค้ดของคุณ หรือฐานข้อมูลโค้ดของบริษัท เพื่อแนะนำคำสั่งที่ตรงแพทเทิร์นทีม",
+      "Enterprise Ready: มีระบบจัดการสิทธิ์ผู้ใช้งาน (Admin Panel) เหมาะสำหรับองค์กรขนาดใหญ่"
+    ],
+    pros: [
+      "ความปลอดภัยและความเป็นส่วนตัวสูงสุด ไร้ความกังวลเรื่องข้อมูลบริษัทรั่วไหล (Zero Data Retention)",
+      "ยิ่งใช้งานนาน AI ยิ่งปรับตัวเข้ากับสไตล์การตั้งชื่อตัวแปรของโปรเจกต์คุณได้เนียนขึ้น",
+      "กินทรัพยากรเครื่องน้อยเมื่อเทียบกับส่วนขยาย AI ตัวอื่นๆ"
+    ],
+    cons: [
+      "ในโหมดใช้งานแบบ Local/ออฟไลน์ ความฉลาดในการเขียนโค้ดยาวๆ จะสู้พวกที่รันผ่าน Cloud อย่าง Copilot ไม่ได้ (ได้แค่เติมคำสั้นๆ)",
+      "หน้าต่างแชท (Tabnine Chat) ยังดูไม่ครบเครื่องเท่าคู่แข่ง"
+    ],
+    steps: [
+      { title: "ติดตั้งใน IDE", desc: "โหลด Extension 'Tabnine' ผ่าน VS Code หรือ IntelliJ" },
+      { title: "ตั้งค่า Privacy", desc: "เลือกโหมดการทำงาน (Cloud หรือ Local) ตามนโยบายความปลอดภัยของคุณ" },
+      { title: "พิมพ์และให้ AI เดาใจ", desc: "AI จะค่อยๆ ซึมซับสไตล์โค้ดของคุณ และเสนอการเติมเต็ม (Completion) ที่ตรงกับใจคุณมากขึ้นเรื่อยๆ" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI เติมแพทเทิร์นโค้ดสไตล์องค์กร (Boilerplate Generation)", 
+        promptTh: "[เปิดไฟล์ใหม่ แล้วพิมพ์โครงสร้างนำร่องให้ AI สานต่อ]\n// Controller สำหรับจัดการข้อมูลพนักงาน (อิงตามสถาปัตยกรรมของบริษัท)\nclass EmployeeController { \n  // ฟังก์ชัน Get พนักงานทั้งหมด\n",
+        promptEn: "// Employee Data Controller (following internal company architecture)\nclass EmployeeController { \n  // Function to fetch all employees\n"
+      },
+      { 
+        purpose: "💡 สร้าง Unit Test ระดับ Enterprise", 
+        promptTh: "ช่วยเขียน Unit Test (ใช้ไลบรารี Jest) สำหรับฟังก์ชัน คำนวณภาษี นี้ให้หน่อย ขอให้ครอบคลุม Edge cases ทั้งหมด เช่น ค่าติดลบ, ค่าเป็นศูนย์, และกรณีที่ส่งตัวแปรผิดประเภท (Type mismatch)",
+        promptEn: "Write comprehensive Unit Tests (using Jest) for this Tax Calculation function. Ensure you cover all edge cases, including: negative values, zero values, and Type mismatches."
+      }
+    ],
+    faqs: [
+      { question: "ถ้าใช้แบบฟรี 100% มันทำอะไรได้บ้าง?", answer: "แบบฟรีจะได้แค่ฟีเจอร์ Basic Autocomplete ครับ คือการเดาคำ หรือเดาบรรทัดสั้นๆ 1 บรรทัด (คล้ายๆ ฟีเจอร์เดาคำในมือถือ) จะสั่งให้สร้างโค้ดทั้งก้อนไม่ได้ครับ" }
+    ]
+  },
+  {
+    id: "c9",
+    slug: "sourcegraph-cody",
+    name: "Sourcegraph Cody",
+    logoUrl: "/logos/sourcegraph.png", // สมมติโลโก้
+    description: "นักสืบหาโค้ด AI Agent ที่เก่งที่สุดในการดำน้ำทำความเข้าใจ Codebase ระดับแสนบรรทัด",
+    longDescription: "ลองจินตนาการว่าคุณเพิ่งย้ายงานใหม่ แล้วต้องไปรับช่วงต่อโปรเจกต์มรดก (Legacy Project) ที่มีโค้ด 5 แสนบรรทัด ไม่มีใครอธิบายได้ว่ามันทำงานยังไง... นั่นคือหน้าที่ของ Sourcegraph Cody! เครื่องมือตัวนี้ถูกสร้างมาเหนือกว่าระบบแชทธรรมดา เพราะมันใช้เทคโนโลยี RAG (Retrieval-Augmented Generation) เจาะลึกเข้าไปอ่านโครงสร้างไฟล์ (Codebase Context) ทั้งหมดขององค์กร เมื่อคุณถามว่า 'ระบบตัดเงินผูกกับ API ตัวไหน?' Cody จะดำน้ำลงไปดึงไฟล์ 10 ไฟล์ที่เกี่ยวข้องมาประกอบร่างเป็นคำตอบให้คุณอย่างแม่นยำ ถือเป็นพระเอกขี่ม้าขาวของทีม Dev องค์กรใหญ่",
+    origin: "Sourcegraph เป็นบริษัทที่ทำระบบ Universal Code Search (ระบบค้นหาโค้ดระดับองค์กร) มาก่อน เมื่อผสานรวมพลังการค้นหาที่รวดเร็วของตนเองเข้ากับ AI LLM จึงเกิดเป็น 'Cody' AI ที่หาของเก่งที่สุดในวงการ",
+    category: "Coding & Development",
+    priceModel: "Free (จำกัดปริมาณ) / Pro $9 ต่อเดือน / Enterprise",
+    isFree: true,
+    externalUrl: "https://sourcegraph.com/cody",
+    rating: 4.8,
+    reviewCount: 5600,
+    updatedAt: "Feb 2026",
+    features: [
+      "Codebase-Aware Chat: ถามคำถามโดยอิงความรู้จากทั้งโปรเจกต์ (หรือหลาย Repository พร้อมกัน)",
+      "Explain Code & Architecture: ให้ AI วาดภาพหรืออธิบายสถาปัตยกรรมรวมของโฟลเดอร์งานได้",
+      "One-click Unit Tests & Docs: ไฮไลต์โค้ดแล้วกดสั่งสร้าง Test หรือเอกสารได้แม่นกว่าค่ายอื่นเพราะมันอ่านบริบทไฟล์รอบๆ ด้วย"
+    ],
+    pros: [
+      "สวรรค์ของคนที่ต้องดูแลระบบใหญ่ (Enterprise Monoliths) ช่วยย่นเวลาทำความเข้าใจโปรเจกต์เก่าได้มหาศาล",
+      "อ้างอิงแหล่งที่มาได้ชัดเจน เวลา AI ตอบ มันจะบอกด้วยว่าอ่านมาจากไฟล์ชื่ออะไร บรรทัดไหน",
+      "ราคา Pro ถือว่าจับต้องได้ง่ายมาก (คุ้มกว่าซื้อกาแฟ 2 แก้ว)"
+    ],
+    cons: [
+      "ระบบทำดัชนี (Indexing) เริ่มต้นสำหรับโปรเจกต์ใหญ่อาจจะใช้เวลาเตรียมตัวนานเล็กน้อย",
+      "หากใช้กับโปรเจกต์เล็กๆ จิ๋วๆ (เช่น ไฟล์เดียวจบ) อาจจะไม่เห็นความเก่งที่แท้จริงของมัน"
+    ],
+    steps: [
+      { title: "ติดตั้ง Extension", desc: "โหลด Cody เข้า IDE (VS Code, JetBrains)" },
+      { title: "เตรียมฐานข้อมูลโค้ด", desc: "เปิดโปรเจกต์แล้วรอให้ Cody ทำการสแกน (Index) โค้ดทั้งหมดของคุณ" },
+      { title: "ถามคำถามกว้างๆ", desc: "เปิดแชทแล้วพิมพ์ถามถึงระบบโดยรวม AI จะรวบรวมไฟล์มาตอบให้" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งให้อธิบายสถาปัตยกรรมและหาต้นตอโค้ด (Architecture Analysis)", 
+        promptTh: "[ใช้หน้าต่างแชทของ Cody]\nอ้างอิงจาก Codebase ทั้งหมดนี้ ช่วยอธิบายหน่อยว่าระบบ 'ตะกร้าสินค้า (Shopping Cart)' มีขั้นตอนการทำงาน (Flow) อย่างไร? เริ่มตั้งแต่ User กดปุ่ม Add to cart ไปจนถึงการเซฟลง Database มีไฟล์ไหนเกี่ยวข้องบ้าง ขอสรุปเป็นข้อๆ",
+        promptEn: "Based on the entire codebase, please explain the workflow of the 'Shopping Cart' system. Trace the flow starting from when a user clicks the 'Add to cart' button all the way to when the data is persisted in the database. List all files involved in this process."
+      },
+      { 
+        purpose: "💡 ค้นหาและเตรียมแก้ไขจุดที่เกิดผลกระทบวงกว้าง (Impact Analysis)", 
+        promptTh: "ฉันต้องการแก้ไขรูปแบบตัวแปรในตาราง 'User_Profile' ถ้าฉันแก้ไขไฟล์ Schema ตรงนี้ มันจะส่งผลกระทบให้ไฟล์อื่นๆ ในโปรเจกต์ (เช่น หน้า Frontend หรือไฟล์ Service) พังบ้างไหม? ช่วยลิสต์ไฟล์ทั้งหมดที่ฉันต้องเข้าไปตามแก้ให้หน่อย",
+        promptEn: "I plan to modify the schema for the 'User_Profile' table. If I change the schema file here, what other files in the project (e.g., Frontend views or backend Services) will break? Please list all the files I need to update to prevent errors."
+      }
+    ],
+    faqs: [
+      { question: "Cody รองรับภาษาอะไรบ้าง?", answer: "รองรับทุกภาษาที่โมเดล LLM ทั่วไปรู้จักครับ แต่จะทำงานได้ดีเว่อร์ๆ กับภาษาที่มีโครงสร้างชัดเจนอย่าง TypeScript, Go, Java และ Python" }
+    ]
+  },
+  {
+    id: "c10",
+    slug: "phind",
+    name: "Phind",
+    logoUrl: "/logos/phind.png", // สมมติโลโก้
+    description: "Search Engine แบบฉบับโปรแกรมเมอร์ หาบั๊กเก่ง มีเหตุผล และอธิบายละเอียดยิบ",
+    longDescription: "ถ้า Google เอาไว้หาคำตอบกว้างๆ StackOverflow เอาไว้หาคำตอบของปัญหาเดิมๆ... Phind (อ่านว่า ฟินด์) ก็คือจุดสูงสุดของการผสมผสานระหว่าง Search Engine และ AI สำหรับโปรแกรมเมอร์โดยเฉพาะ! ความเจ๋งคือมันสามารถต่ออินเทอร์เน็ตเพื่อค้นหา Document ล่าสุดของภาษาโปรแกรม (เช่น Next.js เวอร์ชันเพิ่งอัปเดตเมื่อวาน) มาอ่านแล้วประมวลผลเป็นคำตอบพร้อมตัวอย่างโค้ดให้คุณทันที แถมมันยังชอบอธิบายตรรกะเบื้องหลัง (Reasoning) ว่าทำไมถึงต้องเขียนโค้ดแบบนี้ ถือเป็นเครื่องมือที่ช่วยให้ Dev เติบโตได้ดีมากๆ",
+    origin: "สร้างมาเพื่อเป็น 'ผู้ช่วยไขปัญหา' ให้กับ Developer ที่เบื่อกับการต้องเปิดแท็บเบราว์เซอร์ 20 หน้าเพื่อตามหาจุดพังของโค้ด Phind จะเข้าไปกวาดข้อมูลจากเว็บตัวท็อปๆ แล้วสรุปจบมาให้ในหน้าเดียว",
+    category: "Coding & Development",
+    priceModel: "Free (ใช้งานบนเว็บ) / Pro $20 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://www.phind.com",
+    rating: 4.8,
+    reviewCount: 7100,
+    updatedAt: "Feb 2026",
+    features: [
+      "Developer Search Engine: ถามปัญหาโค้ด AI จะค้นหาเน็ต สรุปข้อมูล และแนบลิงก์อ้างอิงมาให้",
+      "Pair Programmer Mode: โหมดแชทแบบเจาะลึกที่ AI จะช่วยคิดและจับผิดโค้ดอย่างมีเหตุผล",
+      "VS Code Extension: ติดตั้งในส่วนขยายเพื่อใช้งาน Phind หาคำตอบคู่กับการพิมพ์โค้ดได้เลย"
+    ],
+    pros: [
+      "ข้อมูลโคตรอัปเดต! เพราะมันดึงสดๆ จากเน็ต หมดปัญหา AI ให้โค้ดเก่าที่ใช้งานไม่ได้",
+      "คำอธิบายของ Phind ละเอียดและมีตรรกะมาก เหมาะกับคนที่ต้องการเรียนรู้ 'ทำไมต้องทำแบบนี้'",
+      "หน้าเว็บใช้งานง่าย มินิมอล ไม่ต้องติดตั้งอะไรก็ใช้งานได้เต็มประสิทธิภาพ"
+    ],
+    cons: [
+      "การให้คำตอบอาจจะใช้เวลาหมุนประมวลผลนานกว่า ChatGPT เล็กน้อย (เพราะมันต้องไปค้นข้อมูลบนเน็ตมารวมกัน)",
+      "ไม่เหมาะกับงานสั่งให้เขียนแอปพลิเคชันขึ้นมาใหม่ทั้งก้อน (สู้ Cursor ไม่ได้) เหมาะกับงานแก้ปัญหา (Debugging) มากกว่า"
+    ],
+    steps: [
+      { title: "เปิดเว็บ Phind", desc: "เข้าไปที่ phind.com (ตั้งเป็นหน้าแรกของเบราว์เซอร์แทน Google ได้เลย)" },
+      { title: "วาง Error Message", desc: "ก๊อปปี้ข้อความตัวแดงๆ ที่ Error ตอนรันโค้ดไปวางในช่องค้นหา" },
+      { title: "อ่านคำอธิบาย", desc: "Phind จะวิเคราะห์สาเหตุ พร้อมให้โค้ดที่ถูกต้อง และอ้างอิงหน้า Document ให้ไปอ่านต่อ" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI ช่วยออกแบบสถาปัตยกรรมระบบ (System Design)", 
+        promptTh: "ฉันกำลังจะสร้างแพลตฟอร์ม Web Application สำหรับ 'สถาบันสอนภาษาอังกฤษ' (Language Learning Portal) โดยคาดว่าจะมีผู้ใช้งานหลักพันคน ช่วยแนะนำ Tech Stack ที่เหมาะสมในยุค 2026 ให้หน่อย พร้อมวิเคราะห์ข้อดีข้อเสียของการเลือกใช้ Next.js คู่กับ Supabase สำหรับโปรเจกต์แนวนี้",
+        promptEn: "I am planning to build a Web Application platform for a 'Language Learning Portal' expecting thousands of concurrent users. Recommend a modern, scalable Tech Stack for 2026. Also, critically analyze the Pros and Cons of using Next.js combined with Supabase for this specific use case."
+      },
+      { 
+        purpose: "💡 ให้ AI ช่วยดีบั๊ก Error ที่หาทางแก้ไม่เจอ (Deep Debugging)", 
+        promptTh: "ฉันกำลังเจอ Error แบบนี้ตอนสั่ง Build โปรเจกต์ Next.js: '[วางข้อความ Error ยาวๆ จาก Terminal]' ฉันลองแก้โดยการลบโฟลเดอร์ node_modules และลงใหม่แล้วก็ยังไม่หาย มันเกิดจากอะไร และมีวิธีแก้ปัญหาที่ต้นเหตุอย่างไรบ้าง?",
+        promptEn: "I am encountering the following build error in my Next.js project: '[Paste full terminal Error here]'. I have already tried deleting node_modules and reinstalling, but the issue persists. What is the root cause of this error, and what are the exact steps to fix it permanently?"
+      }
+    ],
+    faqs: [
+      { question: "ถ้ามีโค้ดความลับบริษัท พิมพ์ลงเว็บ Phind ได้ไหม?", answer: "ทาง Phind อนุญาตให้ปิดสวิตช์ฟีเจอร์ Data Sharing ได้ในเมนูตั้งค่าครับ ทำให้ข้อมูลที่คุณค้นหาจะไม่ถูกนำไปใช้สอน AI ต่อ แต่ถ้าซีเรียสมากๆ แนะนำให้เซนเซอร์คีย์เวิร์ดชื่อบริษัทก่อนค้นหาครับ" }
     ]
   },
 
   // ==========================================
-  // 🔹 8) AI วิเคราะห์ข้อมูล (Data & Analytics AI)
+  // 🎨 หมวด AI สร้างภาพ (Image Generation) - 5 ตัวท็อป
   // ==========================================
   {
-    id: "20",
-    slug: "tableau-ai",
-    name: "Tableau",
-    logoUrl: "/logos/Tableau.png",
-    description: "แชมป์แพลตฟอร์มวิเคราะห์ Data ผสาน AI ช่วยสร้าง Dashboard และย่อยข้อมูลอัตโนมัติ",
-    longDescription: "Tableau คือราชาแห่งวงการ Business Intelligence (BI) ที่ขึ้นชื่อเรื่องกราฟสวยและเจาะลึก แต่ความยากของมันคือคนทั่วไปมักจะใช้ไม่เป็น ต้องพึ่ง Data Analyst ลากกราฟให้ วันนี้ Tableau ได้นำ 'Einstein Copilot' เข้ามาฝังในระบบ ทำให้คุณสามารถ 'พิมพ์ถามคำถามด้วยภาษามนุษย์' (Natural Language) เช่น 'ยอดขายสินค้ากลุ่มเสื้อผ้าในภาคเหนือเทียบปีที่แล้วเป็นยังไง?' แล้ว AI จะวิ่งเข้าไปดึงข้อมูล สร้างกราฟที่ตอบโจทย์ที่สุด และพิมพ์สรุป Insights เป็นตัวอักษรให้อ่านง่ายๆ ทันที ทำให้ผู้บริหารหรือฝ่ายเซลส์เข้าใจยอดขายได้โดยไม่ต้องพึ่งแผนก IT",
-    origin: "Tableau ถูก Salesforce เข้าซื้อกิจการ และ Salesforce ก็มีขุมพลัง AI ของตัวเองชื่อ Einstein อยู่แล้ว ทั้งสองจึงผสานกันเกิดเป็นฟีเจอร์ใหม่อย่าง Tableau Pulse และ Einstein Copilot ที่มุ่งเน้นลดเวลาของคนทำ Data จากหลายสัปดาห์ให้เหลือหลักนาที",
-    category: "Data & Analytics",
-    priceModel: "ต้องใช้ License องค์กร / Starts at $15/user/month",
+    id: "img1",
+    slug: "midjourney",
+    name: "Midjourney",
+    logoUrl: "/logos/Midjourney.png",
+    description: "AI เสกภาพคุณภาพสูงระดับงานศิลป์ สวยสมจริง โทน Cinematic รายละเอียดสุดยอด",
+    longDescription: "Midjourney คือราชาแห่งความสวยงามในวงการ AI สร้างภาพ มันโดดเด่นเรื่องการทำความเข้าใจสุนทรียภาพทางศิลปะ (Aesthetics) แสง เงา และพื้นผิวที่สมบูรณ์แบบจนแทบแยกไม่ออกว่านี่คือภาพ AI หรือถ่ายด้วยกล้องโปร เหมาะที่สุดสำหรับงานโปรดักชัน งานโฆษณา ทำปกหนังสือ หรืองานกราฟิกที่ต้องการความรู้สึกแบบ Cinematic",
+    origin: "พัฒนาโดยห้องปฏิบัติการวิจัยอิสระ นำโดย David Holz ทำงานผ่านแอป Discord ปัจจุบันถึงเวอร์ชัน v6 ที่เก่งเรื่องภาพถ่ายเสมือนจริง (Photorealism) และการใส่ตัวหนังสือลงในภาพ",
+    category: "Image Generation",
+    priceModel: "Starts at $10/เดือน",
     isFree: false,
-    externalUrl: "https://www.tableau.com/products/tableau-ai",
-    rating: 4.8,
-    reviewCount: 3100,
-    updatedAt: "Feb 2025",
+    externalUrl: "https://midjourney.com",
+    rating: 4.9,
+    reviewCount: 35400,
+    updatedAt: "Feb 2026",
     features: [
-      "Tableau Pulse: ฟีเจอร์ย่อยข้อมูล สรุปยอดขายส่งตรงเข้าอีเมลหรือแอป Slack ทุกเช้า พร้อม AI เขียนอธิบายสาเหตุว่าทำไมยอดตก",
-      "Ask Data: ช่องค้นหาอัจฉริยะ พิมพ์ถามหาตัวเลขด้วยภาษามนุษย์ ระบบจะพ่นกราฟคำตอบขึ้นมาป๊อปอัปให้ทันที",
-      "Einstein Copilot: ผู้ช่วยข้างจอสำหรับคนทำ Data ช่วยเขียนสูตรคำนวณที่ยากๆ และแนะนำวิธีการเล่าเรื่องจาก Data (Storytelling)"
+      "Photorealistic & Cinematic: ความสมจริงขั้นสุด แสงเงาสะท้อนระดับสตูดิโอถ่ายภาพ",
+      "Style & Character Reference (--sref, --cref): ล็อกหน้าตาตัวละครหรือคัดลอกลายเส้นจากรูปต้นแบบมาใส่ในรูปใหม่ได้เป๊ะๆ",
+      "Vary (Region): ไฮไลต์แก้ไขรูปภาพเฉพาะจุด (Inpainting) เช่น สั่งเปลี่ยนชุด สวมแว่นตา หรือเปลี่ยนพื้นหลัง"
     ],
     pros: [
-      "การทำ Data Visualization กราฟและการตกแต่ง สวยงาม ลื่นไหล และยืดหยุ่นที่สุดในโลก",
-      "ฟีเจอร์ AI ช่วยย่อยข้อมูล (Insights) ออกมาเป็นคำพูดภาษาคน ทำให้หัวหน้างานอ่านปุ๊บรู้เรื่องปั๊บ ไม่ต้องตีความเส้นกราฟเอง",
-      "ระบบรักษาความปลอดภัยหนาแน่น (Enterprise-grade) ข้อมูลบริษัทไม่รั่วไหลไปไหน"
+      "คุณภาพรูปภาพกินขาด AI ทุกตัวบนโลก (โดยเฉพาะ Portrait คน และงานศิลปะ)",
+      "ฟีเจอร์ Character Reference ช่วยให้สร้างคาแรคเตอร์ตัวเดิมในอิริยาบถต่างๆ ได้ง่ายขึ้น",
+      "คอมมูนิตี้ใหญ่มาก มีตัวอย่าง Prompt ให้ศึกษาจากผู้ใช้งานระดับโปรทั่วโลก"
     ],
     cons: [
-      "การเริ่มต้นใช้งานครั้งแรก (ตั้งค่าเชื่อมต่อ Data Source) ต้องอาศัยผู้เชี่ยวชาญด้าน IT เข้ามาวางระบบให้",
-      "โครงสร้างราคา (Pricing) ค่อนข้างแพงและซับซ้อนตามสไตล์ซอฟต์แวร์ระดับองค์กร B2B",
-      "การตั้งคำถามด้วยภาษาไทย ยังจับใจความและเรียกดึงคอลัมน์ได้ไม่เก่งเท่าการสั่งด้วยภาษาอังกฤษ"
+      "การใช้งานผ่าน Discord อาจจะซับซ้อนสำหรับมือใหม่ (แต่ปัจจุบันเริ่มเปิดให้ใช้บนเว็บไซต์แล้ว)",
+      "พิมพ์คำสั่ง (Prompt) เป็นภาษาไทยไม่ได้ ต้องใช้ภาษาอังกฤษเท่านั้น",
+      "ไม่มีโควต้าให้ทดลองใช้ฟรี"
     ],
     steps: [
-      { title: "เชื่อมต่อฐานข้อมูล", desc: "นำข้อมูลบริษัท (SQL, Excel, Cloud) เชื่อมเข้าสู่ Tableau Server" },
-      { title: "ตั้งค่า Tableau Pulse", desc: "เลือกตัวชี้วัดสำคัญ (Metrics) เช่น กำไรขั้นต้น แล้วปล่อยให้ AI สร้างหน้า Dashboard เฝ้าระวังให้คุณอัตโนมัติ" },
-      { title: "ถาม-ตอบด้วย Copilot", desc: "พิมพ์คำถามเจาะลึกกับบอท หรือขอให้มันช่วยร่างสูตรคำนวณเพื่อสร้างมุมมองวิเคราะห์แบบใหม่ๆ" }
+      { title: "เข้า Discord หรือเว็บ", desc: "สมัครแพ็กเกจ แล้วเข้าไปที่ห้องแชทของ Midjourney Bot" },
+      { title: "ใช้คำสั่ง /imagine", desc: "พิมพ์ /imagine ตามด้วยคำอธิบายภาพภาษาอังกฤษ และใส่ Parameter เช่น --ar 16:9" },
+      { title: "อัปสเกลรูปภาพ", desc: "กดปุ่ม U1-U4 เพื่อขยายรูปที่ถูกใจ หรือกด V1-V4 เพื่อขอรูปทางเลือกเพิ่ม" }
     ],
     prompts: [
       { 
-        purpose: "💡 สร้างกราฟเปรียบเทียบข้อมูลทันทีด้วย Ask Data", 
-        promptTh: "[แนะนำให้สั่งเป็นภาษาอังกฤษ เพื่อให้ AI ดึงชื่อ Column ได้แม่นยำที่สุด]\nShow me a comprehensive breakdown of the total [ระบุตัวเลขที่ต้องการดู เช่น Sales/Revenue/Profit] categorized by [ระบุหมวดหมู่ เช่น Region/Product Category]. Filter the data for the last [ระบุระยะเวลาย้อนหลัง เช่น 6 months], compare it directly with the same period from the previous year, and visualize the trend as a line chart.",
-        promptEn: "Show me a comprehensive breakdown of the total [Insert Metric e.g., Sales/Revenue] categorized by [Insert Dimension e.g., Region/Product Category]. Filter the data for the last [Insert Timeframe e.g., 6 months], compare it directly with the same period from the previous year, and visualize the trend as a line chart."
+        purpose: "💡 สร้างภาพถ่ายบุคคลสไตล์ Cinematic นิตยสารแฟชั่น", 
+        promptTh: "[Midjourney รับคำสั่งภาษาอังกฤษเท่านั้น กรุณานำ Prompt ด้านล่างไปปรับใช้]",
+        promptEn: "A photorealistic, highly detailed editorial portrait of a beautiful Asian woman in her mid-20s, wearing a futuristic cyberpunk neon jacket. She is standing in a dimly lit, rainy Tokyo street. Neon reflections on wet pavement, cinematic lighting, shot on 35mm lens, f/1.8 aperture, 8k resolution, ultra-realistic textures. --ar 4:5 --style raw --v 6.0"
       },
       { 
-        purpose: "💡 ให้ AI ร่างสูตรคำนวณซับซ้อน (Calculated Field)", 
-        promptTh: "[พิมพ์สั่งในช่องแชท Copilot]\nช่วยเขียนสูตรคำนวณเพื่อหา 'อัตรากำไรขั้นต้น' (Gross Profit Margin) โดยสูตรคือเอา ([ระบุชื่อฟิลด์กำไร] หารด้วย [ระบุชื่อฟิลด์ยอดขาย]) จากนั้นให้ตั้งเงื่อนไข If/Else ว่า: \n- ถ้ากำไรน้อยกว่า [ระบุเกณฑ์ เช่น 15%] ให้คืนค่าคำว่า 'Critical/Needs Review'\n- ถ้านอกเหนือจากนั้น ให้คืนค่าคำว่า 'Healthy Margin'",
-        promptEn: "Write a robust calculated field formula to determine the Gross Profit Margin. The logic is: divide ([Insert Profit field name] by [Insert Sales field name]). Then, add an IF/ELSE conditional statement: \n- If the calculated margin is below [Insert threshold e.g., 15%], return the string 'Critical/Needs Review'.\n- Otherwise, return the string 'Healthy Margin'."
+        purpose: "💡 ออกแบบโลโก้แบรนด์สไตล์ Minimal", 
+        promptTh: "[Midjourney รับคำสั่งภาษาอังกฤษเท่านั้น]",
+        promptEn: "A clean, minimalist vector logo design for a modern specialty coffee shop named 'BREW'. The logo features a simple geometric coffee cup integrated with a rising sun. Monotone color palette, flat design, isolated on a pure white background. High quality graphic design, professional, corporate. --ar 1:1 --no shading, realistic details --v 6.0"
       }
     ],
     faqs: [
-      { question: "มี Excel อยู่แล้ว ทำไมต้องใช้ Tableau ด้วย?", answer: "Excel เหมาะกับการพิมพ์คีย์ข้อมูลดิบๆ (Data Entry) แต่เมื่อข้อมูลคุณมีปริมาณหลักล้านบรรทัด Excel จะค้างพังทันที Tableau AI ถูกออกแบบมาให้รับข้อมูลมหาศาลนั้นมาปั่นกราฟแบบเรียลไทม์ และหาเทรนด์ที่ซ่อนอยู่ให้ครับ" }
+      { question: "ทำยังไงให้ตัวละครหน้าเหมือนเดิมตลอด?", answer: "ใช้ Parameter --cref [ลิงก์รูปหน้าตัวละคร] ตามด้วย --cw 100 ครับ AI จะพยายามรักษาหน้าตา ทรงผม และเสื้อผ้าของตัวละครนั้นไว้ในภาพใหม่" }
     ]
   },
   {
-    id: "21",
-    slug: "power-bi-copilot",
-    name: "Power BI (Copilot)",
+    id: "img2",
+    slug: "dall-e-3",
+    name: "OpenAI – DALL·E 3",
+    logoUrl: "/logos/OpenAI – DALL·E.png",
+    description: "Multimodal AI สั่งงานเป็นภาษาไทยได้ เข้าใจ Prompt ซับซ้อนและเขียนตัวอักษรได้เป๊ะ",
+    longDescription: "DALL·E 3 คือ AI สร้างภาพที่ 'เข้าใจภาษามนุษย์' ดีที่สุดในโลก มันถูกฝังอยู่ใน ChatGPT ทำให้คุณสามารถพิมพ์สั่งวาดรูปเป็นภาษาไทยแบบคุยกับเพื่อนได้เลย จุดแข็งที่โดดเด่นคือการทำตามคำสั่งที่มีองค์ประกอบยิบย่อยเยอะๆ (Prompt Adherence) และความสามารถในการวาด 'ตัวอักษร' ลงบนป้ายหรือเสื้อผ้าได้อย่างแม่นยำ ซึ่งเป็นจุดบอดของ AI ตัวอื่นมาตลอด",
+    origin: "ถูกผนวกรวมเข้ากับ ChatGPT Plus โดย ChatGPT จะทำหน้าที่แปลงคำสั่งภาษาไทยของคุณให้เป็น Prompt ภาษาอังกฤษที่สมบูรณ์แบบ ก่อนส่งไปให้ DALL·E 3 วาดรูป",
+    category: "Image Generation",
+    priceModel: "รวมอยู่ใน ChatGPT Plus ($20/เดือน)",
+    isFree: false,
+    externalUrl: "https://openai.com/dall-e-3",
+    rating: 4.7,
+    reviewCount: 28100,
+    updatedAt: "Feb 2026",
+    features: [
+      "Conversational Editing: สั่งแก้รูปภาพด้วยการพิมพ์แชทต่อ เช่น 'ช่วยเปลี่ยนเสื้อเป็นสีแดง' หรือ 'ขอซูมออกอีกนิด'",
+      "Text Rendering: เรนเดอร์ตัวหนังสือลงในภาพได้เป๊ะมาก (เช่น สั่งให้เขียนคำว่า 'SALE 50%' บนป้ายโฆษณา)",
+      "Inpainting: มีเครื่องมือพู่กันให้ระบายเลือกจุดที่อยากแก้ไขเฉพาะส่วนบนภาพได้โดยตรง"
+    ],
+    pros: [
+      "ใช้งานง่ายที่สุด ไม่ต้องจำสูตร Prompt ยากๆ แค่พิมพ์บอกความต้องการตรงๆ",
+      "ทำงานร่วมกับฟีเจอร์วิเคราะห์ข้อมูลของ ChatGPT ได้ เช่น ให้ AI อ่านไฟล์ Excel สรุปเทรนด์ แล้ววาดรูปกราฟิกประกอบเนื้อหานั้น",
+      "เรนเดอร์ตัวหนังสือภาษาอังกฤษได้ถูกต้องแม่นยำสูงมาก"
+    ],
+    cons: [
+      "สไตล์ภาพมักจะดูออกชัดเจนว่าเป็น 'ภาพ AI' (Digital Art) ไม่ค่อยสมจริงระดับภาพถ่ายเหมือน Midjourney",
+      "ระบบเซนเซอร์ความปลอดภัยเข้มงวดมาก ปฏิเสธการวาดภาพดารา คนดัง หรือภาพที่มีความรุนแรง/โป๊เปลือยอย่างเด็ดขาด"
+    ],
+    steps: [
+      { title: "เปิด ChatGPT", desc: "ล็อกอินเข้า ChatGPT Plus (ต้องเป็นบัญชีเสียเงิน)" },
+      { title: "สั่งวาดรูป", desc: "พิมพ์คำสั่งเป็นภาษาไทย เช่น 'ช่วยวาดรูปแมวอวกาศ ถือป้ายคำว่า HELLO'" },
+      { title: "ปรับแต่ง (Refine)", desc: "ถ้ายังไม่ถูกใจ สามารถใช้เมาส์ระบายจุดที่อยากแก้ หรือพิมพ์แชทบอกให้ AI ปรับปรุงรูปให้" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สร้างภาพ Mockup สินค้าพร้อมตัวหนังสือ (UX/UI & Marketing)", 
+        promptTh: "ช่วยวาดภาพ Mockup สินค้า เป็นขวดน้ำหอมสไตล์มินิมอลวางอยู่บนแท่นหินอ่อน โดยมีฉากหลังเป็นแสงแดดรำไรลอดผ่านใบไม้ ที่ฉลากขวดน้ำหอมให้เขียนคำว่า 'ELEGANCE' ด้วยฟอนต์ที่ดูหรูหรา ขอภาพโทนสีอบอุ่น (Warm tone) อัตราส่วน 16:9",
+        promptEn: "Generate a product mockup of a minimalist perfume bottle resting on a marble pedestal. The background features dappled sunlight filtering through leaves. The label on the perfume bottle must clearly display the word 'ELEGANCE' in a luxurious, elegant font. Use a warm color tone. Aspect ratio 16:9."
+      },
+      { 
+        purpose: "💡 สร้างภาพประกอบบทความสไตล์ Flat Design", 
+        promptTh: "สร้างภาพประกอบสไตล์ Flat vector illustration สีสันสดใส รูปพนักงานออฟฟิศกำลังนั่งปวดหัวกับกองเอกสาร โดยมีนาฬิกาเรือนใหญ่กำลังเดินจับเวลาอยู่ด้านหลัง ภาพพื้นหลังสีขาวสะอาด สำหรับนำไปใช้ประกอบบทความเรื่องการจัดการเวลา",
+        promptEn: "Create a colorful flat vector illustration of a stressed office worker sitting at a desk overflowing with documents, with a giant ticking clock looming in the background. Pure white background, clean lines, corporate Memphis style, perfect for a blog post about time management."
+      }
+    ],
+    faqs: [
+      { question: "สั่งวาดตัวหนังสือภาษาไทยลงไปในรูปได้ไหม?", answer: "ปัจจุบัน DALL-E 3 ยังเรนเดอร์ 'ฟอนต์ภาษาไทย' ไม่ได้ครับ มันจะวาดออกมาเป็นตัวอึกขระแปลกๆ แนะนำให้สั่งเขียนเป็นภาษาอังกฤษไปก่อน แล้วค่อยไปพิมพ์ข้อความไทยทับใน Canva ครับ" }
+    ]
+  },
+  {
+    id: "img3",
+    slug: "stable-diffusion",
+    name: "Stability AI – Stable Diffusion",
+    logoUrl: "/logos/Stability AI.png",
+    description: "AI สายเปิดกว้าง (Open-source) ปรับแต่งได้อิสระลึกระดับเส้นโครงกระดูก",
+    longDescription: "Stable Diffusion คือมหาเทพของนักสร้างภาพสายฮาร์ดคอร์ มันเป็นระบบ Open-source ที่เปิดให้คุณดาวน์โหลดโค้ดมารันบนการ์ดจอคอมพิวเตอร์ของคุณเองฟรีๆ จุดเด่นที่ AI ตัวอื่นทำไม่ได้คือส่วนเสริมอย่าง 'ControlNet' ที่ให้คุณบังคับท่าทาง (Pose) ของตัวละคร หรืออัปโหลดภาพห้องเปล่าๆ เข้าไป แล้วบังคับให้ AI วางเฟอร์นิเจอร์ตามโครงสร้างเป๊ะๆ ชนิดมิลลิเมตรต่อมิลลิเมตร เหมาะสำหรับสายสถาปนิกและโปรดักชันสตูดิโอ",
+    origin: "แจกฟรีโดย Stability AI ทำให้เกิดคอมมูนิตี้ระดับโลก มีคนนำไปพัฒนาต่อเป็นโมเดลเฉพาะทาง (เช่น สายสมจริง, สายอนิเมะ) และมี LoRA แจกฟรีบนเว็บอย่าง Civitai มหาศาล",
+    category: "Image Generation",
+    priceModel: "Free (รัน Local เครื่องตัวเอง) / มีแอปเว็บ Third-party ให้บริการ",
+    isFree: true,
+    externalUrl: "https://stability.ai",
+    rating: 4.8,
+    reviewCount: 19500,
+    updatedAt: "Feb 2026",
+    features: [
+      "ControlNet: ควบคุมท่าทางมนุษย์ เส้นขอบสถาปัตยกรรม และความลึก (Depth) จากภาพอ้างอิงได้อย่างสมบูรณ์",
+      "LoRA & Fine-tuning: ระบบเทรน AI ขนาดย่อม ให้เรียนรู้ใบหน้าของคุณ สินค้า หรือสไตล์ศิลปินลงไปในโมเดลได้",
+      "Uncensored: ไม่มีระบบเซนเซอร์คำสั่ง ทำให้สามารถสร้างสรรค์ผลงานได้อิสระ 100% (หากรันบนเครื่องตัวเอง)"
+    ],
+    pros: [
+      "อิสระสูงสุด ปรับแต่งพารามิเตอร์ได้ลึกที่สุด ควบคุมภาพได้ดั่งใจนึก ไม่ใช่แค่การ 'สุ่ม' กาชาปอง",
+      "มีโมเดลและส่วนเสริมฟรีให้โหลดนับหมื่นรูปแบบ",
+      "หากรันออฟไลน์บนเครื่องตัวเอง จะไม่ต้องเสียเงินค่ารายเดือนใดๆ ทั้งสิ้น"
+    ],
+    cons: [
+      "หน้าต่างใช้งาน (UI) อย่าง ComfyUI หรือ Automatic1111 มีความซับซ้อนระดับขับเครื่องบิน มือใหม่ท้อแน่นอน",
+      "ต้องใช้คอมพิวเตอร์สเปคแรงมาก (แนะนำการ์ดจอ NVIDIA ที่มี VRAM 8GB ขึ้นไป)",
+      "การเขียน Prompt ค่อนข้างจุกจิก ต้องรู้คำศัพท์ (Tags) เฉพาะทาง"
+    ],
+    steps: [
+      { title: "ดาวน์โหลดโปรแกรม", desc: "ติดตั้ง UI เช่น ComfyUI หรือใช้บริการผ่านเว็บคลาวด์ เช่น Tensor.art หรือ Leonardo.ai" },
+      { title: "โหลด Checkpoint", desc: "ดาวน์โหลดสไตล์รูปภาพ (เช่น สายสมจริง) จากเว็บ Civitai มาติดตั้ง" },
+      { title: "รันภาพด้วย Prompt & ControlNet", desc: "ใส่ภาพเรฟเฟอเรนซ์ พิมพ์คำสั่ง (Positive/Negative Prompt) แล้วกด Generate" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 โครงสร้าง Prompt แบบ Tags สำหรับภาพบุคคลสมจริง (SDXL)", 
+        promptTh: "[การพิมพ์ Prompt ใน SD นิยมพิมพ์เป็นกลุ่มคำสั้นๆ คั่นด้วยลูกน้ำ]",
+        promptEn: "masterpiece, best quality, ultra-detailed, RAW photo, a portrait of a stunning futuristic cyberpunk hacker woman, wearing holographic streetwear, standing in a glowing neon city street background, sharp focus, 8k uhd, dslr, soft volumetric lighting, detailed skin pores. \n\n[Negative Prompt]: (worst quality, low quality:1.4), illustration, 3d, 2d, painting, cartoons, sketch, bad anatomy, missing fingers, blurry, ugly."
+      },
+      { 
+        purpose: "💡 งานเรนเดอร์ตกแต่งภายใน (Architectural Rendering)", 
+        promptTh: "[ใช้ร่วมกับ ControlNet สายเส้นเพื่อคุมโครงสร้างห้อง]",
+        promptEn: "interior design, hyper-realistic architectural render of a modern cozy living room, warm afternoon sunlight casting shadows through large floor-to-ceiling windows, indoor monstera plants, a minimalist grey sofa, wooden coffee table, highly detailed, octane render, unreal engine 5, ray tracing. \n\n[Negative Prompt]: blurry, cartoon, unproportional, messy, distorted perspective, watermark."
+      }
+    ],
+    faqs: [
+      { question: "ถ้าคอมสเปคไม่แรง แต่อยากใช้ Stable Diffusion ทำไง?", answer: "แนะนำให้ไปใช้บริการผ่านเว็บไซต์ Third-party ที่นำโค้ด Stable Diffusion ไปรันบน Cloud ของเขาครับ เช่นเว็บ SeaArt.ai หรือ Leonardo.ai ซึ่งจะมีโควต้าให้ใช้ฟรีระดับหนึ่งครับ" }
+    ]
+  },
+  {
+    id: "img4",
+    slug: "adobe-firefly",
+    name: "Adobe – Firefly",
+    logoUrl: "/logos/Adobe Firefly.png", // สมมติโลโก้
+    description: "AI สาย Commercial ปลอดภัยเรื่องลิขสิทธิ์ 100% เชื่อมต่อกับ Photoshop โดยตรง",
+    longDescription: "Adobe Firefly คือ AI สร้างภาพที่เกิดมาเพื่อ 'องค์กรและแบรนด์ใหญ่' จุดขายที่สำคัญที่สุดคือ 'ความปลอดภัยด้านลิขสิทธิ์ (Commercially Safe)' เพราะโมเดลนี้ถูกฝึกสอน (Train) จากคลังภาพ Adobe Stock และภาพที่เป็นโดเมนสาธารณะเท่านั้น ทำให้แบรนด์สามารถนำภาพไปใช้ทำโฆษณา บิลบอร์ด หรือแพ็กเกจจิ้งได้อย่างสบายใจโดยไม่ต้องกลัวโดนฟ้อง นอกจากนี้ มันยังถูกฝังเป็นฟีเจอร์ 'Generative Fill' ใน Photoshop ที่ให้คุณลบคน รีทัชภาพ หรือขยายขอบภาพ (Outpainting) ได้เนียนกริบในไม่กี่คลิก",
+    origin: "พัฒนาโดย Adobe เจ้าพ่อซอฟต์แวร์กราฟิก โดยตั้งเป้าให้เป็นเครื่องมือเสริมพลัง (Copilot) สำหรับนักออกแบบมืออาชีพ มากกว่าจะมาแย่งงานศิลปิน",
+    category: "Image Generation",
+    priceModel: "มีแครดิตฟรีรายเดือน / รวมอยู่ในแพ็กเกจ Adobe Creative Cloud",
+    isFree: true,
+    externalUrl: "https://firefly.adobe.com",
+    rating: 4.6,
+    reviewCount: 12500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Generative Fill / Expand: ลบวัตถุ เติมของ หรือขยายสัดส่วนภาพใน Photoshop ได้อย่างแนบเนียน",
+      "Structure Match: อัปโหลดภาพร่าง (Sketch) เข้าไป แล้วให้ AI วาดภาพจริงโดยคุมโครงสร้างตามภาพร่างเป๊ะๆ",
+      "Text Effects: สร้างกราฟิกตัวหนังสือที่ประกอบขึ้นจากพื้นผิวแปลกๆ เช่น ตัวอักษรที่ทำจากขนสัตว์ หรือใบไม้"
+    ],
+    pros: [
+      "ปลอดภัยด้านลิขสิทธิ์ 100% (Safe for Commercial Use) องค์กรใหญ่ใช้ได้สบายใจ",
+      "เครื่องมือ Generative Fill ใน Photoshop คือสิ่งที่นักแต่งรูปทุกคนขาดไม่ได้ ประหยัดเวลารีทัชไปได้ 90%",
+      "รองรับการสั่งงานด้วย Prompt มากกว่า 100 ภาษา (รวมถึงภาษาไทยด้วย)"
+    ],
+    cons: [
+      "ความสวยงามและความคิดสร้างสรรค์ของรูปภาพตั้งต้น (Text to Image) ยังตามหลัง Midjourney อยู่พอสมควร",
+      "ความสมจริงของใบหน้ามนุษย์ บางครั้งยังดูแบนๆ หรือเหมือนภาพสต็อก (Stock Photo) มากเกินไป"
+    ],
+    steps: [
+      { title: "เปิดเว็บหรือแอป", desc: "เข้าไปที่เว็บ Adobe Firefly หรือเปิดโปรแกรม Photoshop (เวอร์ชันอัปเดตล่าสุด)" },
+      { title: "ใช้ Generative Fill", desc: "ใช้เครื่องมือ Lasso Tool วงบริเวณที่ต้องการแก้ไข แล้วพิมพ์คำสั่ง (เช่น 'ใส่รถสปอร์ตสีแดง')" },
+      { title: "เลือกผลลัพธ์", desc: "AI จะให้ตัวเลือกมา 3 แบบ ให้คุณกดเลือกแบบที่กลืนไปกับสภาพแสงของรูปที่สุด" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ขยายขอบภาพแนวนอน และลบสิ่งรบกวน (Generative Fill ใน Photoshop)", 
+        promptTh: "[การพิมพ์ภาษาอังกฤษใน Photoshop มักจะให้ผลลัพธ์ที่แม่นยำกว่าภาษาไทย]\n1. ลากเครื่องมือ Crop Tool ยืดขอบภาพให้กว้างขึ้น -> กดปุ่ม Generative Fill -> ปล่อยช่อง Prompt ว่างไว้แล้วกด Generate (AI จะเติมฉากหลังให้เนียนเอง)\n2. วงกลมรอบคนเดินผ่านหลังกล้อง -> พิมพ์ Prompt: 'remove person' หรือปล่อยว่างไว้ ระบบจะลบคนทิ้งให้",
+        promptEn: "1. Expand canvas using Crop Tool -> Click Generative Fill -> Leave prompt blank -> Click Generate (AI auto-fills background).\n2. Lasso a photobomber -> Prompt: 'remove person'."
+      },
+      { 
+        purpose: "💡 สร้างภาพพื้นหลังสำหรับงานโฆษณา (Text to Image บนเว็บ Firefly)", 
+        promptTh: "ภาพพื้นหลังเวที 3 มิติ (3D podium) ที่ทำจากหินอ่อนสีขาว ท่ามกลางป่าดิบชื้นที่มีหมอกจางๆ และแสงแดดลอดผ่านใบไม้ สำหรับวางโฆษณาผลิตภัณฑ์บำรุงผิว โทนสีเขียวธรรมชาติและสบายตา",
+        promptEn: "A 3D marble podium background situated in a lush, misty tropical rainforest with sunbeams filtering through the canopy. Designed for a skincare product advertisement. Natural, calming, and lush green color palette."
+      }
+    ],
+    faqs: [
+      { question: "ถ้าใช้แครดิตฟรีบนเว็บ ภาพจะติดลายน้ำไหม?", answer: "ถ้าใช้บัญชีฟรี ภาพที่โหลดจากเว็บ Firefly จะมีลายน้ำ Adobe เล็กๆ ติดอยู่ที่มุมภาพครับ ต้องเป็นสมาชิก Creative Cloud แบบเสียเงินถึงจะโหลดภาพแบบไม่มีลายน้ำได้" }
+    ]
+  },
+  {
+    id: "img5",
+    slug: "google-imagen",
+    name: "Google DeepMind – Imagen 3",
+    logoUrl: "/logos/Google – Gemini.png", // ใช้โลโก้ Gemini เพราะผูกกัน
+    description: "AI สร้างภาพของ Google คมชัดสูง สีสันสมจริงที่สุดในการทำภาพแนว Photorealistic",
+    longDescription: "Imagen 3 คือโมเดลสร้างภาพรุ่นท็อปจากฝั่ง Google DeepMind ปัจจุบันถูกนำมาให้ใช้งานผ่านแชทบอท Gemini สิ่งที่ Imagen 3 ทำได้ดีจนน่าขนลุกคือ 'ภาพแนวสตรีทและการถ่ายภาพบุคคลสมจริง (Photorealistic)' แสง เงา ริ้วรอยบนใบหน้า และสีสันของภาพจะดูเป็นธรรมชาติมากๆ ไม่ติดโทน 'พลาสติก 3D' แบบ AI ตัวอื่นๆ นอกจากนี้มันยังเก่งเรื่องการวาดรูปให้ตรงตามสัดส่วนภาพถ่ายกล้องโปร และสามารถเรนเดอร์ตัวหนังสือ (Text Rendering) ลงไปในป้ายหรือภาพกราฟิกได้อย่างแม่นยำสูสีกับ DALL-E 3",
+    origin: "พัฒนาโดย Google DeepMind ออกแบบมาเพื่อผสานเข้ากับระบบ Ecosystem ของ Google (เช่น Gemini, Google Docs, Slides) เพื่อให้ผู้ใช้งานทั่วไปสามารถเสกภาพประกอบรายงานได้ทันที",
+    category: "Image Generation",
+    priceModel: "Free (ใช้งานผ่าน Gemini)",
+    isFree: true,
+    externalUrl: "https://gemini.google.com",
+    rating: 4.6,
+    reviewCount: 14500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Exceptional Photorealism: ภาพคนและภาพวิวสมจริงระดับนำไปหลอกคนในโซเชียลได้ (Skin texture เนียนมาก)",
+      "Accurate Text Generation: พิมพ์คำสั่งให้ใส่ตัวหนังสือลงในรูปภาพได้",
+      "Gemini Integration: สั่งงานผ่านแชท Gemini ด้วยภาษาไทยได้ทันที"
+    ],
+    pros: [
+      "ความสมจริงของสภาพแสง (Lighting) ดูเป็นธรรมชาติและคล้ายการจัดแสงจริงของมนุษย์ที่สุด",
+      "ใช้งานฟรีผ่านหน้าเว็บ Gemini ได้เลย ประมวลผลรวดเร็ว",
+      "ทำตามคำสั่ง Prompt ยาวๆ ได้ดีเยี่ยม ไม่หลงลืมรายละเอียดเล็กๆ น้อยๆ"
+    ],
+    cons: [
+      "ไม่สามารถสร้างภาพบุคคลที่มีอยู่จริง หรือภาพที่อาจก่อให้เกิดปัญหาทางการเมืองและศีลธรรมได้ (เซนเซอร์ดุมาก)",
+      "สัดส่วนภาพส่วนใหญ่จะถูกล็อกไว้เป็นจัตุรัส (1:1) หากไม่ได้ระบุในคำสั่งชัดเจน",
+      "ยังไม่มีเครื่องมือล้ำๆ อย่าง Inpainting (ระบายแก้เฉพาะจุด) แบบเต็มรูปแบบเหมือนใน DALL-E หรือ Midjourney"
+    ],
+    steps: [
+      { title: "เปิด Google Gemini", desc: "เข้าเว็บไซต์ gemini.google.com ด้วยบัญชี Gmail" },
+      { title: "สั่งวาดภาพ", desc: "พิมพ์คำว่า 'ช่วยวาดภาพ...' หรือ 'Generate an image of...' ตามด้วยคำอธิบาย" },
+      { title: "ดาวน์โหลด", desc: "AI จะให้ภาพทางเลือกมา 2-4 ภาพ ให้กดปุ่มดาวน์โหลดรูปที่ถูกใจได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สร้างภาพถ่ายสตรีทไลฟ์สมจริง (Street Photography)", 
+        promptTh: "ช่วยวาดภาพถ่ายบุคคล (Portrait) ของชายชราที่มีริ้วรอยตามวัยกำลังนั่งยิ้มดื่มกาแฟอยู่ที่ร้านกาแฟริมถนนในเมืองปารีส ถ่ายด้วยกล้อง DSLR เลนส์ 85mm หน้าชัดหลังเบลอ (Bokeh) แสงแดดยามเช้าสาดส่องกระทบใบหน้า ขอความสมจริงระดับภาพถ่ายสารคดี",
+        promptEn: "Generate a photorealistic portrait of an elderly man with detailed facial wrinkles, smiling warmly while drinking coffee at a sidewalk cafe in Paris. Shot on a DSLR with an 85mm lens, shallow depth of field (bokeh effect). Morning sunlight softly illuminating his face. Documentary photography style."
+      },
+      { 
+        purpose: "💡 สร้างภาพเมนูอาหารยั่วๆ (Food Photography)", 
+        promptTh: "ภาพถ่ายมุมสูง (Top-down view) ของชามราเมนต้มยำกุ้งน้ำข้นสไตล์ฟิวชัน ควันร้อนๆ กำลังลอยขึ้นมา จัดจานแบบพรีเมียมไฟน์ไดนิ่ง มีตะเกียบไม้วางพาดอยู่ขอบชาม แสงไฟสตูดิโอขับสีส้มของน้ำซุปให้ดูน่ากินจัดจ้าน",
+        promptEn: "A top-down view food photography shot of a premium fusion Tom Yum Goong ramen bowl. Hot steam gently rising. Fine-dining plating style, with wooden chopsticks resting on the rim. Professional studio lighting highlighting the rich, vibrant orange color of the spicy broth. Extremely appetizing and highly detailed."
+      }
+    ],
+    faqs: [
+      { question: "วาดรูปคนได้ไหม เห็นเมื่อก่อน Google สั่งระงับ?", answer: "ปัจจุบัน Google ได้ปรับปรุงโมเดล Imagen 3 ให้สามารถสร้างภาพคนทั่วไปได้อย่างปลอดภัยและสมจริงมากแล้วครับ แต่ยังคงบล็อกการสร้างภาพดารา คนดัง หรือนักการเมืองที่มีอยู่จริงครับ" }
+    ]
+  },
+
+  // ==========================================
+  // 🎬 หมวด AI สร้างวิดีโอ (Video Generation) - 5 ตัวท็อป
+  // ==========================================
+  {
+    id: "vid1",
+    slug: "openai-sora",
+    name: "OpenAI – Sora",
+    logoUrl: "/logos/OpenAI – DALL·E.png", // ใช้โลโก้ OpenAI ชั่วคราว
+    description: "สุดยอด AI เปลี่ยนข้อความเป็นวิดีโอ สมจริงระดับภาพยนตร์ฮอลลีวูด ความยาว 1 นาทีเต็ม",
+    longDescription: "Sora คือ 'ปรากฏการณ์' ที่สะเทือนวงการภาพยนตร์ไปทั่วโลก โมเดล Text-to-Video ตัวนี้สามารถเสกวิดีโอความยาวสูงสุด 60 วินาที จากการพิมพ์ Prompt แค่ไม่กี่ประโยค ความโหดของมันคือ 'ความเข้าใจเรื่องฟิสิกส์ 3 มิติ' (3D Physical World) เวลาที่มุมกล้องแพนไปมา วัตถุในฉากและเงาจะยังคงอยู่ในตำแหน่งที่ถูกต้อง ไม่เบี้ยว ไม่ละลายหายไปเหมือน AI วิดีโอยุคก่อนหน้า เหมาะสำหรับงานโปรดักชัน โฆษณา และการสร้างช็อต B-Roll อลังการที่ไม่สามารถถ่ายทำจริงได้",
+    origin: "เปิดตัวโดย OpenAI ทำให้โลกตะลึงด้วยคุณภาพความเนียนตา (Temporal Consistency) ที่ก้าวกระโดดจาก AI รุ่นก่อนเป็นสิบเท่า ปัจจุบันยังอยู่ในช่วงทดสอบกับกลุ่มผู้กำกับและนักวิจัย (Red Team) อย่างจำกัด",
+    category: "Video Generation",
+    priceModel: "ปัจจุบันเปิดให้ทดลองเฉพาะกลุ่มนักสร้างสรรค์/องค์กร",
+    isFree: false,
+    externalUrl: "https://openai.com/sora",
+    rating: 4.9,
+    reviewCount: 8400,
+    updatedAt: "Feb 2026",
+    features: [
+      "1-Minute Continuous Video: สร้างวิดีโอแบบลากยาว 1 นาที โดยที่ตัวละครและฉากไม่เปลี่ยนรูปร่าง",
+      "Complex Camera Motion: รองรับการแพนกล้อง ซูมทะลุวัตถุ หรือถ่ายแบบโดรนบินวนรอบเมืองได้สมบูรณ์แบบ",
+      "Image/Video to Video: นำภาพนิ่งมาทำให้ขยับ หรือนำคลิปเก่ามาใส่เอฟเฟกต์แปลงโฉมสภาพแวดล้อมได้"
+    ],
+    pros: [
+      "คุณภาพงานระดับ Production-ready ภาพสวยและมุมกล้องสมจริงมากที่สุดในตลาด",
+      "ลดปัญหาฉากหลังละลาย (Morphing) เมื่อตัวละครเดินบังกล้อง",
+      "ประหยัดงบถ่ายทำมหาศาลสำหรับช็อตภาพมุมกว้าง หรือฉากแฟนตาซีอลังการ"
+    ],
+    cons: [
+      "คนทั่วไปยังเข้าใช้งานไม่ได้ง่ายๆ (ยังไม่เปิด Public Release แบบเต็มรูปแบบ)",
+      "ยังมีบั๊กเรื่องฟิสิกส์หนักๆ เช่น กระจกแตกไม่เนียน หรือตัวละครกินคุกกี้แล้วรอยแหว่งไม่ลดลง",
+      "การประมวลผลคลิปยาวๆ ใช้เวลาเรนเดอร์และกินทรัพยากรมหาศาล"
+    ],
+    steps: [
+      { title: "เตรียม Prompt ให้ละเอียด", desc: "Sora ต้องการคำอธิบายบรรยากาศ มุมกล้อง และการเคลื่อนไหวที่ชัดเจน" },
+      { title: "ป้อนคำสั่ง", desc: "พิมพ์คำสั่ง Text-to-Video ลงในระบบ" },
+      { title: "รอเรนเดอร์", desc: "ระบบจะใช้เวลาประมวลผลก่อนเสิร์ฟวิดีโอระดับความละเอียด 1080p มาให้" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งสร้างช็อต B-Roll โดรนถ่ายเมือง (Drone Cinematic)", 
+        promptTh: "[แนะนำพิมพ์ภาษาอังกฤษเพื่อผลลัพธ์ที่สมบูรณ์ที่สุด]",
+        promptEn: "A cinematic, sweeping drone camera shot flying through a futuristic cyberpunk Tokyo covered in glowing neon signs. Heavy rain is pouring. The camera gracefully weaves between tall skyscrapers, capturing flying cars navigating the traffic. Photorealistic, 4k resolution, smooth 60fps motion."
+      },
+      { 
+        purpose: "💡 ช็อตซูมบุคคลแบบมาโคร (Macro Close-up)", 
+        promptTh: "[แนะนำพิมพ์ภาษาอังกฤษ]",
+        promptEn: "An extreme close-up of a human eye. The camera zooms deep into the iris, which magically transforms into a swirling galaxy full of sparkling stars and nebulas. Ultra-detailed, cinematic lighting, seamless transition."
+      }
+    ],
+    faqs: [
+      { question: "เราจะแยกออกไหมว่าอันไหนของจริง อันไหนคลิปสาดจาก Sora?", answer: "OpenAI ประกาศว่าจะฝังลายน้ำ (Watermark) และข้อมูล Metadata ลงไปในทุกคลิปที่สร้างจาก Sora เพื่อป้องกันการนำไปใช้สร้างข่าวปลอม (Deepfake) ครับ" }
+    ]
+  },
+  {
+    id: "vid2",
+    slug: "runway-gen3",
+    name: "Runway – Gen-3 Alpha",
+    logoUrl: "/logos/Runway-ai.png",
+    description: "AI ผู้สร้างวิดีโอระดับภาพยนตร์ฮอลลีวูด ใช้งานง่าย เครื่องมือควบคุมกล้องละเอียด",
+    longDescription: "Runway Gen-3 Alpha คือผู้ท้าชิงเบอร์หนึ่งของ Sora ที่ 'เปิดให้คนทั่วไปใช้งานได้แล้ววันนี้' ความสามารถของมันคือการเสกภาพเคลื่อนไหวที่เนียนตา (Temporal consistency) สมจริงระดับโฆษณาทีวี จุดแข็งของ Runway คือระบบนิเวศหน้าเว็บที่มีฟีเจอร์สำหรับ 'คนทำหนัง' โดยเฉพาะ ไม่ว่าจะเป็นการอัปโหลดภาพนิ่งแล้วสั่งให้ขยับ ฟีเจอร์ Motion Brush ที่ให้คุณเอากระป๋องสีไประบายเมฆให้ขยับแต่วัตถุอื่นอยู่นิ่ง หรือการควบคุมทิศทางกล้องแพนซ้ายขวา (Camera Control) อย่างละเอียด",
+    origin: "RunwayML เป็นสตาร์ทอัพที่มุ่งสร้าง Tools ให้นักตัดต่อวิดีโอ และมีส่วนร่วมในการพัฒนาเทคโนโลยีเบื้องหลังภาพยนตร์ระดับรางวัลออสการ์อย่าง 'Everything Everywhere All at Once'",
+    category: "Video Generation",
+    priceModel: "Free (ให้เครดิตจำกัด) / Starts at $15/เดือน",
+    isFree: false,
+    externalUrl: "https://runwayml.com",
+    rating: 4.8,
+    reviewCount: 6200,
+    updatedAt: "Feb 2026",
+    features: [
+      "Image-to-Video: โยนภาพนิ่งสวยๆ (จาก Midjourney) เข้าไป แล้วสั่งให้มันขยับเป็นวิดีโอ",
+      "Motion Brush: ระบายสีลงบนรูปภาพ เฉพาะจุดที่อยากให้มีการเคลื่อนไหว เช่น ปล่อยน้ำตกไหล",
+      "Lip Sync & Audio: นำคลิปหน้าคนมาใส่เสียงพากย์ ให้ AI ทำให้ปากขยับตามเสียงได้เนียนกริบ"
+    ],
+    pros: [
+      "เปิดให้คนทั่วไปเข้าใช้งานได้เลย อินเตอร์เฟซเว็บออกแบบมาดี ใช้งานง่ายมาก",
+      "คุณภาพความสมจริง (Photorealism) ของโมเดล Gen-3 แข่งขันกับตัวท็อปได้สบายๆ",
+      "ฟีเจอร์ควบคุมการเคลื่อนไหวเฉพาะจุด (Motion Brush) มีประโยชน์มากๆ สำหรับคนทำภาพโฆษณา"
+    ],
+    cons: [
+      "เครดิตหมดไวมาก การสร้างคลิป 10 วินาทีใช้เครดิตค่อนข้างเยอะ (ต้นทุนแพง)",
+      "ใบหน้าและนิ้วมือมนุษย์ในการทำแอคชันซับซ้อน (เช่น เดินหันหลัง หรือจับของ) ยังมีอาการบิดเบี้ยวหลอกตาอยู่บ้าง"
+    ],
+    steps: [
+      { title: "เลือกโหมด", desc: "ล็อกอินเข้าระบบ เลือกเครื่องมือ 'Text/Image to Video' (Gen-3 Alpha)" },
+      { title: "อัปโหลดรูปตั้งต้น", desc: "แนะนำให้อัปโหลดภาพนิ่งเข้าไปเป็นสารตั้งต้น (ดีกว่าพิมพ์ Text สดๆ)" },
+      { title: "สั่ง Generate", desc: "พิมพ์คำสั่งอธิบายสิ่งที่อยากให้ขยับ แล้วรอประมวลผล 1-2 นาที" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ทำภาพนิ่งให้กลายเป็นวิดีโอ Cinematic (Image-to-Video)", 
+        promptTh: "[อัปโหลดรูปภาพใบหน้าคน แล้วพิมพ์ Prompt ภาษาอังกฤษ]",
+        promptEn: "Subtle motion. The subject gently blinks and slightly turns her head towards the camera. The wind softly blows her hair. Film grain, moody cinematic lighting, 4k."
+      },
+      { 
+        purpose: "💡 สร้างช็อตแอคชันเร็วๆ (Dynamic Motion)", 
+        promptTh: "[พิมพ์ Text ล้วน]",
+        promptEn: "A high-speed FPV drone chasing a red sports car drifting through a snowy mountain pass. Snow flying off the tires. Fast motion blur, highly dynamic camera angle, hyper-realistic."
+      }
+    ],
+    faqs: [
+      { question: "ทำไมคลิปที่ได้ยาวแค่ไม่กี่วินาที?", answer: "การประมวลผลวิดีโอทีละเฟรมกินพลังงานเซิร์ฟเวอร์มหาศาลครับ ปัจจุบัน AI ค่ายนี้จะเรนเดอร์คลิปให้ทีละ 5-10 วินาที คุณต้องเอาช็อตสั้นๆ หลายๆ ช็อตไปเรียงต่อกันในโปรแกรมตัดต่ออีกทีครับ" }
+    ]
+  },
+  {
+    id: "vid3",
+    slug: "pika-labs",
+    name: "Pika Labs",
+    logoUrl: "/logos/Pika.png",
+    description: "AI เสกวิดีโอสาย 3D/Anime ใช้งานฟรีง่ายๆ เด่นเรื่องขยับปากและใส่เอฟเฟกต์บึ้มบั้ม",
+    longDescription: "Pika คือคู่แข่งตัวตึงที่ครองใจวัยรุ่นและนักทำคอนเทนต์โซเชียล เพราะมันมีโมเดลธุรกิจที่ 'ใจดี' แจกเครดิตให้เล่นฟรีทุกวัน! จุดแข็งของ Pika ไม่ใช่การแข่งความสมจริงแบบภาพยนตร์ แต่เก่งมากในการปั้นสไตล์ แอนิเมชัน, 3D Render น่ารักๆ และสไตล์ Anime แถมยังมีฟีเจอร์เด็ดอย่าง 'Lip Sync' ยัดไฟล์เสียงลงไปให้ตัวการ์ตูนขยับปากพูดตามเป๊ะๆ และมีปุ่มกดใส่เอฟเฟกต์ (Pikaffects) เช่น สั่งให้ของระเบิดตูมตาม ทำลูกโป่งแตก ได้ในคลิกเดียว",
+    origin: "สร้างโดยทีมนักศึกษา Stanford ที่อยากให้เครื่องมือทำวิดีโอมันสนุกและจับต้องได้ง่าย Pika เคยเป็นไวรัลสุดๆ บน X (Twitter) ตอนที่ปล่อยฟีเจอร์สั่งขยายกรอบภาพวิดีโอ (Expand Canvas)",
+    category: "Video Generation",
+    priceModel: "Free (มีเครดิตเติมให้ทุกวัน) / Starts at $10/เดือน",
+    isFree: true,
+    externalUrl: "https://pika.art",
+    rating: 4.6,
+    reviewCount: 5200,
+    updatedAt: "Feb 2026",
+    features: [
+      "Lip Sync: อัปโหลดเสียง (หรือพิมพ์ข้อความ) ให้ตัวละครในภาพขยับปากพูดตามเนียนๆ",
+      "Pikaffects: เอฟเฟกต์สำเร็จรูป สั่งให้วัตถุในรูป ละลาย, บีบอัด, หรือระเบิดกระจายได้ทันที",
+      "Modify Region: ตีวงกรอบสี่เหลี่ยมในคลิปวิดีโอ แล้วสั่งให้ AI เปลี่ยนเสื้อผ้า เปลี่ยนแว่น ขณะคลิปกำลังเล่นอยู่ได้"
+    ],
+    pros: [
+      "เวอร์ชันฟรีแจกเครดิตให้เล่นทุกวัน เหมาะกับการเอาไปทำคอนเทนต์ลง TikTok หรือ YouTube Shorts",
+      "ฟีเจอร์สไตล์การ์ตูน 3D หรือ Anime ทำออกมาได้มีเสน่ห์และขยับได้ลื่นไหลมาก",
+      "ระบบเครื่องมือ Lip Sync ทำได้จบในเว็บเดียว ไม่ต้องสลับแอปไปมา"
+    ],
+    cons: [
+      "ความสมจริงในแง่ของภาพมนุษย์หรือธรรมชาติ (Photorealism) สู้ Runway หรือ Luma ไม่ได้ ภาพจะดูนวลๆ วุ้นๆ นิดนึง",
+      "ฉากที่ตัวละครมีการก้าวเท้าเดิน หรือหันหน้า 360 องศา มักจะบิดเบี้ยวหรือพังได้ง่าย"
+    ],
+    steps: [
+      { title: "อัปโหลดภาพตั้งต้น", desc: "เข้าไปที่ Pika.art กดอัปโหลดภาพที่จะทำให้ขยับ" },
+      { title: "ปรับแต่ง Camera", desc: "เลือกทิศทางกล้อง ซูมเข้า/ออก หรือพิมพ์ Prompt ว่าอยากให้เกิดอะไรขึ้น" },
+      { title: "ใส่เสียง Lip Sync", desc: "ถ้าเป็นภาพคน ให้คลิกฟีเจอร์ Lip sync แล้วพิมพ์บทพูดลงไป จากนั้นกด Generate" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สร้างแอนิเมชัน 3D สุดน่ารักสไตล์ Pixar", 
+        promptTh: "[แนะนำพิมพ์ภาษาอังกฤษต่อท้ายภาพที่อัปโหลด]",
+        promptEn: "High quality 3D animation, Pixar style. An adorable fluffy ginger kitten wearing a tiny spacesuit, floating clumsily in zero gravity inside a futuristic spaceship. Bright, cheerful studio lighting, fluid motion, highly detailed fur."
+      },
+      { 
+        purpose: "💡 สั่งเพิ่มเอฟเฟกต์ระเบิดหรือละลาย (Pikaffects)", 
+        promptTh: "[คลิกเลือกเมนูเอฟเฟกต์ หรือพิมพ์คำสั่งตรงๆ]",
+        promptEn: "The fluffy cake on the table suddenly explodes into colorful confetti. Dynamic motion, slow motion effect."
+      }
+    ],
+    faqs: [
+      { question: "ทำวิดีโอแบบไหนที่ภาพมักจะพังน้อยที่สุด?", answer: "ช็อตซูมครึ่งตัว (Close-up) หรือช็อตที่กล้องแพนผ่านวิวธรรมชาติเฉยๆ ครับ หลีกเลี่ยงช็อตที่เห็นขากำลังก้าวเดิน หรือช็อตที่มีมือมาจับสิ่งของซับซ้อน" }
+    ]
+  },
+  {
+    id: "vid4",
+    slug: "luma-dream-machine",
+    name: "Luma AI – Dream Machine",
+    logoUrl: "/logos/Pika.png", // ใช้โลโก้ชั่วคราว
+    description: "AI เสกวิดีโอตัวตึงน้องใหม่ เด่นเรื่องกล้อง 3D เคลื่อนไหวรวดเร็วและสมจริงทะลุจอ",
+    longDescription: "Luma AI เริ่มต้นจากการเป็นบริษัททำ 3D Capture ขั้นเทพ (ถ่ายรูปของรอบด้านแล้วปั้นเป็นโมเดล 3D) เมื่อพวกเขาปล่อย 'Dream Machine' มันเลยกลายเป็น AI Video ที่เก่งเรื่อง 'ความมีมิติและความลึก (Depth)' ที่สุดในตลาดตอนนี้ จุดแข็งที่คนรัก Luma คือมันสามารถทำช็อตที่กล้องบินโฉบไปมา (FPV Drone Style) เคลื่อนไหวรวดเร็ว ดุดัน และเปลี่ยนฉากมุมกล้องได้เนียนสุดๆ ทำความยาวเริ่มต้น 5 วินาที และให้ภาพสมจริงที่น่าประทับใจจนก้าวขึ้นมาท้าชน Runway และ Sora ได้อย่างเต็มภาคภูมิ",
+    origin: "พัฒนาโดย Luma AI สตาร์ทอัพสาย 3D ที่ผันตัวมาลุยตลาด Generative Video โมเดลของพวกเขาเน้นความเข้าใจในโครงสร้าง 3 มิติของโลก ทำให้วิดีโอที่ได้ไม่มีอาการภาพแบนๆ เป็นแผ่นกระดาษ",
+    category: "Video Generation",
+    priceModel: "Free (จำกัด 30 ครั้ง/เดือน) / Starts at $29/เดือน",
+    isFree: true,
+    externalUrl: "https://lumalabs.ai/dream-machine",
+    rating: 4.7,
+    reviewCount: 4300,
+    updatedAt: "Feb 2026",
+    features: [
+      "Dynamic Camera Angles: เก่งมากเรื่องการจำลองมุมกล้องแบบ Action ทะยานไปข้างหน้า หรือบินตีลังกา",
+      "Keyframe Control: สามารถกำหนด 'ภาพแรก (Start Frame)' และ 'ภาพสุดท้าย (End Frame)' ให้ AI ทายวิดีโอคั่นกลางให้เนียนเชื่อมกัน",
+      "High-speed Generation: ประมวลผลและสร้างคลิป 5 วินาทีออกมาได้เร็วกว่า AI หลายๆ ค่าย (ใช้เวลาประมาณ 2 นาที)"
+    ],
+    pros: [
+      "มิติภาพและความลึกของฉาก (Depth of Field) สวยงามสมบูรณ์แบบมาก วิดีโอดูมีสเปซ ไม่บี้แบน",
+      "ให้โควต้าฟรีรายเดือนเยอะ (ประมาณ 30 คลิป) เหมาะแก่การไปลองของ",
+      "ฟีเจอร์กำหนดภาพหัว-ท้าย (Keyframing) ช่วยให้คุมทิศทางเนื้อเรื่องในคลิปได้เป๊ะขึ้น"
+    ],
+    cons: [
+      "ช่วงที่มีคนใช้งานหนักๆ (Traffic สูง) แถวคิวในแพ็กเกจฟรีจะยาวมาก อาจต้องรอคลิปเป็นสิบนาที",
+      "เหมือน AI ตัวอื่นๆ คือยังจัดการสรีระหน้าตาของคนในคลิปที่มีการขยับตัวเยอะๆ ได้ไม่เพอร์เฟกต์ 100%"
+    ],
+    steps: [
+      { title: "ลงชื่อเข้าใช้", desc: "เข้าเว็บไซต์ Luma Dream Machine ผูกบัญชี Google" },
+      { title: "กำหนดภาพคีย์เฟรม", desc: "อัปโหลดภาพตั้งต้น (Start) และภาพจบ (End) ถ้ามี" },
+      { title: "พิมพ์ Prompt", desc: "พิมพ์อธิบายการเคลื่อนไหวของกล้องให้ชัดเจน แล้วกดสร้างคลิป" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สร้างช็อตกล้องบินโดรนสไตล์ดุดัน (Action FPV)", 
+        promptTh: "[แนะนำภาษาอังกฤษ]",
+        promptEn: "First-person FPV drone view. The camera flies aggressively down a steep, narrow mountain waterfall. Water splashes onto the lens. Highly dynamic, fast-paced action, hyper-realistic nature documentary style."
+      },
+      { 
+        purpose: "💡 สั่งให้เปลี่ยนรูปภาพให้มีมิติลึกขึ้น (Cinematic Pan)", 
+        promptTh: "[อัปโหลดรูปภาพห้องนั่งเล่นเข้าไป]",
+        promptEn: "The camera slowly glides forward through the room, focusing on the coffee table while the background softly blurs out. Cinematic tracking shot, highly detailed, realistic lighting."
+      }
+    ],
+    faqs: [
+      { question: "คลิป 5 วินาทีมันสั้นไป สั่งยืดความยาวได้ไหม?", answer: "เมื่อกดสร้างคลิปแรกเสร็จ จะมีปุ่ม 'Extend' ให้คุณกดครับ AI จะเอาเฟรมสุดท้ายของคลิปนั้นไปคิดต่อยอดความยาวเพิ่มอีก 5 วินาทีต่อกันไปเรื่อยๆ ได้ครับ" }
+    ]
+  },
+  {
+    id: "vid5",
+    slug: "synthesia",
+    name: "Synthesia",
+    logoUrl: "/logos/Synthesia.png",
+    description: "AI จ้างคนจำลอง (Avatars) พรีเซนต์งานและอ่านสคริปต์แทนคุณ รองรับภาษาไทยชัดเจน",
+    longDescription: "หมดปัญหาการตั้งกล้อง เช่าไฟ และเขินกล้อง! Synthesia คือแพลตฟอร์มที่เสก 'พรีเซนเตอร์เสมือนจริง (AI Avatars)' มายืนอ่านสคริปต์หน้าจอแทนคุณ คุณเพียงแค่พิมพ์ข้อความที่อยากให้พูด เลือกหุ่นพรีเซนเตอร์ที่มีให้เลือกกว่า 160 แบบ AI จะจัดการขยับปากให้ตรงกับเสียงพูด (Lip-sync) พร้อมน้ำเสียงและภาษากายที่เป็นธรรมชาติ เหมาะที่สุดสำหรับการทำวิดีโอสอนพนักงาน (Corporate Training) วิดีโออธิบายสินค้า หรืองานนำเสนอแบบมืออาชีพ",
+    origin: "มุ่งเน้นแก้ปัญหางานโปรดักชัน B2B ให้กับองค์กรระดับโลก เพื่อลดต้นทุนการจ้างสตูดิโอถ่ายคลิปสอนงานลงกว่า 80%",
+    category: "Video Generation",
+    priceModel: "Starts at $22/เดือน",
+    isFree: false,
+    externalUrl: "https://www.synthesia.io",
+    rating: 4.8,
+    reviewCount: 6500,
+    updatedAt: "Feb 2026",
+    features: [
+      "160+ AI Avatars: มีพรีเซนเตอร์ทุกเชื้อชาติ อายุ และสไตล์ชุดเสื้อผ้าให้เลือก",
+      "Multilingual Audio: รองรับกว่า 120 ภาษา (เสียงภาษาไทยพูดได้เป็นธรรมชาติ ควบกล้ำชัดเจน)",
+      "Built-in Video Editor: มีหน้าต่างจัดสไลด์ ใส่พื้นหลังข้อความ วิดีโอสต็อก และปุ่มกดให้ครบจบในแอปเดียว",
+      "Custom Avatar: ส่งคลิปตัวคุณเองไปให้บริษัทโคลนหน้าและเสียง เพื่อสร้าง Avatar ส่วนตัวให้คุณพิมพ์สั่งตัวเองพูดได้ตลอดชีพ"
+    ],
+    pros: [
+      "ประหยัดเวลาและค่าใช้จ่ายในการถ่ายทำอย่างมหาศาล หากพูดผิดก็แค่พิมพ์แก้ข้อความแล้วกดเรนเดอร์ใหม่ ไม่ต้องถ่ายซ่อม",
+      "Avatar รุ่นใหม่ๆ มีการแสดงสีหน้า กะพริบตา เอียงคอ และขยับมือ (Micro-expressions) ดูเป็นมนุษย์ขึ้นมาก",
+      "หน้าต่างตัดต่อใช้งานง่ายเหมือนทำสไลด์ PowerPoint"
+    ],
+    cons: [
+      "แววตาและการแสดงอารมณ์ดราม่ายังดูออกว่าเป็น AI (แอบตาลอยเบาๆ)",
+      "แพ็กเกจเริ่มต้นให้โควต้านาทีในการเรนเดอร์วิดีโอน้อยไปนิดนึง",
+      "หากใช้อวตารฟรีที่มีในระบบ คนดูอาจจำหน้าได้ว่านี่คือ AI ทำให้ขาดความเป็นเอกลักษณ์ของแบรนด์"
+    ],
+    steps: [
+      { title: "เลือก Avatar และฉาก", desc: "เข้าไปในระบบ เลือกพรีเซนเตอร์ที่ถูกใจ และเลือกภาพพื้นหลังฉาก (เช่น ออฟฟิศ ห้องข่าว)" },
+      { title: "พิมพ์สคริปต์รายสไลด์", desc: "วางข้อความที่ต้องการให้ AI พูดลงไป (ปรับแต่งความช้า/เร็ว การเว้นวรรคหายใจได้)" },
+      { title: "กด Generate", desc: "ตรวจสอบความถูกต้อง แล้วกดสร้างคลิป รอประมาณ 5-10 นาที จะได้ไฟล์ MP4 ไปใช้งาน" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สคริปต์วิดีโออธิบายสินค้า (Product Explainer)", 
+        promptTh: "สวัสดีค่ะ! ยินดีต้อนรับเข้าสู่วิดีโอแนะนำบริการจากบริษัทของเรา. [เว้นวรรค 1 วิ] วันนี้เราจะพาคุณไปทำความรู้จักกับฟีเจอร์ใหม่ล่าสุด ที่จะช่วยให้การจัดการข้อมูลลูกค้าของคุณง่ายขึ้นกว่าเดิมถึง 2 เท่า! ไปดูขั้นตอนการตั้งค่าพร้อมๆ กันบนหน้าจอเลยค่ะ",
+        promptEn: "Hello and welcome! In today's video, we are thrilled to introduce our newest feature designed to make your customer data management twice as efficient. [Pause for 1 sec] Let's jump right into the dashboard and see exactly how to set it up!"
+      },
+      { 
+        purpose: "💡 สคริปต์สอนงานพนักงาน (Corporate Onboarding)", 
+        promptTh: "ยินดีต้อนรับพนักงานใหม่ทุกท่านเข้าสู่ครอบครัวของเรานะคะ! ในโมดูลแรกนี้ เราจะมาทำความเข้าใจเกี่ยวกับวิสัยทัศน์ และวัฒนธรรมองค์กรของเรา ซึ่งถือเป็นหัวใจสำคัญในการทำงานร่วมกันที่นี่ หากพร้อมแล้ว เราไปเริ่มเนื้อหาสไลด์ถัดไปกันเลยค่ะ",
+        promptEn: "Welcome to the team! We are so excited to have you on board. In this first module, we will explore our company's core vision and culture, which guide everything we do here. If you are ready, let's dive into the first lesson."
+      }
+    ],
+    faqs: [
+      { question: "ทำ Avatar โคลนหน้าตัวเองแพงไหม?", answer: "มีค่าบริการรายปีเพิ่มเติมแยกจากแพ็กเกจปกติครับ โดยคุณต้องอัดวิดีโออ่านสคริปต์ส่งไปให้ระบบใช้เวลาเรียนรู้หน้าคุณประมาณ 1 สัปดาห์ถึงจะได้ Avatar ส่วนตัวมาใช้ครับ" }
+    ]
+  },
+
+  // ==========================================
+  // 📊 หมวด AI วิเคราะห์ข้อมูล (Data & Analytics) - 10 ตัวท็อป
+  // ==========================================
+  {
+    id: "da1",
+    slug: "power-bi",
+    name: "Microsoft Power BI (Copilot)",
     logoUrl: "/logos/Power BI.png",
-    description: "แพลตฟอร์มวิเคราะห์ธุรกิจแชมป์โลก แค่พิมพ์สั่ง AI ก็สร้างรายงานสวยๆ ได้ทั้งหน้า",
-    longDescription: "หากบริษัทของคุณใช้ระบบ Microsoft 365 อยู่แล้ว Power BI คือหัวใจสำคัญของการวิเคราะห์ข้อมูล ปัจจุบัน Microsoft ได้นำ 'Copilot' เข้ามาฝังในโปรแกรม ซึ่งมันเปลี่ยนชีวิตคนทำรายงานอย่างสิ้นเชิง จากเดิมที่คุณต้องลากกราฟทีละอัน จัดหน้ากระดาษให้ตรง และนั่งเขียนสูตร DAX (ที่ซับซ้อนจนหัวระเบิด) ตอนนี้คุณแค่เปิดแผง Copilot แล้วพิมพ์ว่า 'ช่วยสร้างหน้ารายงานสรุปยอดขายของสาขากรุงเทพ เน้นเปรียบเทียบเป้าหมาย' Copilot จะทำการ Generate กราฟแท่ง แผนที่วงกลม และตารางทั้งหมด จัดเรียงลงในหน้าจออย่างสวยงามภายในไม่กี่วินาที",
-    origin: "Power BI ครองตำแหน่งผู้นำสูงสุดใน Gartner Magic Quadrant ด้าน Analytics มาหลายปีซ้อน เมื่อ Microsoft จับมือกับ OpenAI พวกเขาจึงนำขุมพลัง LLM มายัดใส่ทุกผลิตภัณฑ์ การมี Copilot อยู่ใน Power BI ทำให้พนักงานออฟฟิศธรรมดาๆ ก็สามารถดึงอินไซต์จากข้อมูลระดับ Enterprise ออกมาโชว์บอสได้โดยไม่ต้องรอคิวเรียกฝ่ายไอที",
+    description: "แพลตฟอร์ม BI อันดับ 1 มี AI ช่วยเสกกราฟและเขียนสูตร DAX ให้ในพริบตา",
+    longDescription: "Power BI คือหัวใจสำคัญของการทำ Data Analytics ในโลกธุรกิจ ปัจจุบัน Microsoft ได้ฝัง 'Copilot' เข้ามาช่วยเปลี่ยนการทำรีพอร์ตที่ยุ่งยากให้กลายเป็นเรื่องง่าย คุณสามารถพิมพ์บอก AI ให้ช่วยสร้างหน้า Dashboard สรุปยอดขาย เขียนสูตรคำนวณ DAX ที่ซับซ้อน หรือแม้แต่ให้ AI อ่านกราฟแล้วเขียนสรุป (Smart Narrative) ออกมาเป็นข้อความให้ผู้บริหารอ่านได้ทันที",
+    origin: "พัฒนาโดย Microsoft ครองแชมป์ใน Gartner Magic Quadrant ด้าน Analytics มาอย่างยาวนาน ทำงานร่วมกับ Excel และ Azure ได้อย่างไร้รอยต่อ",
     category: "Data & Analytics",
-    priceModel: "Desktop โหลดฟรี / Power BI Pro $10/เดือน",
+    priceModel: "Desktop โหลดฟรี / Power BI Pro $10 ต่อเดือน",
     isFree: false,
     externalUrl: "https://powerbi.microsoft.com",
     rating: 4.8,
-    reviewCount: 14500,
-    updatedAt: "Feb 2025",
+    reviewCount: 22100,
+    updatedAt: "Feb 2026",
     features: [
-      "Copilot Report Creation: พิมพ์สิ่งที่คุณอยากเห็น AI จะร่างหน้ารายงาน (Dashboard) กราฟหลากหลายแบบขึ้นมาวางโชว์ให้เต็มหน้าจอ",
-      "DAX Copilot: ผู้ช่วยเขียนและอธิบายสูตรคำนวณ DAX (Data Analysis Expressions) ประหยัดเวลาเปิด Google หาโค้ด",
-      "Smart Narrative: AI อ่านกราฟทั้งหมดที่คุณลากวางไว้ แล้วเขียน Text สรุปภาพรวมประเด็นสำคัญ (Executive Summary) แปะไว้มุมจอให้อ่านอัตโนมัติ"
+      "Copilot Dashboard Creation: พิมพ์สั่งให้ AI สร้างหน้ารายงานพร้อมกราฟหลากหลายแบบอัตโนมัติ",
+      "DAX Copilot: ผู้ช่วยเขียนและอธิบายสูตรคำนวณ DAX ประหยัดเวลาเปิด Google หาโค้ด",
+      "Smart Narrative: AI อ่านข้อมูลทั้งหมดในหน้าจอ แล้วพิมพ์สรุปประเด็นสำคัญ (Executive Summary) ให้อัตโนมัติ"
     ],
     pros: [
-      "การทำงานเป็นทีมยอดเยี่ยม แชร์ลิงก์ให้ทีมดูผ่าน Microsoft Teams หรือฝังลงใน SharePoint ได้ง่ายมากๆ",
-      "AI ช่วยปลดล็อกเรื่องสูตร DAX ทำให้มือใหม่สามารถสร้างฟิลด์วัดผลแปลกๆ ซับซ้อนได้เอง",
-      "โปรแกรมสำหรับสร้างรายงาน (Power BI Desktop) สามารถดาวน์โหลดมาลงเครื่องใช้ได้ฟรี!"
+      "เชื่อมต่อกับ Data Source ได้แทบทุกประเภทบนโลก (Excel, SQL, Cloud)",
+      "แชร์ลิงก์รายงานให้ทีมดูผ่าน Microsoft Teams ได้สะดวกมาก",
+      "โปรแกรม Power BI Desktop โหลดมาใช้งานบนเครื่องตัวเองได้ฟรี 100%"
     ],
     cons: [
-      "โหมด Copilot AI ตัวฉลาดบน Cloud สงวนไว้สำหรับองค์กรขนาดใหญ่ที่ซื้อไลเซนส์ Fabric หรือ Premium Capacity เท่านั้น (ราคาแรงมาก)",
-      "ความสวยงามและความเนียนของกราฟ ยังแอบดูแข็งๆ เหลี่ยมๆ เป็นสไตล์ Microsoft สู้ความพรีเมียมของ Tableau ไม่ค่อยได้",
-      "การจะให้ AI สร้างกราฟแม่นๆ คุณต้องจัดเรียงข้อมูลความสัมพันธ์ (Data Modeling/Star Schema) ให้ดีก่อน ถ้าโยนข้อมูลดิบมั่วๆ ไป AI ก็จะงง"
+      "ฟีเจอร์ Copilot ตัวเต็มสงวนไว้สำหรับองค์กรที่ซื้อไลเซนส์ระดับ Premium หรือ Fabric เท่านั้น",
+      "การเตรียมข้อมูล (Data Modeling) ยังต้องอาศัยความเข้าใจเรื่อง Star Schema หากทำผิด AI จะดึงข้อมูลมั่วได้"
     ],
     steps: [
-      { title: "นำเข้าและคลีน Data", desc: "โหลดตาราง Excel เข้ามา และตั้งค่าความสัมพันธ์ของตาราง (Data Model) ในหน้า Desktop" },
-      { title: "สั่ง Copilot ทำกราฟ", desc: "เปิดแผงแชท Copilot พิมพ์คำอธิบายสิ่งที่จะวิเคราะห์ AI จะเสกกราฟมาวางให้ในหน้าแคนวาส" },
-      { title: "ใส่คำบรรยายอัตโนมัติ", desc: "ลาก Visual ตัว Smart Narrative ลงไป ให้มันพิมพ์สรุปข้อความไฮไลต์จากตัวเลขทั้งหมดลงไป" }
+      { title: "เตรียมข้อมูล", desc: "นำเข้าและคลีนข้อมูล (Transform Data) ผ่าน Power Query" },
+      { title: "สั่ง Copilot", desc: "เปิดแผงแชท Copilot พิมพ์คำอธิบายกราฟที่อยากได้ AI จะเสกกราฟมาวางให้" },
+      { title: "ปรับแต่ง", desc: "จัดเรียงหน้าตา Dashboard และเพิ่ม Smart Narrative สรุปผล" }
     ],
     prompts: [
       { 
-        purpose: "💡 ให้ AI เสกหน้ารายงานแบบเต็ม Dashboard", 
-        promptTh: "[พิมพ์สั่งในแผง Copilot ขวามือ]\nสร้างหน้ารายงานใหม่ (New Report Page) เพื่อใช้วิเคราะห์เจาะลึกเกี่ยวกับ [ระบุหัวข้อ เช่น ประสิทธิภาพการจัดส่งสินค้าในโซนภาคใต้] \nจุดโฟกัส: ขอให้โชว์ Metric หลักคือ [ระบุ Metric เช่น อัตราการจัดส่งตรงเวลา (On-time Delivery Rate)] \nให้แบ่งมิติการแสดงผล (Breakdown) ตาม [ระบุ Dimension เช่น เป็นรายเดือน และแยกตามชื่อบริษัทขนส่ง] \nสุดท้าย ต้องมีกราฟเส้น (Line chart) เปรียบเทียบเทรนด์ย้อนหลังด้วย",
-        promptEn: "Create a complete, new report page to deeply analyze [Insert topic e.g., Shipping Performance in the Southern region]. \nFocus Area: Highlight key metrics such as [Insert metrics e.g., On-time Delivery Rate and Reasons for Delay]. \nBreakdown the visuals by [Insert dimensions e.g., Month and Shipping Carrier]. \nMust include: Ensure there is at least one line chart clearly showing the trend over time."
+        purpose: "💡 ให้ AI ร่างสูตร DAX วิเคราะห์ยอดขายยานยนต์", 
+        promptTh: "ช่วยเขียนสูตร DAX เพื่อคำนวณ 'ยอดขายสะสมตั้งแต่ต้นปี (YTD Sales)' ของข้อมูลยอดขายรถยนต์ Toyota โดยมีเงื่อนไขว่าต้องกรองเฉพาะรถยนต์กลุ่ม 'Hybrid' และสถานะการขายคือ 'Delivered' เท่านั้น",
+        promptEn: "Write a DAX measure to calculate the 'Year-to-Date (YTD) Sales' from the Toyota sales dataset. Apply a filter to strictly include only the 'Hybrid' vehicle category where the sales status is 'Delivered'."
       },
       { 
-        purpose: "💡 ให้ AI ช่วยร่างสูตร DAX โหดๆ โดยไม่ต้องพึ่ง Google", 
-        promptTh: "[ใช้ในหน้าต่าง Quick Measure / DAX Copilot]\nกรุณาเขียนสูตรคำนวณ DAX เพื่อหาค่า [ระบุผลลัพธ์ เช่น ยอดขายสะสมตั้งแต่ต้นปี (YTD Sales)] โดยดึงตัวเลขจากตารางชื่อ '[ระบุชื่อตาราง]' และคอลัมน์ '[ระบุชื่อคอลัมน์]' \nเงื่อนไขสำคัญ: ให้สร้าง Filter เพื่อบวกเฉพาะเรคคอร์ดที่ Status เป็นคำว่า '[ระบุสถานะ เช่น Completed หรือ Paid]' เท่านั้น ข้อมูลที่แคนเซิลไม่ต้องนำมาคิด",
-        promptEn: "Write a highly accurate DAX measure to calculate the [Insert requirement e.g., Year-to-Date (YTD) Sales]. \nSource: Use the '[Insert Table Name]' table and aggregate the '[Insert Column Name]' field. \nConstraint: Add a strict filter to ONLY include records where the Status column is exactly equal to '[Insert Status e.g., Completed or Paid]'. Ignore cancelled orders."
+        purpose: "💡 สั่ง Copilot สร้างหน้า Dashboard", 
+        promptTh: "สร้างหน้ารายงานใหม่เพื่อวิเคราะห์ประสิทธิภาพยอดขายรายภูมิภาค โชว์ Metric หลักคือ 'Total Revenue' และ 'YoY Growth' โดยแบ่งตามสาขา พร้อมกราฟเส้นแสดงเทรนด์รายเดือน",
+        promptEn: "Create a new report page analyzing regional sales performance. Highlight key metrics: 'Total Revenue' and 'YoY Growth' segmented by branch. Include a line chart showing the monthly trend."
       }
     ],
     faqs: [
-      { question: "โหลดมาใช้ฟรีๆ เลยได้ไหม?", answer: "ตัวโปรแกรม Power BI Desktop ให้โหลดฟรี 100% ไม่มีหมดอายุครับ! คุณเอามาทำกราฟลากวางบนคอมตัวเองได้เลย แต่ถ้าคุณต้องการโชว์เพื่อนโดยการส่งลิงก์ URL ให้ดูผ่านเว็บเบราว์เซอร์ ถึงจะต้องเริ่มจ่ายเงินค่าบริการ Cloud แบบรายเดือนครับ" }
+      { question: "ทำไมใช้ Copilot ใน Power BI ไม่ได้?", answer: "ต้องตรวจสอบว่า Admin ขององค์กรเปิดสิทธิ์การใช้งาน Copilot ให้หรือยัง และบัญชีของคุณต้องอยู่ใน Workspace ที่รองรับ Premium Capacity ครับ" }
+    ]
+  },
+  {
+    id: "da2",
+    slug: "tableau-ai",
+    name: "Tableau (Einstein Copilot)",
+    logoUrl: "/logos/Tableau.png",
+    description: "แพลตฟอร์ม BI ระดับ Advanced โดดเด่นเรื่อง Data Visualization กราฟสวยยืดหยุ่นสูง",
+    longDescription: "Tableau คือราชาแห่งการทำ Data Visualization ที่ให้ความอิสระในการตกแต่งกราฟมากที่สุด การมาของ 'Einstein Copilot' (จาก Salesforce) ทำให้ Tableau ฉลาดขึ้นไปอีกขั้น คุณสามารถใช้ฟีเจอร์ Tableau Pulse เพื่อให้ AI สรุปยอดขายรายวันส่งเข้าอีเมล หรือพิมพ์ถามหาตัวเลข (Ask Data) ด้วยภาษามนุษย์ แล้วระบบจะพ่นกราฟคำตอบขึ้นมาให้ทันทีโดยไม่ต้องลากวางเอง",
+    origin: "ถูก Salesforce เข้าซื้อกิจการ จึงได้รับการถ่ายทอดขุมพลัง AI ของ Einstein มาช่วยลดเวลาในการย่อยข้อมูลให้ผู้บริหารอ่าน",
+    category: "Data & Analytics",
+    priceModel: "Starts at $15/user/month (ต้องใช้ License องค์กร)",
+    isFree: false,
+    externalUrl: "https://www.tableau.com/products/tableau-ai",
+    rating: 4.8,
+    reviewCount: 18500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Tableau Pulse: AI ย่อยข้อมูลและส่งสรุป Insights ประจำวันเข้าอีเมล/Slack แบบอัตโนมัติ",
+      "Ask Data: พิมพ์คำถามหาตัวเลขด้วยภาษามนุษย์ ระบบจะสร้างกราฟตอบให้ทันที",
+      "Einstein Copilot: ช่วยเขียนสูตรคำนวณซับซ้อน (Calculated Field) ในหน้า Worksheet"
+    ],
+    pros: [
+      "ความสวยงามและความยืดหยุ่นของการทำกราฟ (Visualization) ชนะคู่แข่งทุกตัวในตลาด",
+      "AI ช่วยอธิบายสาเหตุที่ยอดขายตกได้ ทำให้ไม่ต้องเดาจากกราฟเอง",
+      "รองรับการจัดการข้อมูลขนาดมหาศาล (Big Data) ได้อย่างลื่นไหล"
+    ],
+    cons: [
+      "ราคาไลเซนส์ระดับองค์กรค่อนข้างสูง",
+      "Learning Curve สูงกว่า Power BI เล็กน้อยสำหรับผู้เริ่มต้นที่ไม่เคยใช้ BI มาก่อน"
+    ],
+    steps: [
+      { title: "เชื่อมต่อ Data", desc: "นำเข้าข้อมูลจาก Database เข้าสู่ Tableau Server" },
+      { title: "ตั้งค่า Metrics", desc: "เลือกตัวชี้วัดใน Tableau Pulse ปล่อยให้ AI เฝ้าระวังข้อมูลให้" },
+      { title: "ถาม-ตอบ (Ask Data)", desc: "พิมพ์คำถามเจาะลึกกับบอทเพื่อสร้างมุมมองวิเคราะห์ใหม่ๆ" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI เขียน Calculated Field ที่ซับซ้อน", 
+        promptTh: "ช่วยเขียนสูตรคำนวณ (Calculated Field) เพื่อแบ่งกลุ่มลูกค้า (Customer Segmentation) ถ้าลูกค้ามียอดซื้อรวม > 100,000 ให้เป็น 'VIP', ถ้าอยู่ระหว่าง 50,000 ถึง 100,000 ให้เป็น 'Gold' และน้อยกว่านั้นเป็น 'Standard'",
+        promptEn: "Write a calculated field formula for Customer Segmentation: IF Total Sales > 100,000 return 'VIP', ELSE IF between 50,000 and 100,000 return 'Gold', ELSE return 'Standard'."
+      },
+      { 
+        purpose: "💡 สร้างกราฟทันทีด้วย Ask Data", 
+        promptTh: "Show me a bar chart comparing Total Profit by Product Category for the last 12 months, and sort it in descending order.",
+        promptEn: "Show me a bar chart comparing Total Profit by Product Category for the last 12 months, and sort it in descending order."
+      }
+    ],
+    faqs: [
+      { question: "Tableau มีเวอร์ชันให้เด็กจบใหม่ลองใช้จัดพอร์ตไหม?", answer: "มี Tableau Public ครับ ให้ดาวน์โหลดมาใช้งานได้ฟรี แต่มีข้อแม้ว่าข้อมูลและ Dashboard ที่คุณสร้างจะต้องเซฟไว้บนเซิร์ฟเวอร์สาธารณะเท่านั้นครับ" }
+    ]
+  },
+  {
+    id: "da3",
+    slug: "google-looker",
+    name: "Google Looker",
+    logoUrl: "/logos/Google – Gemini.png", // ใช้โลโก้ Google
+    description: "Cloud BI ระดับ Enterprise เชื่อมต่อ BigQuery ได้แนบเนียน พร้อม Gemini AI",
+    longDescription: "Looker เป็นเครื่องมือ BI แบบ Cloud-Native 100% จาก Google ที่มีภาษาจำลองโมเดลข้อมูลของตัวเองเรียกว่า LookML จุดแข็งที่สุดของมันคือสถาปัตยกรรมแบบ In-database (ไม่ได้ดูดข้อมูลมาเก็บไว้ที่ตัวเอง แต่วิ่งไป Query สดๆ จาก Database) ทำให้มันเป็นเพื่อนรักที่ดีที่สุดของ Google BigQuery ล่าสุด Google ได้นำเอา Gemini AI เข้ามาฝังเพื่อช่วยเขียนโค้ด LookML และช่วยวาดกราฟจากคำสั่งแชท ทำให้ฝั่ง Data Analyst ทำงานได้ไวขึ้นหลายเท่า",
+    origin: "เดิมเป็นสตาร์ทอัพที่ถูก Google Cloud ซื้อกิจการเพื่อมาเสริมทัพสู้กับ Power BI และ Tableau โดยเน้นเจาะกลุ่มองค์กรที่รันระบบบน Google Cloud Platform (GCP)",
+    category: "Data & Analytics",
+    priceModel: "Enterprise Pricing (Custom)",
+    isFree: false,
+    externalUrl: "https://cloud.google.com/looker",
+    rating: 4.6,
+    reviewCount: 8200,
+    updatedAt: "Feb 2026",
+    features: [
+      "Gemini in Looker: AI ช่วยร่างโค้ด LookML สำหรับสร้าง Data Model",
+      "Conversational BI: แชทถามบอทเพื่อให้มันเจาะข้อมูลและวาด Dashboard ออกมาให้",
+      "Real-time Querying: ประมวลผลและดึงข้อมูลสดๆ จาก Data Warehouse (ไม่มีปัญหาคอขวดตอนดูดข้อมูล)"
+    ],
+    pros: [
+      "เก่งมากเรื่องความปลอดภัยของข้อมูล (Data Governance) เพราะทุกคนมองเห็นความจริงชุดเดียวกันผ่าน LookML",
+      "ทำงานร่วมกับ Google BigQuery ได้เร็วและทรงพลังที่สุด",
+      "ไม่เปลืองพื้นที่เก็บข้อมูลซ้ำซ้อน เพราะไม่ต้อง Import ข้อมูลเข้าตัวโปรแกรม"
+    ],
+    cons: [
+      "ต้องใช้เวลาเรียนรู้ภาษา LookML ซึ่งเป็นภาษาเฉพาะของเครื่องมือนี้",
+      "การจัดหน้า Dashboard อาจจะไม่ยืดหยุ่นและสวยงามล้ำลึกเท่า Tableau"
+    ],
+    steps: [
+      { title: "เชื่อมฐานข้อมูล", desc: "ต่อ Looker เข้ากับ Data Warehouse (เช่น BigQuery)" },
+      { title: "สร้าง LookML", desc: "ใช้ Gemini ช่วยเขียนโครงสร้างความสัมพันธ์ของตารางข้อมูล" },
+      { title: "Explore & Build", desc: "ผู้ใช้ทั่วไปคลิกเลือกมิติข้อมูล (Dimensions) เพื่อออกรายงานได้ทันทีโดยไม่ต้องเขียน SQL" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ Gemini ช่วยร่างโค้ด LookML", 
+        promptTh: "ช่วยสร้างโค้ด LookML สำหรับ View ที่ชื่อ 'sales_transactions' โดยดึงข้อมูลจากตาราง `project.dataset.sales` ให้สร้าง Dimension สำหรับวันที่ขาย, รหัสสาขา, และสร้าง Measure สำหรับหาผลรวมยอดขาย (sum) และค่าเฉลี่ยยอดขาย (average)",
+        promptEn: "Generate LookML code for a View named 'sales_transactions' pointing to the `project.dataset.sales` table. Include dimensions for sales_date and branch_id. Create measures for total sales (sum) and average sales."
+      },
+      { 
+        purpose: "💡 สั่ง AI วิเคราะห์ข้อมูลในหน้า Explore", 
+        promptTh: "What are the top 5 performing marketing channels in terms of ROI for the Q3 campaign? Show it as a pie chart.",
+        promptEn: "What are the top 5 performing marketing channels in terms of ROI for the Q3 campaign? Show it as a pie chart."
+      }
+    ],
+    faqs: [
+      { question: "Looker Studio กับ Looker ต่างกันยังไง?", answer: "Looker Studio (ชื่อเดิม Data Studio) เป็นตัวฟรีที่ใช้ลากวางกราฟง่ายๆ ส่วน Looker (ตัวเต็ม) เป็นระดับ Enterprise ที่มีระบบจัดการ Data Model เบื้องหลังด้วย LookML ครับ" }
+    ]
+  },
+  {
+    id: "da4",
+    slug: "qlik-sense",
+    name: "Qlik Sense",
+    logoUrl: "/logos/qlik.png", // สมมติโลโก้
+    description: "BI สาย Augmented Analytics ที่มี AI ช่วยเสาะหา Insight พฤติกรรมที่ซ่อนอยู่อัตโนมัติ",
+    longDescription: "Qlik Sense โดดเด่นด้วยกลไก 'Associative Engine' ที่ไม่เหมือนใคร มันสามารถเชื่อมโยงข้อมูลทุกตารางเข้าด้วยกันแบบใยแมงมุม เมื่อคุณคลิกเลือกข้อมูลตัวหนึ่ง มันจะไฮไลต์ข้อมูลที่เกี่ยวข้อง และ 'ทำสีเทา' ข้อมูลที่ไม่เกี่ยวข้องให้เห็นทันที นอกจากนี้ Qlik ยังชูจุดเด่นเรื่อง Augmented Analytics ที่ให้ AI คอยสแกนหาความผิดปกติ (Anomaly) และเทรนด์ที่ซ่อนอยู่ในข้อมูล แล้วเด้งแจ้งเตือนขึ้นมาบอกผู้ใช้งานเองโดยที่ยังไม่ได้ตั้งคำถาม",
+    origin: "บริษัทสัญชาติสวีเดนที่เป็นผู้เล่นระดับตำนานในวงการ BI มุ่งเน้นการใช้ AI เพื่อสนับสนุนการตัดสินใจ (Decision Intelligence) ให้กับคนทำงานที่ไม่ใช่สายเทค",
+    category: "Data & Analytics",
+    priceModel: "Starts at $20/user/month",
+    isFree: false,
+    externalUrl: "https://www.qlik.com/us/products/qlik-sense",
+    rating: 4.5,
+    reviewCount: 6800,
+    updatedAt: "Feb 2026",
+    features: [
+      "Associative Engine: คลิกกรองข้อมูลได้อิสระ ไม่โดนบังคับเส้นทางแบบ SQL ช่วยให้เจอ Insight ที่คาดไม่ถึง",
+      "Insight Advisor: AI คอยแนะนำว่าควรสร้างกราฟแบบไหน หรือคอยแจ้งเตือนเมื่อพบตัวเลขที่ผิดปกติ",
+      "AutoML Integration: มีฟีเจอร์พยากรณ์ข้อมูล (Predictive Analytics) ฝังมาในตัวให้กดใช้ง่ายๆ"
+    ],
+    pros: [
+      "เครื่องมือ AI ทำหน้าที่วิเคราะห์ข้อมูลเชิงลึกได้อัตโนมัติ (Automated Insights) เก่งมาก",
+      "ทำงานได้เร็วมากแม้อยู่บนมือถือ",
+      "สถาปัตยกรรมข้อมูลไม่ตายตัว ยืดหยุ่นสูง"
+    ],
+    cons: [
+      "หน้าตา UI ของตัวโปรแกรมอาจจะดูไม่โมเดิร์นเท่าคู่แข่งรุ่นใหม่",
+      "การเขียนสคริปต์โหลดข้อมูล (Data Load Script) มีไวยากรณ์เฉพาะตัวที่ต้องศึกษาเพิ่ม"
+    ],
+    steps: [
+      { title: "โหลดข้อมูล", desc: "ลากไฟล์ใส่ หรือเขียน Script ดึงข้อมูลเข้า Qlik Sense" },
+      { title: "ตรวจสอบ Insight", desc: "เปิดแผง Insight Advisor เพื่อดูว่า AI แนะนำกราฟหรือเจอความผิดปกติอะไรบ้าง" },
+      { title: "คลิกเพื่อวิเคราะห์", desc: "จิ้มจุดข้อมูลในกราฟเพื่อกรองข้อมูลทั้ง Dashboard แบบไดนามิก" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI สแกนหาความผิดปกติของรายได้ (Anomaly Detection)", 
+        promptTh: "[ใช้หน้าต่าง Insight Advisor]\nวิเคราะห์ยอดขายในไตรมาสที่ 4 เทียบกับไตรมาสที่ 3 และช่วยหาจุดที่มีความผิดปกติ (Anomaly) หรือสาขาที่ยอดขายตกลงอย่างมีนัยสำคัญให้หน่อย",
+        promptEn: "Analyze the sales revenue in Q4 compared to Q3. Identify any significant anomalies, outliers, or specific branches that experienced a sharp decline."
+      },
+      { 
+        purpose: "💡 ให้ AI แนะนำกราฟที่เหมาะสม", 
+        promptTh: "ฉันต้องการเปรียบเทียบความสัมพันธ์ระหว่าง 'ค่าใช้จ่ายโฆษณา' กับ 'จำนวนลูกค้าใหม่ที่ได้มา' ควรใช้กราฟรูปแบบไหนดีที่สุด? ช่วยสร้างให้ดูหน่อย",
+        promptEn: "I want to compare the correlation between 'Ad Spend' and 'New Customer Acquisition'. What is the best visualization for this? Please generate it."
+      }
+    ],
+    faqs: [
+      { question: "Associative Data Model ดีกว่า SQL ตรงไหน?", answer: "SQL มักจะตัดข้อมูลที่ไม่ตรงเงื่อนไขทิ้งไปเลย แต่ Associative ของ Qlik จะเก็บไว้เป็นสีเทา ทำให้เราเห็นว่า 'ลูกค้ากลุ่มไหนที่ไม่ได้ซื้อสินค้าตัวนี้' ซึ่งบางครั้งเป็น Insight ที่มีค่ามากครับ" }
+    ]
+  },
+  {
+    id: "da5",
+    slug: "datarobot",
+    name: "DataRobot",
+    logoUrl: "/logos/datarobot.png", // สมมติโลโก้
+    description: "แพลตฟอร์ม AutoML ระดับท็อป สร้างและเทรนโมเดล ML ได้อัตโนมัติ ไม่ต้องโค้ดเยอะ",
+    longDescription: "DataRobot คือระบบ 'Automated Machine Learning (AutoML)' ที่ช่วยเปลี่ยนทุกคนให้เป็น Data Scientist โยนชุดข้อมูล (Dataset) เข้าไป เลือกคอลัมน์ที่ต้องการทำนาย (Target Variable) จากนั้น DataRobot จะทำหน้าที่เหมือนกองทัพนักวิเคราะห์ โดยวิ่งหยิบเอาอัลกอริทึม ML นับร้อยโมเดลมาแข่งขันกันรันหาผลลัพธ์ที่ดีที่สุด (Leaderboard) พร้อมทั้งจูนพารามิเตอร์ให้เสร็จสรรพ ทำให้คุณได้โมเดลทำนายผลระดับโปรดักชันในเวลาไม่กี่นาที",
+    origin: "สร้างขึ้นด้วยภารกิจ AI Democratization (ทำให้ทุกคนเข้าถึง AI ได้) ลดเวลาที่ทีม Data Science ต้องมานั่งเขียนโค้ดจูนโมเดลซ้ำๆ เป็นเดือน ให้จบในคลิกเดียว",
+    category: "Data & Analytics",
+    priceModel: "Enterprise Subscription (ราคาสูงระดับองค์กร)",
+    isFree: false,
+    externalUrl: "https://www.datarobot.com",
+    rating: 4.7,
+    reviewCount: 3400,
+    updatedAt: "Feb 2026",
+    features: [
+      "Automated Model Leaderboard: รันอัลกอริทึมจำนวนมากพร้อมกันแล้วจัดอันดับว่าตัวไหนแม่นยำที่สุด",
+      "Explainable AI (XAI): อธิบายได้อย่างชัดเจนว่าทำไมโมเดลถึงตัดสินใจแบบนี้ (Feature Impact)",
+      "One-Click Deployment: ได้โมเดลชนะเลิศแล้ว กดปุ่มเดียวเพื่อสร้าง API นำไปเชื่อมกับแอปพลิเคชันจริงได้เลย"
+    ],
+    pros: [
+      "ประหยัดเวลาการทำโมเดล (Time to Value) จากหลายสัปดาห์เหลือแค่หลักชั่วโมง",
+      "มีระบบ Explainability ที่ยอดเยี่ยม ทำให้สามารถอธิบายให้ผู้บริหารหรือ Regulator ฟังได้ว่าโมเดลทำงานยังไง (ไม่เป็น Blackbox)",
+      "มีระบบ Guardrails คอยเฝ้าระวังไม่ให้โมเดลเกิดอาการ Bias หรือความแม่นยำตก (Data Drift) เมื่อปล่อยใช้จริง"
+    ],
+    cons: [
+      "ราคาแพงมาก เหมาะกับองค์กรขนาดใหญ่ที่มี Use case การใช้ ML ชัดเจน",
+      "แม้จะไม่ต้องเขียนโค้ด แต่ผู้ใช้งานก็ควรมีความรู้ความเข้าใจพื้นฐานด้านสถิติและ Data Science อยู่บ้างเพื่อตีความผลลัพธ์"
+    ],
+    steps: [
+      { title: "อัปโหลด Data", desc: "นำเข้าชุดข้อมูล (เช่น ข้อมูลลูกค้าเก่า)" },
+      { title: "เลือก Target", desc: "ระบุคอลัมน์ที่ต้องการทำนาย (เช่น ทายว่าลูกค้าคนไหนจะยกเลิกบริการ - Churn)" },
+      { title: "กด Start", desc: "ระบบจะรันโมเดลแข่งกัน เมื่อเสร็จแล้วให้เลือกโมเดลที่แม่นยำที่สุดไปใช้งาน" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI อธิบายโมเดลทำนายการยกเลิกบริการ (Churn Prediction)", 
+        promptTh: "[ใช้ในหน้า Explainability]\nช่วยอธิบายผลลัพธ์ของโมเดล XGBoost ตัวนี้ให้หน่อยว่า ตัวแปร (Feature) ไหนที่มีอิทธิพลมากที่สุดที่ทำให้ลูกค้าตัดสินใจยกเลิกบริการ? และหากต้องการลดอัตราการ Churn องค์กรควรไปโฟกัสแก้ไขที่จุดไหน?",
+        promptEn: "Based on the Explainability report for this XGBoost model, what are the top features driving customer churn? Provide actionable recommendations on what the business should focus on to reduce the churn rate."
+      },
+      { 
+        purpose: "💡 ประเมินความเสี่ยงและอคติ (Bias Assessment)", 
+        promptTh: "กรุณาสแกนโมเดล Credit Scoring ตัวนี้ว่ามีอคติ (Bias) ต่อข้อมูลเพศ (Gender) หรือที่อยู่อาศัย (Region) ซ่อนอยู่หรือไม่? ขอรายงานความเสี่ยงแบบละเอียด",
+        promptEn: "Perform a bias assessment on this Credit Scoring model. Does it exhibit any unintended bias regarding the 'Gender' or 'Region' features? Generate a detailed risk report."
+      }
+    ],
+    faqs: [
+      { question: "AutoML จะมาแย่งงาน Data Scientist ไหม?", answer: "ไม่ครับ แต่จะเป็นเหมือน Iron Man Suit ให้กับ Data Scientist มากกว่า ทำให้ไม่ต้องเสียเวลาไปกับการเขียนโค้ดจูนโมเดลพื้นฐาน เอาเวลาไปคิดโจทย์ธุรกิจที่ซับซ้อนขึ้นแทน" }
+    ]
+  },
+  {
+    id: "da6",
+    slug: "h2o-ai",
+    name: "H2O.ai (Driverless AI)",
+    logoUrl: "/logos/h2o.png", // สมมติโลโก้
+    description: "แพลตฟอร์ม AutoML ระดับเทพ โดดเด่นสุดๆ เรื่อง Feature Engineering อัตโนมัติ",
+    longDescription: "H2O Driverless AI คือคู่แข่งตัวฉกาจของ DataRobot ความโหดของ H2O คือความเก่งกาจด้าน 'Automatic Feature Engineering' ในงาน Data Science ปกติคุณต้องมานั่งคิดสูตรแปลงข้อมูล (เช่น เอาคอลัมน์ A มาคูณ B แล้วสแควร์รูท) เพื่อให้โมเดลฉลาดขึ้น แต่ Driverless AI จะใช้ Algorithm ระดับโลกมาคิดค้นและแปลงฟีเจอร์แปลกๆ นานาชนิดให้คุณแบบอัตโนมัติ ซึ่งเหมาะมากสำหรับงานวิเคราะห์ข้อมูลที่มีความซับซ้อนสูงและต้องการความแม่นยำเด็ดขาด เช่น ระบบตรวจจับการทุจริต (Fraud Detection)",
+    origin: "สร้างโดยทีมนักวิจัยระดับ Grandmaster ของ Kaggle (เวทีแข่งเขียน AI ระดับโลก) พวกเขานำเทคนิคลับที่ใช้ชนะการแข่งขันมายัดใส่ไว้ในเครื่องมือนี้",
+    category: "Data & Analytics",
+    priceModel: "Enterprise License",
+    isFree: false,
+    externalUrl: "https://h2o.ai",
+    rating: 4.7,
+    reviewCount: 2900,
+    updatedAt: "Feb 2026",
+    features: [
+      "Auto Feature Engineering: สกัดและสร้างตัวแปรใหม่ๆ ทางคณิตศาสตร์ให้โมเดลฉลาดขึ้นอัตโนมัติ",
+      "Time Series & NLP: รองรับข้อมูลประเภทข้อความ (Text) และการพยากรณ์ข้อมูลล่วงหน้าแบบอนุกรมเวลาได้อย่างเนียนกริบ",
+      "Auto Doc Generation: เมื่อรันโมเดลเสร็จ กดปุ่มเดียวระบบจะพิมพ์เอกสารรายงานความหนา 40 หน้า อธิบายที่มาที่ไปของโมเดลให้เสร็จสรรพ"
+    ],
+    pros: [
+      "ความแม่นยำของโมเดลมักจะสูงมาก เพราะมีกระบวนการทำ Feature Engineering ที่ลึกล้ำ",
+      "รองรับการวิเคราะห์ข้อมูลขนาดใหญ่ (Big Data) และประมวลผลบน GPU ได้เร็วทะลุนรก",
+      "มีเวอร์ชัน Open-source (H2O-3) ให้สายนักพัฒนาโหลดไปรันใช้งานได้ฟรีด้วย"
+    ],
+    cons: [
+      "หน้าต่างใช้งาน (UI) ออกแนวสายเนิร์ด (Technical) มากกว่า DataRobot อาจทำให้ Business User งงได้",
+      "ด้วยความที่มันสร้างตัวแปรใหม่ (Features) ออกมาซับซ้อนมาก บางครั้งการอธิบายผลลัพธ์ก็แอบยากตามไปด้วย"
+    ],
+    steps: [
+      { title: "Ingest Data", desc: "เตรียมชุดข้อมูลธุรกรรมบัตรเครดิตที่มี Label ว่าทุจริตหรือไม่ นำเข้าระบบ" },
+      { title: "ตั้งค่า Experiment", desc: "กำหนดเวลาที่จะให้ระบบรัน และตั้งระดับความสามารถในการตีความผลลัพธ์ (Interpretability)" },
+      { title: "Deploy", desc: "เซฟโมเดลเป็นไฟล์ MOJO เพื่อนำไปวางหลังบ้านเป็น Data Pipeline ตรวจจับแบบ Real-time" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI แนะนำ Feature สำหรับโปรเจกต์ Fraud Detection", 
+        promptTh: "อิงจากชุดข้อมูลธุรกรรมบัตรเครดิตที่ฉันมี ฉันกำลังทำโปรเจกต์ระบบ Data Pipeline ตรวจจับการทุจริต (Fraud Detection) ช่วยวิเคราะห์และแนะนำให้หน่อยว่าควรทำ Feature Engineering ออกมาในรูปแบบไหนบ้าง? เช่น การหาค่าความถี่การรูดบัตรใน 1 ชั่วโมงย้อนหลัง",
+        promptEn: "Based on this credit card transaction dataset, I am building a Fraud Detection data pipeline. Please suggest advanced Feature Engineering techniques I should apply to improve model accuracy (e.g., transaction frequency within the last 1 hour per user)."
+      },
+      { 
+        purpose: "💡 สร้างสรุปรายงานโมเดล (Auto Doc)", 
+        promptTh: "[ฟีเจอร์ภายในแอป] Generate an exhaustive Model Experiment Report documenting the data preprocessing steps, the evolutionary feature engineering process, and the final LightGBM model metrics for compliance review.",
+        promptEn: "[In-app feature] Generate an exhaustive Model Experiment Report documenting the data preprocessing steps, the evolutionary feature engineering process, and the final LightGBM model metrics for compliance review."
+      }
+    ],
+    faqs: [
+      { question: "MOJO Pipeline คืออะไร?", answer: "เป็นสถาปัตยกรรมการส่งออกโมเดลของ H2O ที่ถูกแพ็กมาให้มีขนาดเล็กและเบามาก ทำให้เวลา Deploy ขึ้นไปเป็น API แล้วมันสามารถพยากรณ์ผลได้เสร็จสิ้นภายในหลักมิลลิวินาที (เสี้ยววินาที) ครับ" }
+    ]
+  },
+  {
+    id: "da7",
+    slug: "amazon-sagemaker",
+    name: "Amazon SageMaker",
+    logoUrl: "/logos/Amazon.png", // สมมติโลโก้
+    description: "แพลตฟอร์มสร้าง เทรน และปล่อยโมเดล ML ระดับ Production แบบครบวงจรจาก AWS",
+    longDescription: "หากคุณเป็นสาย Data Engineer หรือ Machine Learning Engineer นี่คือสุดยอดอาวุธคู่กาย Amazon SageMaker ไม่ใช่แค่ตัวช่วยเขียนโค้ด แต่มันคือแพลตฟอร์มแบบ End-to-End บนคลาวด์ AWS ที่ครอบคลุมตั้งแต่การเตรียมข้อมูล (Data Prep), การเปิดสมุดโน้ต (Jupyter Notebook) เพื่อเขียนโค้ดเทรนโมเดล, ไปจนถึงการกด Deploy โมเดลนั้นขึ้นเซิร์ฟเวอร์สเกลระดับโลก ความเจ๋งคือมันมีฟีเจอร์ Autopilot สำหรับทำ AutoML และมี JumpStart ที่แจกโมเดล AI สำเร็จรูป (เช่น Llama, Stable Diffusion) ให้คุณกดคลิกเดียวเพื่อรันโมเดลบนเซิร์ฟเวอร์ส่วนตัวของคุณเองได้เลย",
+    origin: "สร้างโดย Amazon Web Services (AWS) เพื่อรวบรวมเครื่องมือด้าน AI/ML ที่เคยกระจัดกระจาย ให้มาจบในระบบนิเวศเดียว (IDE สำหรับ ML)",
+    category: "Data & Analytics",
+    priceModel: "Pay-as-you-go (คิดเงินตามทรัพยากรการประมวลผลที่ใช้จริง)",
+    isFree: false,
+    externalUrl: "https://aws.amazon.com/sagemaker/",
+    rating: 4.7,
+    reviewCount: 11200,
+    updatedAt: "Feb 2026",
+    features: [
+      "SageMaker Studio: IDE บนเบราว์เซอร์สำหรับงาน Data Science โดยเฉพาะ",
+      "SageMaker JumpStart: คลังรวม Foundation Models ยอดฮิตและโซลูชันสำเร็จรูปให้กดติดตั้งใช้งานได้ทันที",
+      "Model Monitor: เฝ้าระวังโมเดลบน Production คอยเตือนเวลาข้อมูลโลกจริงเริ่มเปลี่ยนไป (Data Drift)"
+    ],
+    pros: [
+      "ยืดหยุ่นสูงสุด เลือกได้ว่าจะเขียนโค้ดเองหมด (Hardcore) หรือจะให้ระบบรันแบบ AutoML (Low-code) ก็ได้",
+      "ทำงานร่วมกับ Data Services อื่นๆ บน AWS เช่น S3, Redshift, Kinesis ได้ดีเยี่ยม",
+      "สเกลทรัพยากร (เช่น เช่า GPU ชั่วคราวมาเทรนโมเดล) ได้รวดเร็ว ประหยัดค่าซื้อฮาร์ดแวร์"
+    ],
+    cons: [
+      "หน้าตาและโครงสร้างระบบมีความซับซ้อนตามสไตล์ AWS หน้าใหม่เข้ามาจะงงกับการตั้งค่าสิทธิ์ (IAM) และ Network มากๆ",
+      "ถ้าลืมปิดเซิร์ฟเวอร์หลังรันโค้ดเสร็จ (Resource leak) บิลค่าใช้จ่ายตอนสิ้นเดือนอาจจะพุ่งกระฉูด"
+    ],
+    steps: [
+      { title: "เปิด Studio Notebook", desc: "เข้าไปที่ AWS Console สร้าง SageMaker Studio ดึงข้อมูลจาก S3 มาวิเคราะห์" },
+      { title: "เทรนโมเดล", desc: "ใช้เฟรมเวิร์กอย่าง TensorFlow/PyTorch หรือกดรัน SageMaker Autopilot" },
+      { title: "Deploy เป็น Endpoint", desc: "กด Deploy เพื่อสร้าง API ให้แอปพลิเคชันหน้าบ้านเรียกเข้ามาทำนายผล" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 เขียนสคริปต์เทรนโมเดลและเซฟลง S3 (AWS Infrastructure)", 
+        promptTh: "ช่วยเขียนสคริปต์ Python เบื้องต้นสำหรับการรันเทรนโมเดล Scikit-Learn บน Amazon SageMaker โดยให้ดึงข้อมูล training data จาก S3 bucket และหลังจากเทรนเสร็จ ให้เซฟไฟล์โมเดล model.tar.gz กลับขึ้นไปที่ S3 ด้วย",
+        promptEn: "Write a basic Python script to execute a Scikit-Learn training job on Amazon SageMaker. The script should pull the training dataset from an S3 bucket and, upon completion, save the trained model.tar.gz artifact back to S3."
+      },
+      { 
+        purpose: "💡 สั่ง Deploy Foundation Model จาก JumpStart", 
+        promptTh: "มีวิธี Deploy โมเดล Llama 3 ผ่าน SageMaker JumpStart ด้วยโค้ด Python (Boto3) ไหม? ขอตัวอย่างโค้ดและวิธีตั้งค่า Instance Type ให้เหมาะสมกับโมเดลนี้",
+        promptEn: "How can I deploy the Llama 3 model via SageMaker JumpStart using the Python SDK? Please provide the code snippet and recommend the appropriate Instance Type for this model."
+      }
+    ],
+    faqs: [
+      { question: "เหมาะกับการเอามาทำ Data Pipeline แบบเรียลไทม์ไหม?", answer: "เหมาะมากครับ โดยเฉพาะถ้าคุณใช้ฟีเจอร์ SageMaker Pipelines ในการร้อยเรียงขั้นตอนตั้งแต่ดึง Data ยัน Deploy เพื่อทำ ML Ops อย่างเต็มรูปแบบ" }
+    ]
+  },
+  {
+    id: "da8",
+    slug: "google-vertex-ai",
+    name: "Google Vertex AI",
+    logoUrl: "/logos/Google – Gemini.png", // ใช้โลโก้ Google
+    description: "แพลตฟอร์มศูนย์รวมพลัง AI ทำ Machine Learning และดึงพลัง Generative LLM มาใช้ได้ในที่เดียว",
+    longDescription: "คู่ปรับตัวตึงของ SageMaker แต่มาจากฝั่ง Google Cloud Platform (GCP)! Vertex AI เป็นแพลตฟอร์มแบบครบวงจรที่รวมเครื่องมือ AI ทั้งหมดของ Google ไว้ด้วยกัน จุดเด่นที่ทำให้ Vertex AI ร้อนแรงสุดๆ ในตอนนี้คือ 'Generative AI Studio' ที่ให้คุณสามารถนำโมเดลตระกูล Gemini มาปรับแต่ง (Fine-tune) ให้กลายเป็นแชทบอทหรือระบบดึงข้อมูลเฉพาะสำหรับบริษัทคุณได้ นอกจากนี้ยังมี AutoML สำหรับข้อมูลรูปแบบ รูปภาพ, วิดีโอ, และข้อความ ที่แม่นยำระดับเวทมนตร์",
+    origin: "Google รวมเอาบริการ AI ยิบย่อยในอดีต (เช่น AutoML, AI Platform) มาผนึกกำลังกันในชื่อ Vertex AI เพื่อให้ทีม Data ทำงานได้จบในที่เดียว ไม่ต้องย้ายหน้าจอไปมา",
+    category: "Data & Analytics",
+    priceModel: "Pay-as-you-go (คิดตามวินาทีการประมวลผลและการเรียก API)",
+    isFree: false,
+    externalUrl: "https://cloud.google.com/vertex-ai",
+    rating: 4.8,
+    reviewCount: 9400,
+    updatedAt: "Feb 2026",
+    features: [
+      "Generative AI Studio: สนามเด็กเล่นสำหรับปรับจูนโมเดล Gemini และสร้าง Prompt แบบโครงสร้าง",
+      "AutoML for Everything: โยนรูปภาพ วิดีโอ หรือข้อความเข้าไป ระบบจะเทรนโมเดลจำแนกประเภท (Classification) ให้เองอย่างแม่นยำ",
+      "Vertex Feature Store: คลังจัดเก็บตัวแปร (Features) ตรงกลาง ให้ทีม Data Engineer นำไปแชร์และใช้ซ้ำได้ทั้งองค์กร"
+    ],
+    pros: [
+      "เข้าถึงโมเดลล้ำหน้าอย่าง Gemini 1.5 Pro ได้โดยตรงผ่าน API ที่เสถียรมาก",
+      "ทำงานประสานกับ Google BigQuery แบบไร้รอยต่อ (สามารถเรียกใช้โมเดล ML ได้จากหน้าต่างเขียน SQL เลย)",
+      "UI เป็นมิตรและใช้งานง่ายกว่า AWS SageMaker ในสายตาของผู้เริ่มต้น"
+    ],
+    cons: [
+      "บริการบางตัว (เช่น การทำ Fine-tuning โมเดล LLM ขนาดใหญ่) มีราคาสูง",
+      "อัปเดตฟีเจอร์ใหม่บ่อยมากจนเอกสารอ้างอิง (Documentation) ตามไม่ทันในบางครั้ง"
+    ],
+    steps: [
+      { title: "เลือกประเภทงาน", desc: "เลือกว่าจะใช้โมเดลสำเร็จรูป (Generative AI) หรือจะเทรนโมเดลเองจากข้อมูลในบริษัท" },
+      { title: "ปรับแต่ง (Tuning)", desc: "ป้อนตัวอย่างข้อมูล Prompt/Response เพื่อสอนให้โมเดล Gemini ตอบแบบที่บริษัทต้องการ" },
+      { title: "ใช้งานผ่าน API", desc: "นำ Endpoint URL ไปฝังในระบบ Web App เพื่อใช้งานจริง" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งปรับแต่ง (Fine-tune) โมเดลเพื่อสกัดข้อมูล (Data Extraction)", 
+        promptTh: "ฉันต้องการใช้ Vertex AI เพื่อดึงข้อมูล 'ชื่อลูกค้า' และ 'จำนวนเงิน' จากไฟล์ใบเสร็จรับเงิน (PDF) ของบริษัท ช่วยแนะนำขั้นตอนและตัวอย่างโค้ด Python สำหรับเรียกใช้โมเดล Gemini ผ่าน Vertex AI API ให้หน่อย",
+        promptEn: "I want to use Vertex AI to extract 'Customer Name' and 'Total Amount' from PDF receipts. Please outline the steps and provide a Python code snippet using the Vertex AI SDK to call the Gemini model for this task."
+      },
+      { 
+        purpose: "💡 เขียน BigQuery ML เรียกใช้ Vertex AI", 
+        promptTh: "ช่วยเขียนคำสั่ง SQL ใน BigQuery เพื่อเรียกใช้โมเดล (ML.GENERATE_TEXT) ที่เชื่อมกับ Vertex AI ในการวิเคราะห์ Sentiment (อารมณ์บวก/ลบ) ของตารางรีวิวลูกค้าให้หน่อย",
+        promptEn: "Write a SQL query in BigQuery using the ML.GENERATE_TEXT function connected to a Vertex AI model. The goal is to perform Sentiment Analysis on a column of customer reviews."
+      }
+    ],
+    faqs: [
+      { question: "เอาข้อมูลบริษัทไปทำ Fine-tuning ใน Vertex AI ข้อมูลจะถูก Google ขโมยไปไหม?", answer: "Google ยืนยันในสัญญา Enterprise ว่าข้อมูลลูกค้าและโมเดลที่ถูกปรับแต่งใน Vertex AI จะเป็นของคุณ 100% ไม่ถูกนำไปใช้เทรนโมเดลสาธารณะเด็ดขาดครับ" }
+    ]
+  },
+  {
+    id: "da9",
+    slug: "databricks",
+    name: "Databricks",
+    logoUrl: "/logos/databricks.png", // สมมติโลโก้
+    description: "แพลตฟอร์ม Lakehouse ระดับเทพ รวมงาน Data Engineering และ AI ไว้ในระบบเดียว",
+    longDescription: "ถ้าคุณเป็นสาย Data Engineer ที่ต้องคลุกคลีกับการทำ Data Pipeline ก้อนมหึมา Databricks คือบ้านเกิดของคุณ! มันคือแพลตฟอร์มที่บุกเบิกแนวคิด 'Data Lakehouse' (รวมข้อดีของ Data Lake ที่เก็บข้อมูลดิบๆ และ Data Warehouse ที่ดึงข้อมูลได้เร็วเข้าด้วยกัน) ขับเคลื่อนด้วยขุมพลัง Apache Spark ที่ประมวลผลข้อมูล Big Data ได้เร็วทะลุโลก ปัจจุบัน Databricks ได้เพิ่มฟีเจอร์ 'MosaicML' และ 'Databricks IQ' ที่นำ AI เข้ามาช่วยเขียนโค้ด Spark ช่วยทำ Data Catalog และสามารถเทรนโมเดล LLM ส่วนตัวขององค์กรได้บนแพลตฟอร์มเลย",
+    origin: "ก่อตั้งโดยผู้สร้าง Apache Spark โดยตรง เป้าหมายเพื่อสร้างแพลตฟอร์ม Unified Analytics ที่ประสานรอยร้าวระหว่างทีม Data Engineer (สายท่อ) และ Data Scientist (สายวิเคราะห์) ให้ทำงานบนพื้นที่เดียวกัน",
+    category: "Data & Analytics",
+    priceModel: "Consumption-based (คิดตามหน่วย DBU ที่ใช้ไป)",
+    isFree: false,
+    externalUrl: "https://www.databricks.com",
+    rating: 4.8,
+    reviewCount: 15400,
+    updatedAt: "Feb 2026",
+    features: [
+      "Apache Spark Engine: ประมวลผลและทำ Data Pipeline ขนาดใหญ่ได้เร็วและเสถียรสุดๆ",
+      "Databricks IQ: AI ผู้ช่วยอัจฉริยะที่ช่วยเขียนและอธิบายโค้ด PySpark และ SQL",
+      "Delta Lake: โครงสร้างการเก็บข้อมูลที่เชื่อถือได้ รองรับการย้อนดูข้อมูลในอดีต (Time Travel)"
+    ],
+    pros: [
+      "ตอบโจทย์งาน Data Engineering ขั้นสุด เหมาะมากกับโปรเจกต์ที่ต้องคลีนข้อมูลซับซ้อน (เช่น Fraud Detection Data Pipeline)",
+      "ทำลายไซโลข้อมูล (Data Silos) เพราะทุกคนในบริษัทวิ่งมาดึงข้อมูลจาก Lakehouse ที่เดียวกัน",
+      "รองรับการเขียนโค้ดทั้ง Python (PySpark), Scala, SQL, และ R ในหน้า Notebook เดียวกัน"
+    ],
+    cons: [
+      "การตั้งค่าระบบและ Cluster ต้องใช้ความรู้เชิงลึกด้าน Cloud Architecture ค่อนข้างมาก",
+      "ค่าใช้จ่ายอาจจะบานปลายได้หากทีมงานเปิด Cluster ทิ้งไว้แล้วลืมปิด"
+    ],
+    steps: [
+      { title: "เปิด Cluster", desc: "สร้างและเปิดใช้งานเครื่องเซิร์ฟเวอร์ (Compute Cluster)" },
+      { title: "เขียน Notebook", desc: "เปิด Workspace เขียนโค้ด PySpark ดึงข้อมูลดิบมาคลีนและแปลงรูปร่าง" },
+      { title: "จัดตาราง (Job)", desc: "ตั้งเวลาให้ Pipeline รันอัตโนมัติทุกวัน แล้วส่งต่อให้ทีม ML นำไปทำโมเดล" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI ร่างโค้ด Data Pipeline แบบ PySpark", 
+        promptTh: "ในฐานะ Data Engineer ฉันต้องการสร้าง Data Pipeline ด้วย PySpark เพื่อจัดการข้อมูลธุรกรรมทางการเงิน ช่วยเขียนโค้ดสำหรับอ่านไฟล์ CSV, จัดการค่า Null, แปลงคอลัมน์วันที่ให้อยู่ในฟอร์แมต 'YYYY-MM-DD' และกรองเอาเฉพาะธุรกรรมที่น่าสงสัย (amount > 50000) จากนั้นเซฟลง Delta Table",
+        promptEn: "As a Data Engineer, I need to build a PySpark data pipeline for financial transactions. Write the code to: read a CSV file, handle Null values, format the date column to 'YYYY-MM-DD', filter for suspicious transactions (amount > 50000), and finally write the DataFrame to a Delta Table."
+      },
+      { 
+        purpose: "💡 สั่งปรับจูนประสิทธิภาพโค้ด (Optimization)", 
+        promptTh: "โค้ด PySpark ตัวนี้ของฉันทำงานช้ามากตอนทำฟังก์ชัน `.join()` ระหว่างสองตารางใหญ่ ช่วยแนะนำเทคนิคการ Optimize เช่น การใช้ Broadcast Join หรือเทคนิคอื่นๆ พร้อมปรับแก้โค้ดให้หน่อย",
+        promptEn: "My PySpark code is running extremely slow during a `.join()` operation between two massive DataFrames. Please recommend optimization techniques (e.g., Broadcast Joins or partitioning) and refactor the code for better performance."
+      }
+    ],
+    faqs: [
+      { question: "ทำโปรเจกต์ Data Pipeline สำหรับพอร์ตโฟลิโอ ใช้ Databricks ได้ไหม?", answer: "ได้ครับ Databricks มีเวอร์ชัน 'Community Edition' ให้ใช้งานฟรี เหมาะมากสำหรับนักศึกษาหรือคนที่อยากโชว์สกิล Spark ลงใน GitHub พอร์ตโฟลิโอสัมภาษณ์งานครับ" }
+    ]
+  },
+  {
+    id: "da10",
+    slug: "snowflake",
+    name: "Snowflake",
+    logoUrl: "/logos/snowflake.png", // สมมติโลโก้
+    description: "Cloud Data Platform สุดล้ำ คิวรีข้อมูลไวด้วยสถาปัตยกรรมแยก Compute และ Storage",
+    longDescription: "Snowflake คือคู่แข่งฟ้าประทานของ Databricks! ในขณะที่ Databricks เก่งเรื่องวิศวกรรมข้อมูล Snowflake จะโดดเด่นในฐานะ 'Cloud Data Warehouse' ที่สมบูรณ์แบบที่สุด ความลับความสำเร็จคือสถาปัตยกรรมที่แยก 'ที่เก็บข้อมูล (Storage)' ออกจาก 'หน่วยประมวลผล (Compute)' ทำให้คุณสามารถอัดข้อมูลเข้าไปได้ไม่จำกัด และขยายเซิร์ฟเวอร์ประมวลผลได้พริบตาเมื่อต้องการคิวรีข้อมูลหนักๆ ปัจจุบันมี 'Snowflake Cortex' ที่ฝังพลัง AI LLM ลงไป ทำให้ผู้ใช้สามารถสั่งแปลภาษา วิเคราะห์ Sentiment หรือสรุปเอกสารในตารางข้อมูลได้ด้วยคำสั่ง SQL ง่ายๆ",
+    origin: "ออกแบบมาเพื่อแก้ปัญหาคอขวดของ Data Warehouse ยุคเก่า (เช่น อืดเวลาคนใช้เยอะ) และเกิดมาเป็นระบบ Cloud-native ที่สามารถรันคล่อมได้ทั้ง AWS, Azure และ GCP",
+    category: "Data & Analytics",
+    priceModel: "Pay-as-you-go (คิดเงินตามเครดิตที่ใช้ประมวลผลระดับวินาที)",
+    isFree: false,
+    externalUrl: "https://www.snowflake.com",
+    rating: 4.8,
+    reviewCount: 16800,
+    updatedAt: "Feb 2026",
+    features: [
+      "Separated Compute & Storage: สเกลการประมวลผลได้อย่างอิสระ ไม่มีอาการระบบค้างเวลาคนดึงรีพอร์ตพร้อมกัน",
+      "Snowflake Cortex (AI): ฟังก์ชัน AI สำเร็จรูปฝังในระบบ สั่งสรุปข้อความหรือพยากรณ์ข้อมูลได้ด้วยโค้ด SQL",
+      "Data Sharing: ฟีเจอร์สุดเจ๋งที่ให้คุณแชร์ตารางข้อมูลข้ามบริษัทหรือให้ลูกค้าเข้ามาดูได้แบบ Real-time โดยไม่ต้องก๊อปปี้ไฟล์ส่งให้กัน"
+    ],
+    pros: [
+      "ใช้งานง่ายและดูแลรักษาง่ายมาก แทบจะไม่มีงาน Admin หลังบ้านที่ต้องคอยจัดการ (Zero Management)",
+      "ประสิทธิภาพการทำ SQL Query เร็วทะลุโลก",
+      "ฟีเจอร์ Cortex ช่วยให้ Data Analyst นำพลัง Generative AI มาประยุกต์ใช้กับตารางข้อมูลได้เลยโดยไม่ต้องพึ่งทีม ML"
+    ],
+    cons: [
+      "เนื่องจากคิดเงินตามวินาทีที่ประมวลผล (Compute Credit) หากเขียน SQL คิวรีแบบไม่มีประสิทธิภาพ (เช่น ไม่ใช้ Filter) ค่าใช้จ่ายจะสูงลิ่ว",
+      "แม้จะมี Snowpark ให้เขียน Python ได้ แต่เครื่องมือในการทำ Data Pipeline ซับซ้อนก็ยังถูกมองว่าเป็นรอง Databricks เล็กน้อย"
+    ],
+    steps: [
+      { title: "สร้าง Warehouse", desc: "ตั้งค่า Virtual Warehouse (หน่วยประมวลผล) เลือกขนาดไซส์แบบเสื้อผ้า (S, M, L, XL)" },
+      { title: "โหลดข้อมูล", desc: "ดึงข้อมูลจาก Cloud Storage เข้ามาเก็บในรูปแบบตาราง" },
+      { title: "รัน Query & AI", desc: "ใช้ SQL หรือฟังก์ชัน Cortex AI เพื่อดึง Insight ส่งไปให้หน้า Dashboard" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ใช้ AI วิเคราะห์ความรู้สึกจากข้อความด้วย SQL (Cortex AI)", 
+        promptTh: "ฉันต้องการใช้ Snowflake Cortex (ฟังก์ชัน CORTEX.SENTIMENT) ในการวิเคราะห์รีวิวลูกค้า ช่วยเขียนคำสั่ง SQL เพื่อดึงตาราง 'customer_reviews' แล้วสร้างคอลัมน์ใหม่ที่ระบุว่ารีวิวนั้นเป็นแง่บวกหรือแง่ลบ พร้อมหาค่าเฉลี่ยคะแนน Sentiment ของแต่ละหมวดหมู่สินค้า",
+        promptEn: "I want to use Snowflake Cortex (CORTEX.SENTIMENT function) to analyze customer feedback. Write a SQL query that reads the 'customer_reviews' table, generates a new column with the sentiment score, and calculates the average sentiment per product category."
+      },
+      { 
+        purpose: "💡 สั่ง AI ช่วย Optimize SQL Query ที่คิวรีช้าให้วิ่งฉิว", 
+        promptTh: "คำสั่ง SQL นี้ของฉันใช้เวลาประมวลผลใน Snowflake นานมาก และกิน Credit สูง [แปะโค้ด SQL] ช่วยรีวิวและปรับแก้ (Optimize) โค้ดนี้หน่อย เช่น การเลี่ยงการใช้ SELECT * หรือปรับปรุงการทำ JOIN ให้ทำงานได้เร็วขึ้น",
+        promptEn: "This SQL query takes a long time to run in Snowflake and consumes a lot of Compute Credits: [Paste SQL Query]. Please review and optimize it. Apply best practices such as avoiding SELECT *, optimizing the JOIN conditions, and using appropriate filtering."
+      }
+    ],
+    faqs: [
+      { question: "เตรียมสัมภาษณ์ตำแหน่ง Data Engineer จำเป็นต้องรู้ Snowflake ไหม?", answer: "เป็นแต้มต่อที่สูงมากครับ! หลายองค์กรในปัจจุบันย้าย Data Warehouse ขึ้นมาบน Snowflake หมดแล้ว การที่คุณรู้คอนเซปต์ 'แยก Compute กับ Storage' จะทำให้คุณตอบคำถามสัมภาษณ์ได้คมขึ้นมากครับ" }
     ]
   },
 
   // ==========================================
-  // 🔹 9) AI ทำ Presentation / เอกสาร
+  // ✍️ หมวด AI เขียนบทความ / คอนเทนต์ (Writing & Content) - 5 ตัวท็อป
   // ==========================================
   {
-    id: "22",
-    slug: "tome",
-    name: "Tome",
-    logoUrl: "/logos/tome.png",
-    description: "แอปสร้างสไลด์และเล่าเรื่อง (Storytelling) ล้ำยุค ดีไซน์สวยดาร์ก เปิดในมือถือได้สมบูรณ์แบบ",
-    longDescription: "ลืมหน้าตาของ PowerPoint เชยๆ ไปได้เลย! Tome คือเครื่องมือทำสไลด์ยุคใหม่ที่เน้นศิลปะแห่งการเล่าเรื่อง (Storytelling Format) จุดเด่นของมันคือดีไซน์ที่ดูล้ำสมัย มินิมอลแบบมีคลาส และออกแบบมาให้รองรับการเลื่อนอ่านบนหน้าจอมือถือ (Responsive) ได้ 100% เพียงแค่คุณพิมพ์ Prompt สั้นๆ หรือโยนบทความเข้าไป Tome จะจัดหน้า แบ่งหัวข้อ พร้อมเสกรูปภาพ AI มาประกอบให้เสร็จสรรพ แถมยังรองรับการแปะวิดีโอ YouTube หรือโมเดล 3D ลงไปในสไลด์ให้หมุนเล่นได้แบบสดๆ ด้วย",
-    origin: "ก่อตั้งโดยอดีตผู้บริหารจาก Facebook ที่เบื่อหน่ายกับซอฟต์แวร์สไลด์แบบเดิมๆ ที่ไม่ตอบโจทย์คนรุ่นใหม่ พวกเขาสร้าง Tome ขึ้นมาโดยใช้คอนเซปต์ 'บล็อก' (Tile) ลากไปวางตรงไหนระบบจะปรับขนาดตัวหนังสือและรูปให้สมดุลเอง ไม่ต้องมานั่งขยับจัดหน้าทีละพิกเซล เหมาะสุดๆ กับนักเรียน Startup และสายครีเอทีฟ",
-    category: "Presentation & Slides",
-    priceModel: "Free (ให้เครดิตฟรีตอนเริ่ม) / Pro Starts at $16 ต่อเดือน",
+    id: "w1",
+    slug: "chatgpt",
+    name: "OpenAI – ChatGPT",
+    logoUrl: "/logos/OpenAI – ChatGPT.png",
+    description: "LLM ครอบจักรวาล เขียนบทความยาว คิดสคริปต์ รีไรต์งาน หรือทำ SEO ได้จบในตัว",
+    longDescription: "ChatGPT (โดยเฉพาะเวอร์ชัน Plus ที่ใช้โมเดล GPT-4o ขึ้นไป) คือผู้ช่วยด้านภาษาที่ทรงพลังที่สุดในปัจจุบัน ความฉลาดของมันไม่ใช่แค่การเขียนตามสั่ง แต่คือการ 'สวมบทบาท (Roleplay)' และการวิเคราะห์บริบทที่ยอดเยี่ยม คุณสามารถป้อนข้อมูลดิบๆ แล้วสั่งให้มันเขียนบทความ SEO วางโครงสร้างเว็บไซต์ เขียนแผนธุรกิจ หรือแม้กระทั่งให้มันช่วยตรวจทาน (Proofread) และขัดเกลาสำนวนให้เป็นทางการหรือเป็นกันเองได้อย่างเป็นธรรมชาติที่สุด",
+    origin: "พัฒนาโดย OpenAI ถือเป็นแชทบอทที่สร้างแรงสั่นสะเทือนเปลี่ยนโลก AI อย่างแท้จริง มีความสามารถในการอ่านไฟล์ (PDF, Word) และค้นหาข้อมูลจากอินเทอร์เน็ตได้แบบเรียลไทม์",
+    category: "Writing & Content",
+    priceModel: "Free / Plus $20 ต่อเดือน",
     isFree: true,
-    externalUrl: "https://tome.app",
-    rating: 4.6,
-    reviewCount: 5200,
-    updatedAt: "Feb 2025",
+    externalUrl: "https://chatgpt.com",
+    rating: 4.9,
+    reviewCount: 55000,
+    updatedAt: "Feb 2026",
     features: [
-      "Text-to-Presentation: พิมพ์หัวข้อเรื่อง AI จะเนรมิตสไลด์ 8-10 หน้า พร้อมโครงร่าง (Outline) และภาพประกอบให้",
-      "Interactive Embeds: ฝังหน้าเว็บไซต์ Figma, Twitter(X), หรือภาพ 3D ลงไปแสดงผลแบบขยับได้ในหน้าสไลด์เลย",
-      "Mobile-First Design: เลย์เอาต์จะปรับขนาดเปลี่ยนรูปทรงอัตโนมัติเมื่อเปิดดูผ่านโทรศัพท์มือถือ ดูง่ายสบายตา",
-      "Document to Slide: นำบทความยาวๆ จาก Word มาโยนใส่ ให้มันย่อยเนื้อหาเป็นสไลด์สวยๆ"
+      "Advanced Roleplay: สั่งให้สวมบทบาทเป็นผู้เชี่ยวชาญเฉพาะทางเพื่อให้ได้น้ำเสียง (Tone of Voice) ที่แม่นยำ",
+      "Web Browsing & SEO: ค้นหาข้อมูลล่าสุดบนเน็ตและนำมาเขียนบทความที่รองรับคีย์เวิร์ด SEO",
+      "Document Analysis: อัปโหลดไฟล์งานวิจัยหรือข้อมูลดิบ แล้วสั่งให้แปลงเป็นบทความหรือสรุปย่อได้ทันที"
     ],
     pros: [
-      "หน้าตาสไลด์ดู Modern ล้ำยุค (UI โทนดาร์กสวยมาก) เอาไปเปิด Pitching งานให้ลูกค้าดูจะดูแพงและโปรเฟสชันนอลขึ้นทันที",
-      "ทำสไลด์เสร็จไวปานสายฟ้าแลบ เพราะไม่ต้องพะวงเรื่องการจับขยับฟอนต์หรือตกขอบหน้ากระดาษ",
-      "แชร์ลิงก์ส่งเข้ากรุ๊ปไลน์ให้เจ้านายดูผ่านมือถือได้ประสบการณ์การอ่านที่ดีมาก"
+      "รองรับภาษาไทยได้เป็นธรรมชาติและสละสลวยที่สุดเมื่อเทียบกับคู่แข่ง",
+      "จดจำบริบทการสนทนาได้ยาวนาน สามารถสั่งแก้เฉพาะบางย่อหน้าได้อย่างต่อเนื่อง",
+      "ใช้งานได้สารพัดประโยชน์ ไม่จำกัดแค่การเขียน (ทำรูป, อ่านกราฟ, แปลงไฟล์ได้)"
     ],
     cons: [
-      "สไตล์การออกแบบค่อนข้างดาร์กและดูเป็นงาน Tech/Abstract บางองค์กรสายอนุรักษ์นิยมอาจจะมองว่าไม่เป็นทางการ",
-      "หากไม่จ่ายเงินเป็นตัว Pro จะเซฟดาวน์โหลดออกมาเป็นไฟล์ PDF ไม่ได้ (บังคับให้พรีเซนต์ผ่านหน้าเว็บอย่างเดียว)",
-      "รูปภาพที่ AI สุ่มมาให้บางครั้งหลุดโลกไปหน่อย (ดูเป็นงานแฟนตาซีเกินจริง) ต้องมาปรับสไตล์ภาพใหม่บ่อยๆ"
+      "บางครั้งอาจเกิดอาการ 'Hallucination' (แต่งเรื่องขึ้นมาเอง) หากข้อมูลที่ค้นหาไม่ชัดเจน",
+      "หากไม่ให้ Prompt ที่ละเอียดพอ สำนวนการเขียนมักจะดูออกว่าเป็น AI (เช่น ชอบใช้คำว่า 'นอกจากนี้', 'สรุปได้ว่า')"
     ],
     steps: [
-      { title: "พิมพ์ไอเดีย", desc: "กด Create พิมพ์คำสั่งสิ่งที่คุณอยากนำเสนอ เช่น 'แผนเปิดคาเฟ่แมว'" },
-      { title: "พรีวิวโครงเรื่อง", desc: "Tome จะสร้างหน้าหัวข้อสารบัญมาให้ดูก่อน 6-8 หน้า หากยังไม่ชอบ สามารถพิมพ์สั่งให้แก้โครงใหม่ได้" },
-      { title: "ตกแต่งรายละเอียด", desc: "เข้าไปปรับแต่งเปลี่ยนธีมสี พิมพ์แก้คำผิด หรือลากวิดีโอเข้ามาระหว่างสไลด์ แล้วกดแชร์ลิงก์ได้เลย" }
+      { title: "กำหนดบทบาท", desc: "เริ่มต้นด้วยการบอกว่า AI คือใคร (เช่น 'คุณคือ Copywriter มืออาชีพ')" },
+      { title: "ให้ข้อมูลและเป้าหมาย", desc: "ใส่ข้อมูลสินค้าหรือหัวข้อ และระบุกลุ่มเป้าหมายที่จะอ่าน" },
+      { title: "สั่งปรับแก้ (Refine)", desc: "เมื่อได้ข้อความมาแล้ว ให้สั่งปรับโทน เช่น 'ขอให้ดูสนุกขึ้น' หรือ 'ขอให้สั้นลง 20%'" }
     ],
     prompts: [
       { 
-        purpose: "💡 ร่างสไลด์ระดมทุน (Startup Pitch Deck)", 
-        promptTh: "ช่วยสร้างสไลด์ Presentation สำหรับนำเสนอแผนธุรกิจ (Pitch Deck) ของแอปพลิเคชันที่มีชื่อว่า '[ระบุชื่อแอป]' ซึ่งเป็นนวัตกรรมที่เข้ามาช่วยแก้ปัญหา [ระบุปัญหา เช่น การหาที่จอดรถว่างในห้างสรรพสินค้า] \nโครงสร้างสไลด์ที่ต้องการ: \n1. ปัญหาปัจจุบันที่คนเจอ \n2. วิธีแก้ปัญหา (Solution) ของเรา \n3. ฟีเจอร์หลัก 3 ข้อ \n4. โมเดลการสร้างรายได้ (Revenue Model) \n5. ทีมงาน\nขอสไตล์ภาพประกอบและการจัดหน้าแบบ Tech Startup ที่ดูน่าเชื่อถือ ทันสมัย และโน้มน้าวใจนักลงทุน",
-        promptEn: "Create an impactful presentation pitch deck for a new startup app named '[Insert App Name]'. This app is designed to solve the critical problem of [Insert problem e.g., finding empty parking spots in crowded malls].\nRequired Slide Structure:\n1. The Core Problem\n2. Our Solution\n3. Top 3 Key Features\n4. Revenue Model / Monetization\n5. The Team\nDesign constraint: Use a modern, tech-focused visual style that is highly persuasive to angel investors."
+        purpose: "💡 สั่งเขียนแผนธุรกิจสำหรับธุรกิจขนาดเล็ก (Business Plan)", 
+        promptTh: "คุณคือที่ปรึกษาธุรกิจ ช่วยเขียนแผนธุรกิจ (Business Plan) เบื้องต้นสำหรับ 'โฮมคาเฟ่ที่เน้นขายเบเกิลโฮมเมดและเครื่องดื่ม' โดยเน้นทำเลในหมู่บ้านและการส่งเดลิเวอรี่ ขอให้ครอบคลุมหัวข้อ: 1. บทสรุปผู้บริหาร 2. กลุ่มลูกค้าเป้าหมาย 3. กลยุทธ์การตลาดผ่านโซเชียลมีเดีย และ 4. โครงสร้างต้นทุนเบื้องต้น",
+        promptEn: "Act as a business consultant. Write a basic Business Plan for a 'home-based cafe specializing in homemade bagels and craft drinks', focusing on a residential neighborhood and delivery operations. Include: 1. Executive Summary, 2. Target Audience, 3. Social Media Marketing Strategy, and 4. Basic Cost Structure."
       },
       { 
-        purpose: "💡 แปลงบทความ/หนังสือ เป็นสไลด์สอนงาน (Educational)", 
-        promptTh: "จงสร้างสไลด์สรุปประเด็นหลักจากหนังสือหรือหัวข้อเรื่อง '[ระบุชื่อเรื่อง เช่น 7 Habits of Highly Effective People]' เพื่อนำไปใช้เป็นสื่อ Onboarding สำหรับฝึกอบรมพนักงานใหม่ในองค์กร \nข้อควรระวัง: ให้อธิบายคอนเซปต์ด้วยภาษาที่เข้าใจง่ายสุดๆ ย่อยข้อมูลให้เหลือหน้าละ 1-2 ประเด็นหลักเท่านั้น (ไม่เอาตัวหนังสือทับกันแน่นๆ) และขอภาพประกอบแนวสร้างแรงบันดาลใจ",
-        promptEn: "Generate an engaging summary presentation based on the core concepts of '[Insert Book or Topic e.g., The 7 Habits of Highly Effective People]'. The target audience is new employee onboarding.\nConstraints: Explain the concepts in extremely simple terms. Break down the heavy data into easily digestible slides (maximum 1-2 main bullet points per slide to avoid clutter). Include inspiring and positive accompanying visuals."
+        purpose: "💡 สั่งร่างโครงสร้างเว็บไซต์ (Website Copywriting)", 
+        promptTh: "ฉันกำลังจะสร้างเว็บไซต์สำหรับ 'โรงเรียนสอนภาษาอังกฤษออนไลน์' ช่วยร่างโครงสร้างเนื้อหา (Sitemap) และเขียน Copywriting หน้า Landing Page ให้หน่อย โดยขอให้มีส่วนของ: Headline ที่ดึงดูด, Pain points ของคนเรียนภาษาไม่เก่ง, และปุ่ม Call-to-action (CTA) ที่กระตุ้นให้คนอยากสมัครเรียน",
+        promptEn: "I am building a website for an 'Online English Language School'. Please draft the Sitemap and write the copywriting for the Landing Page. Include: A catchy Headline, common Pain Points of language learners, and compelling Call-to-action (CTA) buttons to drive course registrations."
       }
     ],
     faqs: [
-      { question: "โหลดไฟล์ไปเปิดในคอมที่ไม่มีเน็ตได้ไหม?", answer: "Tome เป็นแอปพลิเคชันที่ทำงานบน 'Web-native' (ต้องมีเน็ตเปิดผ่านเบราว์เซอร์) เพราะมันต้องการเรนเดอร์กราฟิกและวิดีโอให้ลื่นไหลครับ หากจะโหลดมาจริงๆ ต้องอัปเกรดเป็นตัว Pro เพื่อบันทึกเป็นไฟล์ภาพ PDF (จะขยับไม่ได้) ครับ" }
+      { question: "ทำยังไงไม่ให้คนอ่านรู้ว่าใช้ ChatGPT เขียน?", answer: "ต้องใช้เทคนิค Prompt สั่งห้ามใช้คำซ้ำซากครับ เช่น 'ห้ามใช้คำว่า ยิ่งไปกว่านั้น, อย่างไรก็ตาม, ในยุคดิจิทัล' และควรนำข้อความมาเกลา (Rewrite) ด้วยตัวเองอีกรอบเสมอครับ" }
     ]
   },
   {
-    id: "23",
-    slug: "gamma",
-    name: "Gamma App",
+    id: "w2",
+    slug: "claude",
+    name: "Anthropic – Claude 3.5",
+    logoUrl: "/logos/Anthropic – Claude.png",
+    description: "ราชาแห่งการอ่านเอกสารยาวๆ สรุปข้อมูลวิจัยแม่นยำ และเขียนภาษาได้เป็นธรรมชาติมาก",
+    longDescription: "หาก ChatGPT คือเด็กเนิร์ดที่รู้ทุกเรื่อง Claude ก็คือนักวิชาการและนักเขียนรางวัลซีไรต์! Claude โดดเด่นอย่างมากเรื่อง 'Long-context window' มันสามารถรับไฟล์ PDF ความยาวเป็นร้อยๆ หน้าเข้าไปอ่านและวิเคราะห์ได้โดยไม่หลงลืมรายละเอียด (No memory loss) ที่สำคัญคือสไตล์การเขียนของ Claude จะมีความลื่นไหล เป็นมนุษย์ มีความถ่อมตัว และไม่ค่อยใช้คำศัพท์ที่ดูประดิษฐ์ประดอยเหมือน AI ทั่วไป เหมาะอย่างยิ่งสำหรับงานสรุปรายงานบริษัท การวิเคราะห์เอกสารทางกฎหมาย หรืองานเขียนที่ต้องการความลุ่มลึก",
+    origin: "สร้างโดยทีมอดีตนักวิจัยจาก OpenAI ที่ให้ความสำคัญกับความปลอดภัยและจริยธรรม (Constitutional AI) ทำให้ Claude เป็น AI ที่ไว้ใจได้เรื่องการไม่ตอบข้อมูลที่เป็นอันตราย",
+    category: "Writing & Content",
+    priceModel: "Free / Pro $20 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://claude.ai",
+    rating: 4.8,
+    reviewCount: 31200,
+    updatedAt: "Feb 2026",
+    features: [
+      "Massive Context Window: รองรับการอัปโหลดไฟล์ขนาดใหญ่ (หนังสือทั้งเล่ม) เพื่อให้ AI อ่านและวิเคราะห์",
+      "Artifacts: ฟีเจอร์แบ่งหน้าจอขวาที่ให้ Claude วาดกราฟิก สร้างตาราง หรือเขียนโค้ดและพรีวิวให้ดูได้ทันที",
+      "Nuanced Writing: น้ำเสียงการเขียนมีความซับซ้อนและเป็นธรรมชาติ คล้ายคลึงนักเขียนมืออาชีพ"
+    ],
+    pros: [
+      "เป็นเบอร์ 1 ในเรื่องการสรุปเอกสารยาวๆ ไม่มีการ 'หลอน' (Hallucinate) ข้อมูลจากไฟล์ที่อัปโหลด",
+      "ฟีเจอร์ Artifacts มีประโยชน์มากเวลาสั่งให้มันเขียนโครงสร้างบทความ หรือทำตารางเปรียบเทียบข้อมูล",
+      "สำนวนการเขียนภาษาไทยดูเป็น 'คนจริง' มากกว่า ChatGPT"
+    ],
+    cons: [
+      "ในเวอร์ชันฟรี โควต้าการใช้งาน (Message limits) หมดค่อนข้างเร็ว โดยเฉพาะถ้าอัปโหลดไฟล์ใหญ่",
+      "ไม่สามารถค้นหาข้อมูลจากอินเทอร์เน็ต (Web Browsing) แบบเรียลไทม์ได้ด้วยตัวเอง"
+    ],
+    steps: [
+      { title: "อัปโหลดเอกสาร", desc: "ลากไฟล์ PDF หรือ Text หลายๆ ไฟล์เข้าไปในช่องแชท" },
+      { title: "สั่งวิเคราะห์", desc: "พิมพ์คำถามเจาะจง เช่น 'ช่วยสรุปประเด็นหลัก 3 ข้อจากเอกสารนี้'" },
+      { title: "ใช้งาน Artifacts", desc: "สั่งให้ Claude แปลงข้อมูลในเอกสารออกมาเป็นตารางเทียบสเปก (Table) ในหน้าต่างขวา" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI วิเคราะห์และสรุปรายงานขนาดยาว (Document Analysis)", 
+        promptTh: "[อัปโหลดไฟล์ PDF รายงานการตลาด]\nช่วยอ่านเอกสารนี้และเขียนสรุป Executive Summary ความยาวไม่เกิน 1 หน้ากระดาษ โดยเน้นไปที่ 'พฤติกรรมผู้บริโภคที่เปลี่ยนไป' และ 'โอกาสทางธุรกิจ' พร้อมทำตารางสรุปตัวเลขสถิติที่สำคัญ",
+        promptEn: "[Upload PDF report]\nPlease read this document and write an Executive Summary (max 1 page). Focus specifically on 'shifting consumer behaviors' and 'new business opportunities'. Also, generate a table summarizing the key statistical findings."
+      },
+      { 
+        purpose: "💡 สั่งเกลาภาษาให้เป็นมืออาชีพ (Tone Adjustment)", 
+        promptTh: "นี่คืออีเมลที่ฉันร่างไว้เพื่อส่งให้พาร์ทเนอร์ธุรกิจ [วางข้อความอีเมล] ช่วยเกลาภาษาใหม่ให้ดูเป็นทางการ สุภาพ แต่ยังคงความกระตือรือร้นที่จะร่วมงานด้วย และแก้ไขไวยากรณ์ให้ถูกต้อง 100%",
+        promptEn: "Here is a draft email I wrote for a business partner: [Paste email]. Please rewrite it to sound highly professional, polite, yet enthusiastic about the collaboration. Ensure 100% perfect grammar."
+      }
+    ],
+    faqs: [
+      { question: "Claude แตกต่างกับ ChatGPT อย่างไรในการเขียน?", answer: "ChatGPT จะชอบจัดรูปแบบมาเป็น Bullet สวยงามและมีคำสรุปปิดท้ายเสมอ ส่วน Claude จะเขียนแบบเล่าเรื่อง (Narrative) ค่อยๆ อธิบายเหตุผล ซึ่งอ่านแล้วรู้สึกลื่นไหลเหมือนคนเขียนมากกว่าครับ" }
+    ]
+  },
+  {
+    id: "w3",
+    slug: "jasper-ai",
+    name: "Jasper AI",
+    logoUrl: "/logos/Jasper AI.png",
+    description: "AI เบอร์หนึ่งสายนักการตลาด เขียนโฆษณา แคปชั่นขายของ และ Email Marketing เก่งขั้นเทพ",
+    longDescription: "Jasper ไม่ได้ถูกสร้างมาให้แชทเล่นทั่วไป แต่มันคือ AI ที่ถูกเทรนด้วยความรู้ด้าน 'Marketing Copywriting' โดยเฉพาะ! มันเกิดมาเพื่อช่วยนักการตลาดปั่นคอนเทนต์ ไม่ว่าจะเป็นแคปชั่น Facebook Ads, สคริปต์วิดีโอ TikTok, หน้า Sales Page แบบยาวๆ ไปจนถึง Email Marketing Jasper มี 'Brand Voice' ที่คุณสามารถป้อนข้อมูลให้มันเรียนรู้โทนเสียงของแบรนด์คุณ (เช่น สนุกสนาน, ทางการ, ทันสมัย) เพื่อให้งานเขียนทุกชิ้นออกมาเป็นเนื้อเดียวกันเหมือนทีมงานคนเดียวกันเขียน",
+    origin: "เริ่มต้นจากชื่อ Jarvis ก่อนจะเปลี่ยนเป็น Jasper ถือเป็นเครื่องมือบุกเบิกในวงการ AI Copywriting ที่รวมโมเดล AI หลายตัวมาปรับแต่ง (Fine-tune) ให้เก่งเรื่องการกระตุ้นยอดขายโดยเฉพาะ",
+    category: "Writing & Content",
+    priceModel: "Starts at $39/เดือน",
+    isFree: false,
+    externalUrl: "https://www.jasper.ai",
+    rating: 4.7,
+    reviewCount: 14500,
+    updatedAt: "Feb 2026",
+    features: [
+      "50+ Marketing Templates: มีแบบฟอร์มสำเร็จรูปให้เลือก เช่น โครงสร้าง AIDA (Attention, Interest, Desire, Action), PAS (Problem, Agitate, Solution)",
+      "Brand Voice & Style: กำหนดน้ำเสียงของแบรนด์ และใส่ข้อมูลสินค้า (Knowledge Base) ทิ้งไว้ให้ AI ดึงไปใช้เขียนได้ตลอด",
+      "Campaign Generator: พิมพ์ไอเดียแคมเปญสั้นๆ ระบบจะแตกชิ้นงานออกมาเป็น อีเมล, แคปชั่น FB, และหน้าเว็บ ให้ครบชุด"
+    ],
+    pros: [
+      "มี Template สำเร็จรูปเยอะมาก ทำให้ทำงานได้เร็วโดยไม่ต้องคิด Prompt เองตั้งแต่ศูนย์",
+      "เขียน Copywriting ได้มีชั้นเชิงและกระตุ้นความรู้สึกอยากซื้อ (Conversion) ได้ดีกว่า ChatGPT ทั่วไป",
+      "ฟีเจอร์ Brand Voice ช่วยคุมโทนงานเขียนของทีมการตลาดทั้งบริษัทได้ดีเยี่ยม"
+    ],
+    cons: [
+      "ราคาค่อนข้างสูงเมื่อเทียบกับการใช้งาน LLM ทั่วไป เหมาะกับบริษัทหรือ Agency มากกว่าใช้งานส่วนตัว",
+      "การเขียนภาษาไทยบางครั้งยังต้องนำมาปรับคำให้เป็นภาษาพูดแบบคนไทยอีกเล็กน้อย"
+    ],
+    steps: [
+      { title: "ตั้งค่า Brand Voice", desc: "นำบทความเก่าๆ ของคุณมาให้ Jasper อ่านเพื่อเรียนรู้น้ำเสียง (Tone)" },
+      { title: "เลือก Template", desc: "เลือกรูปแบบที่ต้องการ เช่น 'Facebook Ad Headline' หรือ 'AIDA Framework'" },
+      { title: "ใส่คีย์เวิร์ด", desc: "พิมพ์ชื่อสินค้าและจุดเด่นสั้นๆ แล้วให้ AI เสกคอนเทนต์ออกมาหลายๆ แบบให้เลือก" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 เขียนอีเมลเสนอขายสินค้าแบบต่อเนื่อง (Email Sequence)", 
+        promptTh: "[ใช้ใน Template: Email Campaign]\nช่วยเขียนอีเมล 3 ฉบับ (Drip Campaign) สำหรับเสนอขาย 'คอร์สเรียนภาษาอังกฤษออนไลน์แบบ Full-stack' อีเมลที่ 1: แนะนำตัวและชี้ให้เห็นปัญหาการสื่อสารไม่ได้, อีเมลที่ 2: นำเสนอความสำเร็จของนักเรียน (Testimonial), อีเมลที่ 3: เสนอโปรโมชั่นโค้งสุดท้ายก่อนปิดรับสมัคร",
+        promptEn: "Write a 3-part email sequence (Drip Campaign) for selling a 'Comprehensive Online English Course'. Email 1: Introduction & agitating the pain point of communication barriers. Email 2: Social proof and student testimonials. Email 3: Scarcity-driven final discount offer before closing."
+      },
+      { 
+        purpose: "💡 เขียนแคปชั่นโฆษณาเฟซบุ๊ก (Facebook Ads)", 
+        promptTh: "[ใช้ใน Template: AIDA Framework]\nช่วยเขียนแคปชั่นโฆษณา Facebook สำหรับ 'ระบบรับชำระเงินออนไลน์สำหรับธุรกิจ B2B' โดยใช้โครงสร้าง AIDA ดึงดูดความสนใจด้วยปัญหาเรื่องการวางบิลล่าช้า และกระตุ้นให้พวกเขากดปุ่มทดลองใช้ฟรี",
+        promptEn: "Write a Facebook Ad caption for a 'B2B Online Payment System' using the AIDA framework. Grab attention with the pain point of late invoice collections, and strongly call them to action (CTA) for a free trial."
+      }
+    ],
+    faqs: [
+      { question: "ทำไมถึงควรจ่ายเงินซื้อ Jasper ในเมื่อ ChatGPT ก็เขียนโฆษณาได้?", answer: "Jasper มีฟีเจอร์จัดการแคมเปญและ Template ที่ประหยัดเวลาครับ คุณไม่ต้องมานั่งคิด Prompt แบบ 'Act as a marketer...' ทุกครั้ง และระบบเด่นเรื่องการทำ A/B Testing ให้ข้อความโฆษณาครับ" }
+    ]
+  },
+  {
+    id: "w4",
+    slug: "copy-ai",
+    name: "Copy.ai",
+    logoUrl: "/logos/Copy.ai.png",
+    description: "ผู้ช่วยสายโซเชียล คิดไอเดียคอนเทนต์ เขียนแคปชั่น และบล็อกโพสต์ได้ไวสุดๆ",
+    longDescription: "Copy.ai เป็นเครื่องมือสาย Copywriting ที่โด่งดังตีคู่มากับ Jasper แต่จะเน้นหนักไปทาง 'การใช้งานที่ง่ายและรวดเร็ว' (Ease of use) เหมาะกับเหล่า Content Creator, เจ้าของร้านค้าออนไลน์ หรือนักการตลาดสายโซเชียลมีเดีย จุดเด่นคือมี Tools แจกแจงย่อยๆ มากกว่า 90 แบบ เช่น เครื่องมือตั้งชื่อคลิป YouTube, เครื่องมือคิดไอเดียโพสต์ Instagram หรือกระทั่งเครื่องมือเขียนจดหมายขอโทษลูกค้า แถมยังมี 'Brand Voice' และระบบ Workflow ที่สั่งรันกระบวนการเขียนอัตโนมัติได้",
+    origin: "สร้างมาเพื่อแก้ปัญหา 'อาการสมองตัน (Writer's Block)' โดยเน้น UI ที่สะอาดตา พิมพ์คำศัพท์ไปไม่กี่คำ ก็พ่นไอเดียเจ๋งๆ ออกมาให้เลือกเพียบ",
+    category: "Writing & Content",
+    priceModel: "Free (จำกัดคำ) / Pro $36 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://www.copy.ai",
+    rating: 4.6,
+    reviewCount: 9800,
+    updatedAt: "Feb 2026",
+    features: [
+      "90+ Copywriting Tools: มีเครื่องมือยิบย่อยครอบคลุมทุกแพลตฟอร์มโซเชียล",
+      "Infobase: บันทึกข้อมูลบริษัทหรือสเปกสินค้าไว้ พอจะเขียนโพสต์ก็พิมพ์แท็กชื่อสินค้าได้เลย AI จะดึงข้อมูลไปเขียนเอง",
+      "Workflow Automation: สั่งให้ AI รันงานต่อเนื่อง เช่น อ่านข่าวต่างประเทศ แปลเป็นไทย แล้วย่อยเป็นโพสต์ Twitter อัตโนมัติ"
+    ],
+    pros: [
+      "มีเวอร์ชันฟรีให้ใช้งานได้เรื่อยๆ (เหมาะกับร้านค้าเล็กๆ หรือมือใหม่)",
+      "หน้าตาโปรแกรมใช้งานง่ายมาก (User-friendly) ไม่มีความรู้เรื่อง AI Prompt ก็ใช้งานได้ 100%",
+      "ไอเดียความสร้างสรรค์ในการทำแคปชั่นโซเชียลถือว่าจี๊ดจ๊าดและน่าสนใจ"
+    ],
+    cons: [
+      "ถ้าจะเขียนบทความระดับวิชาการหรือเอกสารที่ใช้ตรรกะซับซ้อน จะทำได้ไม่ดีเท่า Claude หรือ ChatGPT",
+      "จำนวนคำ (Word limit) ในเวอร์ชันฟรีอาจจะไม่พอสำหรับคนที่เขียนบล็อกยาวๆ ทุกวัน"
+    ],
+    steps: [
+      { title: "เลือกโปรเจกต์", desc: "เลือกว่าจะเขียนอะไร เช่น 'Instagram Captions' หรือ 'Blog Ideas'" },
+      { title: "อธิบายสั้นๆ", desc: "พิมพ์อธิบายสิ่งที่จะสื่อเพียง 1-2 บรรทัด หรือเลือกโทนเสียง เช่น 'ตลก', 'หรูหรา'" },
+      { title: "เลือกและปรับแต่ง", desc: "AI จะให้ตัวเลือกมา 5-10 แบบ ให้กด Copy แบบที่ชอบที่สุดไปใช้ได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI ร่างแคปชั่น Instagram แบบเป็นกันเอง", 
+        promptTh: "[ใช้เครื่องมือ Instagram Caption]\nช่วยเขียนแคปชั่น IG สำหรับร้าน 'โฮมคาเฟ่' ของฉัน วันนี้เรามีเมนูใหม่คือ 'เบเกิลครีมชีสสตรอว์เบอร์รี' รสชาติเปรี้ยวอมหวาน กินคู่กับกาแฟดำเข้ากันสุดๆ ขอโทนเสียงแบบน่ารัก สดใส เป็นกันเอง พร้อมใส่ Hashtag ที่เกี่ยวข้องให้ด้วย",
+        promptEn: "Write an Instagram caption for my home-based cafe. Today's new menu item is a 'Strawberry Cream Cheese Bagel'. It's sweet and tangy, perfectly paired with black coffee. Tone: Cute, bright, and friendly. Include relevant hashtags."
+      },
+      { 
+        purpose: "💡 ร่างโพสต์ LinkedIn โชว์ความเป็นมืออาชีพ", 
+        promptTh: "[ใช้เครื่องมือ LinkedIn Post]\nฉันเพิ่งเรียนจบหลักสูตร Data Analysis และได้ทำโปรเจกต์ 'วิเคราะห์ยอดขาย Toyota' จนเสร็จสมบูรณ์ ช่วยเขียนโพสต์แชร์ประสบการณ์ สิ่งที่ได้เรียนรู้ และเปิดโอกาสให้คนมาพูดคุยแลกเปลี่ยนกัน ขอโทนเสียงแบบมืออาชีพและถ่อมตัว",
+        promptEn: "I just completed a Data Analysis course and finished my capstone project on 'Toyota Sales Data Analysis'. Write a LinkedIn post sharing my journey, key learnings, and inviting connections to discuss. Tone: Professional and humble."
+      }
+    ],
+    faqs: [
+      { question: "เหมาะกับร้านค้าใน IG หรือ TikTok ไหม?", answer: "เหมาะมากๆ ครับ Copy.ai เก่งเรื่องการเขียนข้อความสั้นๆ ที่มี Hook กระชากใจ (เช่น ประโยคเปิดคลิป TikTok) ช่วยให้คอนเทนต์โซเชียลหยุดนิ้วคนดูได้ดีครับ" }
+    ]
+  },
+  {
+    id: "w5",
+    slug: "writesonic",
+    name: "Writesonic",
+    logoUrl: "/logos/Writesonic.png",
+    description: "AI สายปั่นบทความ SEO อัตโนมัติ มีโครงสร้างเว็บ โยงข้อมูลและรูปภาพให้พร้อม",
+    longDescription: "Writesonic คือสุดยอดอาวุธสำหรับชาว SEO และ Blogger! ในขณะที่ AI ตัวอื่นแค่เขียนข้อความให้ แต่ Writesonic ถูกออกแบบมาเพื่อ 'ทำอันดับบน Google' อย่างแท้จริง มีเครื่องมือ Article Writer 6.0 ที่คุณแค่ป้อนคีย์เวิร์ด (Keyword) ลงไป มันจะไปวิเคราะห์เว็บไซต์คู่แข่งที่ติดหน้าแรก Google ดึงเอาโครงสร้างหัวข้อ (H1, H2, H3) มารวมกัน แล้วเขียนบทความใหม่ที่ยาวกว่า ดีกว่า พร้อมแทรกรูปภาพอ้างอิงและลิงก์ออก (Outbound Links) ให้เสร็จสรรพในคลิกเดียว!",
+    origin: "สร้างขึ้นด้วยเป้าหมายเพื่อเป็น All-in-one AI สำหรับการทำ Content Marketing โดยมี Chatsonic (แชทบอทที่ต่อเน็ตได้) เป็นฟีเจอร์ชูโรงตีคู่มากับ ChatGPT",
+    category: "Writing & Content",
+    priceModel: "Free (ให้คำจำกัด) / Starts at $16/เดือน",
+    isFree: true,
+    externalUrl: "https://writesonic.com",
+    rating: 4.6,
+    reviewCount: 8800,
+    updatedAt: "Feb 2026",
+    features: [
+      "AI Article Writer 6.0: สแกนคู่แข่งและเสกบทความยาว 2,000+ คำ ที่อัดแน่นด้วยคีย์เวิร์ด SEO ทันที",
+      "Surfer SEO Integration: เชื่อมต่อกับเครื่องมือทำ SEO ชื่อดังเพื่อวิเคราะห์คะแนนบทความ (Content Score)",
+      "Chatsonic: แชทบอทอัจฉริยะที่สามารถวาดรูปและเสิร์ช Google เพื่อให้ข้อมูลที่เป็นปัจจุบันที่สุด"
+    ],
+    pros: [
+      "ช่วยประหยัดเวลาทำ Research ข้อมูลสำหรับบล็อกโพสต์ไปได้มหาศาล",
+      "โครงสร้างบทความที่ได้ เป็นมิตรกับ Google Algorithm มากๆ (SEO-friendly)",
+      "มีระบบ Auto-publish กดปุ่มเดียวส่งบทความขึ้น WordPress ได้เลย"
+    ],
+    cons: [
+      "สำหรับภาษาไทย บางครั้งคำศัพท์ในบทความยาวๆ อาจจะดูแปลกแปร่ง ต้องมานั่งเกลาอีกรอบ",
+      "เครดิตใช้งาน (Words) หมดค่อนข้างเร็วหากสั่งเขียนบทความแบบคุณภาพสูงสุด (Premium Quality)"
+    ],
+    steps: [
+      { title: "ใส่ Keyword", desc: "เข้าไปที่ Article Writer พิมพ์คีย์เวิร์ดหลักที่อยากให้คนค้นเจอ" },
+      { title: "เลือกโครงสร้าง", desc: "AI จะเสนอหัวข้อย่อย (Outlines) มาให้ ให้เรากดเลือกหรือเพิ่มลบเองได้" },
+      { title: "กด Generate", desc: "รอระบบปั่นบทความยาวเหยียดพร้อมจัด Format หน้ากระดาษให้เรียบร้อย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ Chatsonic ช่วยเขียนบทความอัปเดตเทรนด์ปัจจุบัน (Real-time Data)", 
+        promptTh: "ช่วยเขียนบทความบล็อกความยาว 800 คำ ในหัวข้อ 'รวมบริษัทที่เปิดรับนักศึกษาฝึกงาน (Co-op) ด้าน Data Engineer 6 เดือน พร้อมให้เงินเดือน' โดยให้ค้นหาข้อมูลอัปเดตล่าสุดจากอินเทอร์เน็ต จัดหน้าแบบอ่านง่าย และแทรกคีย์เวิร์ด SEO",
+        promptEn: "Write an 800-word blog post on 'Top Companies Offering 6-Month Paid Co-op Internships for Data Engineers'. Search the web for the most up-to-date listings. Format it for readability and seamlessly integrate SEO keywords."
+      },
+      { 
+        purpose: "💡 เขียน Copywriting สำหรับ Landing Page สินค้า", 
+        promptTh: "[ใช้เครื่องมือ Landing Page Copy]\nชื่อสินค้า/บริการ: คอร์สเรียน Python พื้นฐานสำหรับคนไม่มีพื้นฐาน\nจุดเด่น: สอนทำโปรเจกต์จริง, มีโค้ดตัวอย่างให้, เข้าใจง่าย",
+        promptEn: "Product/Service: Beginner Python Course for Non-programmers\nFeatures: Hands-on real projects, code snippets provided, easy-to-understand approach."
+      }
+    ],
+    faqs: [
+      { question: "Google จะแบนเว็บไซต์ที่ใช้ AI เขียนบทความไหม?", answer: "Google ออกกฎชัดเจนว่า 'ไม่แบน AI' ตราบใดที่บทความนั้น 'มีประโยชน์และตอบคำถามผู้ใช้งานได้จริง (Helpful Content)' ไม่ใช่แค่การสแปมคีย์เวิร์ดขยะครับ" }
+    ]
+  },
+
+  // ==========================================
+  // 📊 หมวด AI ทำสไลด์ / Presentation - 5 ตัวท็อป
+  // ==========================================
+  {
+    id: "p1",
+    slug: "gamma-app",
+    name: "Gamma",
     logoUrl: "/logos/Gamma.png",
-    description: "เครื่องมือเนรมิตสไลด์ Presentation สุดสวยงาม ให้เสร็จภายใน 1 นาที",
-    longDescription: "Gamma App คือตัวช่วยที่จะทำให้คุณได้สไลด์ระดับมืออาชีพโดยไม่ต้องแตะ PowerPoint เพียงแค่คุณป้อน 'หัวข้อ' หรือ 'โครงร่างเนื้อหา (Outline)' AI จะทำหน้าที่เป็นทั้งนักเขียน (Copywriter) และนักออกแบบกราฟิก (Designer) มันจะแบ่งหน้าสไลด์ สรุปข้อความ จัดวางเลย์เอาต์ และหารูปภาพมาประกอบให้เสร็จสรรพในเวลาไม่ถึง 1 นาที ออกมาเป็นผลงานที่สวยงาม ทันสมัย และพร้อมนำไปขึ้นจอพรีเซนต์ทันที",
-    origin: "ก่อตั้งขึ้นในซานฟรานซิสโก ด้วยแนวคิดที่ว่า 'ทำไมซอฟต์แวร์ทำสไลด์ถึงหน้าตาเหมือนเดิมมา 30 ปี?' ผู้สร้าง Gamma ต้องการปฏิวัติการทำพรีเซนเทชันให้ลื่นไหลเหมือนการเขียนบล็อก (Notion-style) โดยให้ AI เข้ามารับหน้าที่จัดสัดส่วนแบบอัตโนมัติ (Auto-layout) ผู้ใช้จะได้เลิกเสียเวลาไปกับการขยับกล่องข้อความ จัดหน้า หรือหาฟอนต์ที่เข้ากัน",
+    description: "แอปสร้างสไลด์และเว็บไซต์พรีเซนต์งานที่ลื่นไหลที่สุด เสกความสวยงามจากข้อความใน 1 นาที",
+    longDescription: "ลืมการนั่งปรับขนาดฟอนต์หรือขยับรูปภาพใน PowerPoint ไปได้เลย! Gamma คือเครื่องมือ Presentation แห่งอนาคต (เขาเรียกตัวเองว่าเป็นสื่อรูปแบบใหม่) คุณเพียงแค่พิมพ์หัวข้อ หรือโยนไฟล์ข้อความ/โครงร่าง (Outline) เข้าไป AI ของ Gamma จะนำไปแบ่งหน้าสไลด์ จับคู่สี หารูปภาพ (หรือสร้างรูปจาก AI) และจัด Layout ให้อัตโนมัติในเวลาไม่ถึงนาที ความเจ๋งคือมันแสดงผลได้ทั้งแบบสไลด์ปัดขวา หรือแบบเว็บเพจที่เลื่อนสกอร์ลง (Scrollable) ดูบนมือถือก็สวยงาม",
+    origin: "สร้างมาเพื่อปฏิวัติวงการนำเสนองาน โดยมองว่าสไลด์แบบเดิม (16:9) ไม่ตอบโจทย์การอ่านบนสมาร์ทโฟน จึงออกแบบ Gamma ให้เป็นเหมือนหน้าเว็บที่อ่านลื่นไหล",
     category: "Presentation & Slides",
-    priceModel: "Free / Starts at $8 ต่อเดือน",
+    priceModel: "Free (ให้เครดิตฟรีตอนสมัคร) / Plus $8 ต่อเดือน",
     isFree: true,
     externalUrl: "https://gamma.app",
     rating: 4.8,
-    reviewCount: 6500,
-    updatedAt: "Feb 2025",
+    reviewCount: 22400,
+    updatedAt: "Feb 2026",
     features: [
-      "AI Generate: สร้าง Presentation, Document, หรือ Webpage ได้จาก Prompt ประโยคเดียว",
-      "Text to Deck: โยนสคริปต์หรือบทความยาวๆ ให้ AI ย่อยและแบ่งสไลด์ให้เอง",
-      "One-click Themes: เปลี่ยนโทนสี ฟอนต์ และอารมณ์ของสไลด์ทั้งหมดได้ในคลิกเดียวโดยไม่ทำให้เนื้อหาพัง",
-      "Interactive Embeds: ฝังวิดีโอ YouTube, ฟอร์ม, หรือลิงก์เว็บไซต์ลงไปเล่นในสไลด์ได้เลย"
+      "Text-to-Slide: พิมพ์ข้อความคำอธิบายสั้นๆ แล้วให้ AI เสกสไลด์ 10 หน้าให้ทันที",
+      "Flexible Layouts: จัดวางข้อมูลแบบการ์ด (Cards) ยืดหยุ่นสูง แทรกวิดีโอ YouTube, เว็บไซต์ หรือ 3D Model ลงในสไลด์ได้เลย",
+      "One-click Theme: เปลี่ยนธีมสีและฟอนต์ทั้งโปรเจกต์ได้ในคลิกเดียว โดยที่ Layout ไม่พัง"
     ],
     pros: [
-      "ความเร็วในการทำงาน: ประหยัดเวลาจากที่ต้องทำสไลด์ 3-4 ชั่วโมง เหลือเพียงแค่ 3-5 นาที",
-      "ดีไซน์โดดเด่น: รูปแบบสไลด์ดูทันสมัย มินิมอล และเป็นมืออาชีพกว่าเทมเพลต PowerPoint ทั่วไปมาก",
-      "ทำงานบนเว็บสมบูรณ์แบบ: นำลิงก์ไปเปิดพรีเซนต์บนมือถือ แท็บเล็ต หรือคอมเครื่องไหนก็ได้ โดยหน้าตาไม่เพี้ยน",
-      "รองรับภาษาไทยได้ดี: ทั้งการ Generate เนื้อหาและฟอนต์ที่นำมาแสดงผล"
+      "ใช้งานง่ายและได้ผลลัพธ์ที่ 'สวยทันที' สไตล์ Modern Minimalist",
+      "แชร์ลิงก์ให้คนอื่นดูได้ง่ายมาก เปิดดูในมือถือ (Mobile Responsive) ได้สวยงาม ไม่ต้องโหลดแอป",
+      "รองรับภาษาไทยได้ดีเยี่ยม ทั้งการตีความคำสั่ง และการจัดวางฟอนต์ภาษาไทย"
     ],
     cons: [
-      "เวอร์ชันฟรีจะมีลายน้ำ (Made with Gamma) แปะอยู่เมื่อทำการ Export ไฟล์เป็น PDF หรือ PPTX",
-      "ไม่เหมาะกับสาย Pixel-perfect: หากคุณชอบขยับวัตถุอิสระทีละมิลลิเมตร หรือทำอนิเมชันบินไปบินมา คุณจะขัดใจ เพราะระบบของ Gamma บังคับการจัดวางเป็นบล็อก (Grid System)",
-      "รูปภาพประกอบที่ AI ดึงมาอาจจะไม่ตรงบริบทแบบ 100% ต้องมากดเปลี่ยนรูปเองบ้าง"
+      "ไม่สามารถจัด Layout แบบอิสระ (Free-form) ลากรูปไปวางทับๆ กันแบบ PowerPoint ไม่ได้ (มันเป็นระบบบล็อก)",
+      "การส่งออก (Export) เป็นไฟล์ .pptx บางครั้ง Layout หรือฟอนต์อาจจะเคลื่อนเล็กน้อย"
     ],
     steps: [
-      { title: "เลือกประเภทงาน", desc: "เข้าเว็บไซต์ กด 'Create New' แล้วเลือกว่าจะทำ Presentation (สไลด์)" },
-      { title: "ป้อน Prompt หรือเนื้อหา", desc: "พิมพ์หัวข้อ เช่น 'เทรนด์ AI ในธุรกิจ 2025' หรือเลือกโหมด Text-to-Deck เพื่อวางสคริปต์ที่มีอยู่แล้ว" },
-      { title: "ตรวจสอบและเลือกธีม", desc: "AI จะสร้าง Outline มาให้ยืนยัน จากนั้นให้คุณเลือกธีมสีสไตล์ที่ชอบ แล้วปล่อยให้ AI สร้างสไลด์จนจบ" }
+      { title: "เลือก Generate", desc: "เข้าไปที่เว็บ Gamma เลือกเมนู 'Generate' แล้วเลือกทำ Presentation" },
+      { title: "พิมพ์ Outline", desc: "ป้อนข้อความว่าสไลด์เกี่ยวกับอะไร AI จะร่างหัวข้อแต่ละหน้ามาให้คอนเฟิร์ม" },
+      { title: "เลือก Theme", desc: "เลือกโทนสีที่ชอบ แล้วนั่งดู AI พิมพ์ข้อความและหารูปมาใส่ให้แบบเรียลไทม์" }
     ],
     prompts: [
       { 
-        purpose: "💡 สไลด์สรุปรายงานประจำปี หรือ สรุปแคมเปญ (Report/Summary)", 
-        promptTh: "สร้างสไลด์ Presentation สรุปผลงานประจำปีของแผนก [ระบุชื่อแผนก เช่น ฝ่ายการตลาดดิจิทัล] \nเนื้อหาที่ต้องมี 5 สไลด์:\n1. ภาพรวมความสำเร็จ (Executive Summary)\n2. ไฮไลต์แคมเปญที่ปังที่สุด 3 อันดับ\n3. ตัวเลขสถิติที่สำคัญ (เช่น ยอดเข้าชม ยอดขาย)\n4. ปัญหาที่พบและวิธีแก้ไข\n5. เป้าหมายและทิศทางในปีหน้า\nโทนการนำเสนอ: เป็นทางการแต่น่าตื่นเต้น ดูมีความเป็นผู้นำ",
-        promptEn: "Generate a comprehensive Annual Report presentation for the [Insert Department e.g., Digital Marketing] department.\nRequire exactly 5 slides covering:\n1. Executive Summary of Achievements\n2. Top 3 Most Successful Campaigns\n3. Key Metrics & Growth Stats (Traffic, Revenue)\n4. Challenges Faced & Solutions Implemented\n5. Strategic Goals for Next Year\nTone: Professional yet energetic and visionary."
+        purpose: "💡 สั่งเสกสไลด์ Pitch Deck นำเสนอโปรเจกต์", 
+        promptTh: "[พิมพ์ในกล่อง Generate ของ Gamma]\nสร้างสไลด์ Pitch Deck สำหรับ 'แพลตฟอร์ม Web Application เพื่อการเรียนภาษา (Bilingual-Club)' ที่มีฟีเจอร์ขายคอร์สเรียนและ e-book ขอให้มีหัวข้อ: ปัญหาของการเรียนภาษาแบบเดิม, โซลูชันของเรา, โครงสร้างแอปพลิเคชัน (Tech Stack), และโมเดลการสร้างรายได้ โทนสีดูเป็นวัยรุ่นและทันสมัย",
+        promptEn: "Generate a Pitch Deck presentation for a 'Language Learning Web Application Platform (Bilingual-Club)' that features online courses and e-book sales. Include sections for: The Problem with traditional learning, Our Solution, the App Architecture (Tech Stack), and the Revenue Model. Use a modern, youthful tone."
       },
       { 
-        purpose: "💡 สไลด์สอนงานพนักงานใหม่ / ปฐมนิเทศ (Onboarding)", 
-        promptTh: "สร้างสไลด์สำหรับการปฐมนิเทศ (Onboarding) พนักงานใหม่ในตำแหน่ง [ระบุตำแหน่ง เช่น Customer Support] \nเป้าหมาย: ทำให้พนักงานรู้สึกอบอุ่น เป็นกันเอง และรู้ว่าต้องเริ่มต้นทำงานอย่างไร\nหัวข้อในสไลด์:\n- ยินดีต้อนรับสู่วัฒนธรรมองค์กรของเรา\n- 3 ซอฟต์แวร์หลักที่คุณต้องใช้ทุกวัน\n- กฎกติกาพื้นฐานในการทำงาน\n- ติดปัญหาต้องทักหาใคร?",
-        promptEn: "Create an engaging Onboarding presentation designed for new hires stepping into the [Insert role e.g., Customer Support] role.\nGoal: Make them feel warmly welcomed, relaxed, and clear on their next steps.\nInclude these specific topics:\n- Welcome to Our Company Culture\n- The 3 Essential Software Tools You'll Use\n- Basic Ground Rules & Workflow\n- Who to Contact for Help & Support"
+        purpose: "💡 แปลงเนื้อหาเป็นสไลด์สรุป (Text to Presentation)", 
+        promptTh: "[เลือกเมนู Text to Presentation แล้ววางบทความยาวๆ]\nช่วยย่อยข้อมูลทั้งหมดในบทความนี้ ทำเป็นสไลด์สรุปบทเรียน 10 หน้า โดยเน้นใช้สัญลักษณ์ (Icons) และ Bullet points ให้อ่านง่าย",
+        promptEn: "Condense all the information from this pasted article into a 10-slide summary presentation. Emphasize the use of icons and bullet points for easy readability."
       }
     ],
     faqs: [
-      { question: "แก้สไลด์ที่ AI ทำเสร็จแล้วได้ไหม?", answer: "แก้ได้อิสระครับ! สามารถลบ พิมพ์เพิ่ม เปลี่ยนรูป หรือพิมพ์สั่ง AI ให้ช่วยเขียนข้อความหน้านั้นใหม่ให้สั้นลง/ยาวขึ้นก็ได้ครับ" }
+      { question: "Gamma เซฟออกมาเป็นไฟล์ PowerPoint หรือ PDF ได้ไหม?", answer: "ได้ครับ! สามารถกดปุ่ม Export มุมขวาบน เลือกดาวน์โหลดเป็น PDF หรือไฟล์ .pptx ไปเปิดในคอมเครื่องอื่นที่ไม่มีเน็ตได้เลยครับ" }
     ]
   },
-  
-  // ==========================================
-  // 🔹 10) หมวด Summarization (NotebookLM)
-  // ==========================================
   {
-    id: "24",
-    slug: "notebooklm",
-    name: "NotebookLM",
-    logoUrl: "/logos/notebooklm-logo.png",
-    description: "สมุดโน้ตอัจฉริยะที่อ่านเอกสารของคุณ แล้วตอบคำถามแบบอ้างอิงหน้าให้เป๊ะๆ โดยไม่มั่วข้อมูล",
-    longDescription: "หมดปัญหาการต้องนั่งงมอ่านไฟล์ PDF, งานวิจัย, หรืองบการเงินหนาเป็นร้อยหน้า NotebookLM คือ AI สไตล์ 'RAG (Retrieval-Augmented Generation)' ที่คุณทำหน้าที่เป็นคนป้อนฐานข้อมูลให้มัน (อัปโหลดไฟล์) จากนั้น AI จะทำความเข้าใจเฉพาะเนื้อหาในไฟล์เหล่านั้น และรอให้คุณตั้งคำถาม มันสามารถสรุปประเด็น ดึงข้อมูลเชิงลึก และที่สำคัญที่สุดคือ 'ชี้เป้า' ได้ว่าคำตอบนั้นมาจากเอกสารหน้าไหน บรรทัดไหน",
-    origin: "พัฒนาโดยทีมวิจัย Google Labs โดยมีเป้าหมายเพื่อแก้จุดอ่อนที่ใหญ่ที่สุดของ AI ทั่วไป นั่นคือ 'การมั่วข้อมูล' (Hallucination) ขับเคลื่อนด้วยขุมพลังของโมเดล Gemini 1.5 Pro ที่มีจุดเด่นระดับโลกคือ 'Context Window' ขนาดมหาศาล ทำให้มันสามารถรับเอกสารพร้อมกันได้ถึง 50 ไฟล์ โดยไม่ลืมข้อมูลส่วนต้นเลย",
-    category: "Summarization & Notes",
-    priceModel: "Free (ใช้งานฟรี 100%)",
+    id: "p2",
+    slug: "tome",
+    name: "Tome",
+    logoUrl: "/logos/tome.png",
+    description: "AI นักเล่าเรื่อง (Storytelling) เกิดมาเพื่อทำ Pitch Deck สไตล์ Startup และงานอาร์ต",
+    longDescription: "Tome คล้ายกับ Gamma แต่มีจุดยืนที่ต่างออกไป Tome เน้นเรื่องการนำเสนอแบบ 'Storytelling' สไลด์ที่ได้จะมีความเป็นนิตยสาร (Editorial layout) ดูหรูหรา และมีศิลปะสูง สิ่งที่ Tome ทำได้ดีมากคือการเชื่อมต่อกับโมเดล AI วาดรูป (เช่น DALL-E) เพื่อวาดภาพประกอบสไลด์ให้ใหม่ทั้งหมด ทำให้สไลด์ของคุณมีภาพที่เป็นเอกลักษณ์ไม่ซ้ำใคร เหมาะมากสำหรับงานสายครีเอทีฟ, การพิตช์งานเอเจนซี่, หรือโปรเจกต์ Startup ที่ต้องการภาพลักษณ์ล้ำสมัย",
+    origin: "สร้างโดยนักพัฒนาจากซิลิคอนแวลลีย์ มุ่งเน้นไปที่กลุ่ม Founder และนักลงทุน (VC) ที่เบื่อหน้าตาของสไลด์ PowerPoint แบบเดิมๆ",
+    category: "Presentation & Slides",
+    priceModel: "Free (ให้เครดิต) / Pro $16 ต่อเดือน",
     isFree: true,
-    externalUrl: "https://notebooklm.google.com",
-    rating: 4.8,
-    reviewCount: 3200,
-    updatedAt: "Feb 2025",
+    externalUrl: "https://tome.app",
+    rating: 4.6,
+    reviewCount: 15100,
+    updatedAt: "Feb 2026",
     features: [
-      "รองรับ Source หลายรูปแบบ (PDF, Google Docs, Slides, Text, ลิงก์เว็บไซต์, วิดีโอ YouTube)",
-      "ระบบ Citation: มีตัวเลขกำกับท้ายประโยค กดปุ๊บกระโดดไปไฮไลต์ข้อความต้นฉบับในไฟล์ทันที",
-      "Notebook Guide: กดคลิกเดียวเพื่อสร้าง Study Guide, ไทม์ไลน์, หรือ FAQs จากเอกสารทั้งหมด",
-      "Audio Overview: ฟีเจอร์สุดล้ำที่แปลงเอกสารของคุณให้กลายเป็นรายการ Podcast 2 คนนั่งคุยถกเถียงกันเกี่ยวกับเนื้อหาของคุณ"
+      "AI Story Creator: ป้อนหัวข้อเพียงประโยคเดียว AI จะแต่งเรื่องราว แบ่งสไลด์ และวาดภาพ 3D ประกอบให้ทันที",
+      "Interactive Embeds: ฝังโปรแกรมจากภายนอก เช่น Figma (Prototype หน้าเว็บ), Airtable, หรือ 3D Spline ลงไปเล่นในสไลด์ได้เลย",
+      "Document to Presentation: แปลงไฟล์เอกสารยาวๆ ให้เป็นสไลด์ย่อยง่าย (เหมือน Gamma)"
     ],
     pros: [
-      "ความน่าเชื่อถือระดับ 99%: เป็น AI ที่เชื่อใจได้มากที่สุดในการหา Fact เพราะมันไม่ดึงข้อมูลจากเน็ตมาปนกับไฟล์ของคุณ",
-      "จัดการเอกสารปริมาณมหาศาลได้ยอดเยี่ยม: โยนงานวิจัย 20 ฉบับลงไป แล้วสั่งให้มันเทียบหาข้อขัดแย้งระหว่างงานวิจัยได้สบายๆ",
-      "ใช้งานได้ฟรีทั้งหมด โดยยังไม่มีการกั๊กฟีเจอร์หรือบังคับจ่ายรายเดือน"
+      "สุนทรียภาพ (Aesthetics) ของสไลด์ดูหรูหรา มืดๆ สไตล์ Apple/Startup สายเทค",
+      "ภาพประกอบที่ AI วาดให้ดูมีศิลปะและคุมโทนไปในทิศทางเดียวกันทั้งงาน",
+      "ฟีเจอร์ฝังงานจาก Figma ช่วยให้การพิตช์โปรเจกต์ทำเว็บ/แอปดูเป็นมืออาชีพสุดๆ"
     ],
     cons: [
-      "ไม่ตอบคำถามนอกเหนือเอกสาร: ถ้าไฟล์ที่คุณใส่ไม่มีข้อมูลนั้น มันจะตอบทันทีว่า 'ไม่พบข้อมูล' (ซึ่งถือเป็นข้อเสียสำหรับคนที่ต้องการให้ AI ช่วยคิดไอเดียใหม่ๆ)",
-      "Audio Overview (Podcast) ยังคงพูดได้แค่ภาษาอังกฤษเท่านั้น แม้ว่าเอกสารต้นฉบับจะเป็นภาษาไทยก็ตาม",
-      "การจัดระเบียบไฟล์ใน UI ยังดูเรียบง่ายเกินไป ลบหรือจัดกลุ่ม Source ลำบากหากใส่ไปเยอะๆ"
+      "การปรับแต่ง Layout แอบใช้งานยากกว่า Gamma และไม่สามารถปรับเปลี่ยนธีมได้อิสระเท่า",
+      "ภาพประกอบที่ AI วาดขึ้นมา บางครั้งอาจจะดูอาร์ตเกินไปจนไม่สื่อถึงเนื้อหาแบบตรงไปตรงมา"
     ],
     steps: [
-      { title: "สร้างสมุดโน้ต (Notebook)", desc: "เปิดเว็บ สร้างโปรเจกต์ใหม่ แล้วอัปโหลดไฟล์แหล่งอ้างอิง (Sources) ที่ต้องการ" },
-      { title: "ใช้เมนูอัตโนมัติ", desc: "กดที่เมนู Notebook Guide เพื่อให้ AI สร้างสรุปภาพรวม หรือแนวข้อสอบเตรียมตัวให้แบบอัตโนมัติ" },
-      { title: "ตั้งคำถามเชิงลึก", desc: "พิมพ์คำถามเจาะจงลงในช่องแชท เช่น 'ทฤษฎี A ขัดแย้งกับทฤษฎี B ในเรื่องใดบ้าง อิงจากเอกสารทั้งหมด'" }
+      { title: "สร้าง Tome ใหม่", desc: "กด Create พิมพ์ประโยคคำสั่งในช่องรับคำสั่ง (Prompt bar)" },
+      { title: "เลือกสไตล์ภาพ", desc: "เลือกสไตล์ภาพประกอบ (เช่น 3D, Cyberpunk, Watercolor) ก่อนให้ AI เริ่มทำงาน" },
+      { title: "ปรับแต่ง (Tweak)", desc: "คลิกที่ภาพเพื่อสั่งให้ AI วาดใหม่ หรือลากบล็อกข้อความเพื่อเปลี่ยนเลย์เอาต์" }
     ],
     prompts: [
       { 
-        purpose: "💡 ดึงจุดบอดหรือความเสี่ยงจากเอกสารยาวๆ (Risk Analysis)", 
-        promptTh: "อ้างอิงข้อมูลจากเอกสาร [ระบุชื่อไฟล์ เช่น สัญญาเช่าอาคาร หรือ งบการเงิน] ที่ฉันเพิ่งอัปโหลดไป ช่วยทำหน้าที่เป็นนักวิเคราะห์ความเสี่ยง ตรวจสอบเงื่อนไขทั้งหมด แล้วสกัด 'จุดเสี่ยง' หรือ 'ข้อเสียเปรียบ' ที่อาจส่งผลกระทบต่อบริษัทของฉันออกมาให้ครบถ้วนที่สุด \nผลลัพธ์: เขียนอธิบายเป็นข้อๆ (Bullet points) และ *บังคับ* ให้ระบุเลขหน้าหรือหมายเลขข้ออ้างอิงแนบไว้ท้ายประโยคเสมอ",
-        promptEn: "Exclusively referencing the uploaded [Insert document type e.g., Lease Agreement or Financial Report], act as a strict Risk Analyst. Scan all conditions and extract every single 'Potential Risk' or 'Disadvantageous Clause' that could negatively impact my company.\nFormat: List them clearly as bullet points. You MUST include the exact page number or clause reference at the end of every point."
+        purpose: "💡 สร้างสไลด์นำเสนอโปรเจกต์นวัตกรรม (Innovation Pitch)", 
+        promptTh: "สร้างพรีเซนเทชัน 8 สไลด์ เพื่อนำเสนอ 'โปรเจกต์ควบคุมวัตถุเสมือนจริงด้วยท่าทางมือ (Hand Gestures Virtual Objects)' ที่ใช้ Python และ Computer Vision กลุ่มเป้าหมายคือนักลงทุนสาย Tech เน้นภาพประกอบสไตล์โลกอนาคต (Futuristic 3D)",
+        promptEn: "Create an 8-slide presentation pitching a 'Hand Gestures Virtual Objects' project built with Python and Computer Vision. The target audience is tech investors. Generate accompanying illustrations in a Futuristic 3D style."
       },
       { 
-        purpose: "💡 ให้ AI สร้างแนวข้อสอบสุดหินเพื่อทบทวนความรู้ (Exam Generator)", 
-        promptTh: "ทำหน้าที่เป็นอาจารย์มหาวิทยาลัยจอมโหด จากสไลด์และเอกสารประกอบการเรียนทั้งหมดที่อัปโหลดไว้ ช่วยออกข้อสอบแบบปรนัย (Multiple choice) จำนวน [ระบุจำนวน] ข้อ \nกฎการออกข้อสอบ: ห้ามออกคำถามประเภทท่องจำความหมายตรงๆ แต่ให้ออกคำถามแนว 'ประยุกต์ใช้ (Application)' หรือ 'วิเคราะห์สถานการณ์สมมติ' เพื่อวัดความเข้าใจแก่นแท้ของเนื้อหา พร้อมทำเฉลยและอธิบายเหตุผลอย่างละเอียดอ้างอิงตามสไลด์",
-        promptEn: "Act as a rigorous University Professor. Based on all the uploaded lecture slides and materials, create a comprehensive multiple-choice quiz with [Insert number] questions.\nRule: Do NOT ask basic memorization or definition questions. Instead, design 'Scenario-based' or 'Application-level' questions that test true comprehension of the core concepts. Provide the answer key with detailed explanations referencing the exact slides."
+        purpose: "💡 ให้ AI วาดรูปประกอบสไลด์ใหม่ (Image Generation)", 
+        promptTh: "[คลิกที่รูปภาพในสไลด์ แล้วใส่ Prompt]\nวาดภาพกราฟิกแบบมินิมอล 3 มิติ (Minimalist 3D render) ของกล้องถ่ายรูปสไตล์คลาสสิก คล้ายกับ Ricoh GR IV วางอยู่บนโต๊ะทำงานที่มีโค้ดโปรแกรมมิ่งอยู่บนจอคอมพิวเตอร์ด้านหลัง โทนสีมืดและเท่",
+        promptEn: "A minimalist 3D render of a classic compact camera (similar to a Ricoh GR IV) resting on a sleek desk, with computer screens displaying programming code in the blurred background. Dark, moody, and cool aesthetic."
       }
     ],
     faqs: [
-      { question: "จำกัดขนาดไฟล์ที่อัปโหลดไหม?", answer: "ปัจจุบัน 1 สมุดโน้ตสามารถใส่ได้สูงสุด 50 Sources โดยแต่ละ Source ต้องมีข้อความไม่เกิน 500,000 คำ ถือว่าเพียงพอสำหรับการทำวิทยานิพนธ์ทั้งเล่มครับ" }
+      { question: "ถ้าสไลด์มีภาษาไทยเยอะๆ Tome ทำได้ดีไหม?", answer: "Tome รองรับข้อความภาษาไทยได้ครับ แต่บางครั้งการจัดวาง Layout กับฟอนต์ไทยอาจจะยังไม่เป๊ะเท่า Gamma แนะนำให้เน้นใช้รูปภาพเป็นหลักและมีข้อความภาษาไทยสั้นๆ ครับ" }
     ]
-  }
-];
+  },
+  {
+    id: "p3",
+    slug: "beautiful-ai",
+    name: "Beautiful.ai",
+    logoUrl: "/logos/Beautiful.ai.png", // สมมติโลโก้
+    description: "AI จัดหน้าสไลด์อัจฉริยะ ลากวางยังไงก็ไม่มีวันเละ เหมาะกับองค์กรและเซลส์",
+    longDescription: "หากคุณเป็นคนที่ทำสไลด์ทีไร หน้าตาก็ออกมาเละเทะ (ฟอนต์เบี้ยว กราฟล้น) Beautiful.ai คือพระเอกของคุณ! มันคือเครื่องมือทำ Presentation ที่มี 'DesignerBot' คอยคุมกฎการออกแบบ ไม่ว่าคุณจะพิมพ์ข้อความยาวแค่ไหน หรือโยนรูปเข้าไปกี่รูป AI จะทำการปรับเลย์เอาต์ ย่อฟอนต์ และจัดช่องไฟ (Spacing) ให้อัตโนมัติตามหลักการออกแบบระดับโปร (Design rules) รับประกันว่าสไลด์คุณจะดู 'สวยงามและเป็นระเบียบ' ตลอดเวลา",
+    origin: "สร้างมาแก้ปัญหา (Pain point) คลาสสิกของชาวออฟฟิศ ที่มักจะเสียเวลาไปกับการ 'จัดหน้าสไลด์' มากกว่าการ 'คิดเนื้อหา'",
+    category: "Presentation & Slides",
+    priceModel: "Starts at $12/เดือน (ไม่มีแผนฟรีระยะยาว มีแค่ Trial 14 วัน)",
+    isFree: false,
+    externalUrl: "https://www.beautiful.ai",
+    rating: 4.7,
+    reviewCount: 9500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Smart Templates: หน้าสไลด์แบบจำกัดรูปแบบ (เช่น ใส่ได้แค่ 3 คอลัมน์) แต่ AI จะคอยขยับสมดุลให้เองเวลามีข้อมูลเพิ่ม",
+      "DesignerBot: พิมพ์คำสั่งให้ AI สร้างโครงสไลด์พร้อมกราฟและตารางข้อมูลตัวอย่าง",
+      "Brand Controls: ล็อกสี โลโก้ และฟอนต์บริษัทไว้ เพื่อให้ทุกคนในออฟฟิศทำสไลด์ออกมาหน้าตาเหมือนกันเป๊ะ"
+    ],
+    pros: [
+      "หมดปัญหาเรื่องจัดหน้ากระดาษ (Formatting issues) ประหยัดเวลาทำสไลด์ไปได้หลายชั่วโมง",
+      "มีเครื่องมือวาดกราฟ (Data Visualization) ในตัวที่สวยงามและใช้งานง่ายมาก นำเสนอตัวเลขแล้วดูแพง",
+      "เหมาะกับการใช้งานในระดับองค์กร (Enterprise) ที่สุด"
+    ],
+    cons: [
+      "อิสระน้อย! หากคุณเป็นคนชอบจัด Layout แปลกๆ ทับซ้อนกัน จะรู้สึกอึดอัดเพราะ AI จะล็อกโครงสร้างไว้",
+      "ไม่มีแพ็กเกจฟรีถาวร ต้องจ่ายเงินรายเดือน"
+    ],
+    steps: [
+      { title: "เลือก Template", desc: "เริ่มจากการเลือกหน้าสไลด์ที่ตรงกับข้อมูล (เช่น หน้าเปรียบเทียบ, หน้า Timeline)" },
+      { title: "ใส่ข้อมูล", desc: "พิมพ์เนื้อหาหรือตัวเลขลงไป ระบบจะขยับกรอบและปรับขนาดตัวหนังสือให้พอดีอัตโนมัติ" },
+      { title: "ให้ DesignerBot ช่วย", desc: "สั่ง AI ให้คิดไอเดียหน้าถัดไป หรือสรุปข้อมูลให้สั้นลง" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สร้างสไลด์รายงาน Data (Data Analysis Report)", 
+        promptTh: "[สั่ง DesignerBot]\nช่วยสร้างชุดสไลด์พรีเซนเทชัน 5 หน้า สำหรับรายงานโปรเจกต์วิเคราะห์ข้อมูล (Data Analysis Project) โดยมีหัวข้อ: วัตถุประสงค์ของการวิเคราะห์, แหล่งที่มาของข้อมูล (Dataset), กระบวนการทำความสะอาดข้อมูล (Data Cleaning), โมเดลที่ใช้พยากรณ์, และบทสรุปข้อเสนอแนะ",
+        promptEn: "Create a 5-slide presentation for a Data Analysis Project report. Outline: Analysis Objectives, Dataset Origins, Data Cleaning Process, Predictive Modeling methodology, and Conclusion/Recommendations."
+      },
+      { 
+        purpose: "💡 ให้ AI เติมข้อมูลลงในกราฟอัจฉริยะ (Smart Charts)", 
+        promptTh: "[เลือกหน้าแบบ Chart แล้วป้อนข้อมูลดิบให้ AI จัดให้]\nนำเสนอยอดผู้ใช้งานแพลตฟอร์มรายไตรมาส Q1: 15k, Q2: 22k, Q3: 45k, Q4: 80k โดยให้แสดงเป็นกราฟแท่ง (Bar chart) และไฮไลต์ไตรมาสที่ 4 เป็นสีโดดเด่น",
+        promptEn: "Present the quarterly platform user growth: Q1: 15k, Q2: 22k, Q3: 45k, Q4: 80k. Display this as a bar chart and apply a distinct highlight color to the Q4 bar."
+      }
+    ],
+    faqs: [
+      { question: "สไลด์สวยจริงไหม หรือก็แค่ Template?", answer: "มันเก่งกว่า Template ทั่วไปตรงที่มันเป็น 'Smart Slide' ครับ เช่น ถ้าคุณมีรูปภาพเรียงกัน 3 รูป แล้วคุณโยนรูปที่ 4 เข้าไป มันจะจัดแถวและย่อขนาดรูปทั้ง 4 ให้พอดีหน้ากระดาษทันทีโดยที่คุณไม่ต้องลากเมาส์ปรับขอบเองเลยครับ" }
+    ]
+  },
+  {
+    id: "p4",
+    slug: "canva-magic-design",
+    name: "Canva – Magic Design",
+    logoUrl: "/logos/Canva.png", // สมมติโลโก้
+    description: "แพลตฟอร์มกราฟิกมหาชนที่มี AI เข้ามาช่วยเสกสไลด์ ใช้ง่าย ของตกแต่งเยอะที่สุดในสามโลก",
+    longDescription: "Canva คือโปรแกรมออกแบบที่ทุกคนคุ้นเคย แต่ล่าสุดพวกเขาได้ปล่อย 'Magic Studio' ที่ทำให้ Canva กลายเป็น AI Presentation Tool สุดโหด! ฟีเจอร์ Magic Design ให้คุณพิมพ์หัวข้อที่ต้องการ แล้ว AI จะไปค้นหา Template นับหมื่นแบบในคลังของ Canva มารวมร่างกัน ปรุงแต่งข้อความ ใส่รูปสต็อก และปรับสีให้เข้ากับแบรนด์ของคุณทันที จุดแข็งที่สุดของ Canva คือคุณมี 'อิสระ 100%' ในการเข้าไปลากวาง ตกแต่ง ใส่สติกเกอร์ (Elements) เติมเพลง หรือทำแอนิเมชันต่อได้อย่างไร้ขีดจำกัด",
+    origin: "Canva เป็นยักษ์ใหญ่ด้าน Design Democratization (ทำให้ทุกคนออกแบบได้) การนำ AI เข้ามาก็เพื่อช่วยลดเวลาเริ่มต้นโปรเจกต์ (Blank canvas syndrome) ให้ผู้ใช้นั่นเอง",
+    category: "Presentation & Slides",
+    priceModel: "Free / Canva Pro $15 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://www.canva.com/magic-design",
+    rating: 4.8,
+    reviewCount: 92000,
+    updatedAt: "Feb 2026",
+    features: [
+      "Magic Design for Presentations: พิมพ์สั่งสไลด์ 1 ประโยค AI จะสร้างสไลด์ 10 หน้าให้ พร้อมจัดหน้าตามาให้หลายๆ สไตล์ให้เลือก",
+      "Magic Switch: แปลงขนาดงานทันที เช่น ทำสไลด์ (16:9) เสร็จ สั่ง AI แปลงเป็นรูปแบบเอกสาร (A4) หรือคลิป TikTok (9:16) ได้ในคลิกเดียว",
+      "Magic Animate: สั่ง AI ใส่ลูกเล่นแอนิเมชันให้ทั้งโปรเจกต์ดูเคลื่อนไหวลื่นไหลแบบมือโปร"
+    ],
+    pros: [
+      "เข้าถึงได้ง่ายที่สุด คุ้นมือทุกคน และมีของตกแต่ง (Assets) ให้เลือกใช้มหาศาล",
+      "ทำงานร่วมกันเป็นทีม (Collaboration) ได้ดีมาก เหมือน Google Docs",
+      "ฟีเจอร์แปลงงาน (Magic Switch) เป็นภาษาอื่นๆ หรือปรับขนาดแพลตฟอร์ม ช่วยประหยัดเวลาได้สุดๆ"
+    ],
+    cons: [
+      "เนื้อหา (Text) ที่ AI เขียนให้ในสไลด์ยังค่อนข้างตื้นและสั้น สู้การแต่งเรื่องของ Gamma หรือ ChatGPT ไม่ได้ (ต้องมาพิมพ์เนื้อหาเพิ่มเองเยอะ)",
+      "Template บางครั้งดูจำเจถ้าใช้งานบ่อยๆ"
+    ],
+    steps: [
+      { title: "เลือก Magic Design", desc: "ไปที่แท็บ Presentations แล้วคลิกแถบ Magic Design (ไอคอนดาววิบวับ)" },
+      { title: "ป้อนคำสั่ง", desc: "พิมพ์หัวข้อ เช่น 'สไลด์แนะนำตัวสมัครงานตำแหน่ง Data Analyst'" },
+      { title: "เลือกดีไซน์", desc: "Canva จะเสนอสไลด์มาให้ 2-3 สไตล์ เลือกอันที่ชอบแล้วเข้าไปแต่งต่อได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งทำสไลด์พอร์ตโฟลิโอสมัครงาน (Resume/Portfolio)", 
+        promptTh: "[พิมพ์ในช่อง Magic Design]\nสร้างสไลด์ Presentation สำหรับพอร์ตโฟลิโอ (Portfolio) เพื่อใช้ประกอบการสัมภาษณ์งานตำแหน่ง 'Data Engineer / Data Analyst' สำหรับโครงการฝึกงาน Co-op 6 เดือน ขอโทนสีน้ำเงิน-ขาว ที่ดูเป็นมืออาชีพและน่าเชื่อถือ",
+        promptEn: "Create a Portfolio presentation slide deck for a job interview applying for a 'Data Engineer / Data Analyst' 6-month Co-op internship position. Use a professional and trustworthy Blue and White color scheme."
+      },
+      { 
+        purpose: "💡 ใช้ Magic Write (AI เขียนข้อความ) ในกล่องข้อความ", 
+        promptTh: "[คลิกที่กล่องข้อความแล้วเลือก Magic Write]\nช่วยเขียนข้อความอธิบายทักษะความสามารถของฉัน (Hard Skills) โดยเน้นไปที่ประสบการณ์การใช้งาน Python, การทำ Data Pipeline, และการใช้งาน Git/GitHub ให้อ่านดูน่าประทับใจความยาว 3 บรรทัด",
+        promptEn: "Write a compelling 3-line description of my Hard Skills, focusing heavily on my experience with Python programming, building Data Pipelines, and version control using Git/GitHub."
+      }
+    ],
+    faqs: [
+      { question: "ใช้ Canva Pro สายการศึกษา (Education) ฟรี เข้าถึง AI พวกนี้ได้ไหม?", answer: "ได้ครับ! บัญชี Canva for Education จะสามารถใช้งานฟีเจอร์ Magic Studio (AI) ได้แทบจะเทียบเท่าบัญชี Pro ปกติเลยครับ เป็นข้อดีสำหรับนักศึกษาและครูมากๆ" }
+    ]
+  },
+  {
+    id: "p5",
+    slug: "copilot-powerpoint",
+    name: "Microsoft Copilot in PowerPoint",
+    logoUrl: "/logos/Power BI.png", // ใช้โลโก้ Microsoft / Power BI แทนได้
+    description: "ผู้ช่วย AI ในตำนาน เปลี่ยนไฟล์ Word ยาวๆ ให้กลายเป็นสไลด์ PowerPoint อัตโนมัติ",
+    longDescription: "หากองค์กรของคุณถูกผูกติดกับ Microsoft Office นี่คืออาวุธที่ขาดไม่ได้! Copilot ถูกฝังเข้าไปในโปรแกรม PowerPoint โดยตรง ความมหัศจรรย์ของมันคือการดึงข้อมูลจาก Ecosystem ของ Microsoft ทั้งหมดมาทำงานร่วมกัน ฟีเจอร์ที่ว้าวที่สุดคือการที่คุณสามารถโยนไฟล์รายงานประจำปี (Word Document) ชิ้นใหญ่เข้าไป แล้วสั่งให้ Copilot ย่อยข้อมูล สกัดประเด็นสำคัญ และสร้างหน้าสไลด์ PowerPoint ออกมาให้เป็นสิบๆ หน้า พร้อมใส่รูปภาพพื้นฐานให้เสร็จสรรพ ทำให้คุณไม่ต้องมานั่งก๊อปปี้แปะข้อความทีละหน้าอีกต่อไป",
+    origin: "เกิดจากการจับมือกันของ Microsoft และ OpenAI โดยนำเอาขุมพลังของโมเดล GPT-4 ไปฝังไว้ในซอฟต์แวร์ทำงานที่คนทั่วโลกใช้กันอยู่แล้ว",
+    category: "Presentation & Slides",
+    priceModel: "Microsoft 365 Copilot License (ประมาณ $30/เดือน สำหรับองค์กร)",
+    isFree: false,
+    externalUrl: "https://www.microsoft.com/en-us/microsoft-365/copilot",
+    rating: 4.5,
+    reviewCount: 11000,
+    updatedAt: "Feb 2026",
+    features: [
+      "Word to PowerPoint: ดึงเนื้อหาจากไฟล์เอกสาร Word มาแปลงเป็นโครงสร้างสไลด์และพาดหัวให้อัตโนมัติ",
+      "Slide Summarization: เปิดไฟล์ PowerPoint ยาว 100 หน้าของหัวหน้า แล้วสั่งให้ AI สรุปเป็นข้อความสั้นๆ ให้อ่านในหน้าเดียว",
+      "Command by Chat: สั่งงานโปรแกรมด้วยภาษาแชท เช่น 'ช่วยทำสไลด์หน้า 3 ให้เป็นแอนิเมชัน' หรือ 'ช่วยเปลี่ยนฟอนต์ทั้งงานให้เล็กลง'"
+    ],
+    pros: [
+      "ไม่ต้องเรียนรู้โปรแกรมใหม่ ทำงานบน PowerPoint เดิมที่คุณคุ้นเคยได้เลย",
+      "ปลอดภัยสำหรับองค์กร ข้อมูลบริษัทจะไม่ถูกนำไปใช้เทรน AI ต่อ (Enterprise Security)",
+      "ลดเวลาทำงานถึก (Manual task) เช่น การเรียงหน้าเอกสารหรือการหารูปสต็อกพื้นฐานมาประกอบสไลด์"
+    ],
+    cons: [
+      "สไลด์ที่ AI สร้างให้ ยังดูเป็นหน้าตาแบบ 'PowerPoint ยุคเก่า' ไม่ได้ล้ำสมัยและมีดีไซน์สวยว้าวเท่า Gamma หรือ Tome",
+      "ราคาไลเซนส์ (License) รายเดือนสูงมาก และมักจะขายพ่วงให้กับบัญชีระดับองค์กร (Enterprise) เท่านั้น"
+    ],
+    steps: [
+      { title: "เปิด PowerPoint", desc: "เปิดโปรแกรมขึ้นมา จะมีปุ่ม 'Copilot' โผล่ที่แถบเมนูด้านขวา" },
+      { title: "เลือกไฟล์ตั้งต้น", desc: "พิมพ์คำสั่ง 'Create presentation from file...' แล้วแปะลิงก์เอกสาร Word ของคุณ" },
+      { title: "จัดแต่ง", desc: "Copilot จะสร้างสไลด์ให้ คุณสามารถใช้ฟีเจอร์ Designer จัดหน้าตาต่อได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สร้างสไลด์จากเอกสาร Word ทันที (Document Transformation)", 
+        promptTh: "[ใช้หน้าต่างแชทของ Copilot ใน PowerPoint]\nCreate presentation from file: [ลิงก์ไฟล์เอกสารแผนธุรกิจ.docx]\nช่วยแปลงเอกสารแผนธุรกิจร้านเบเกิลนี้ ให้เป็นพรีเซนเทชัน 10 สไลด์ โดยขอให้เน้นดึงตัวเลขต้นทุนและกลยุทธ์การตลาดมาทำเป็นไฮไลต์เด่นๆ",
+        promptEn: "Create presentation from file: [Link to Business Plan.docx]. Please convert this bagel shop business plan into a 10-slide presentation. Highlight the cost structure and marketing strategies prominently."
+      },
+      { 
+        purpose: "💡 ให้ AI เพิ่มหน้าสไลด์และจัดหน้า (Slide Addition)", 
+        promptTh: "Add a slide summarizing the 'Interview Process with MFEC'. Format it as a timeline with 3 distinct steps: Application, Technical Test, and Final Interview. Add an appropriate professional image.",
+        promptEn: "Add a slide summarizing the 'Interview Process with MFEC'. Format it as a timeline with 3 distinct steps: Application, Technical Test, and Final Interview. Add an appropriate professional image."
+      }
+    ],
+    faqs: [
+      { question: "ใช้งาน Copilot ในโปรแกรม Excel และ Word ด้วยได้ไหม?", answer: "ได้ครับ! หากองค์กรคุณซื้อไลเซนส์ Copilot for M365 คุณจะสามารถเรียกใช้ AI ตัวนี้ได้ในทุกโปรแกรมเลย ทั้ง Word, Excel, PowerPoint รวมถึงใช้สรุปการประชุมใน Microsoft Teams ด้วยครับ" }
+    ]
+  },
 
-// ------------------------------------
-// ข้อมูลสำหรับปุ่มกดหมวดหมู่ Categories
-// ------------------------------------
-export const categories = [
-  { name: "Conversational AI", slug: "Conversational AI" },
-  { name: "AI Writing & SEO", slug: "AI Writing & SEO" },
-  { name: "Image Generation", slug: "Image Generation" },
-  { name: "Video Generation", slug: "Video Generation" },
-  { name: "Voice & Audio", slug: "Voice & Audio" },
-  { name: "Music Generation", slug: "Music Generation" },
-  { name: "Coding & Development", slug: "Coding & Development" },
-  { name: "Data & Analytics", slug: "Data & Analytics" },
-  { name: "Presentation & Slides", slug: "Presentation & Slides" },
-  { name: "Summarization & Notes", slug: "Summarization & Notes" }
+  // ==========================================
+  // 🎙 หมวด AI สร้างเสียงพากย์และโคลนเสียง (Voice & Audio Generation) - 5 ตัวท็อป
+  // ==========================================
+  {
+    id: "v1",
+    slug: "elevenlabs",
+    name: "ElevenLabs",
+    logoUrl: "/logos/ElevenLabs.png", // สมมติโลโก้
+    description: "AI เสียงพากย์ที่สมจริงที่สุดในโลก โคลนเสียงมนุษย์ได้เป๊ะปังระดับโปรดักชัน",
+    longDescription: "ElevenLabs คือ 'มาตรฐานทองคำ' (Gold Standard) ของวงการ AI เสียงพากย์ในปัจจุบัน น้ำเสียงที่ได้มีความเป็นธรรมชาติสูงมาก มีการเว้นวรรคหายใจ มีจังหวะหนักเบา และใส่อารมณ์ลงไปในน้ำเสียงได้จนแทบแยกไม่ออกว่านี่คือ AI ฟีเจอร์ที่สร้างชื่อที่สุดคือ 'Voice Cloning' ที่คุณสามารถอัปโหลดเสียงตัวเองความยาวแค่ 1 นาทีเข้าไป ระบบก็จะโคลนเสียงคุณออกมาให้พิมพ์ข้อความสั่งพูดได้ทันที ปัจจุบันรองรับภาษาไทยได้ดีเยี่ยม เหมาะสุดๆ สำหรับทำช่อง YouTube แบบ Faceless, พอดแคสต์, หรือทำหนังสือเสียง (Audiobook)",
+    origin: "ก่อตั้งโดยอดีตวิศวกร Machine Learning จาก Google และ Palantir โดยมุ่งเน้นการแก้ปัญหาเสียง AI แบบเก่าที่ฟังดูแข็งเหมือนหุ่นยนต์ Siri/Google Translate",
+    category: "Voice & Audio",
+    priceModel: "Free (ให้เครดิตจำกัด) / Creator $5 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://elevenlabs.io",
+    rating: 4.9,
+    reviewCount: 38500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Text-to-Speech (TTS): แปลงข้อความเป็นเสียงด้วยโมเดล Multilingual v2 ที่รองรับกว่า 29 ภาษา (รวมภาษาไทย)",
+      "Instant Voice Cloning: โคลนเสียงใครก็ได้โดยใช้ออดิโอตัวอย่างแค่ 1-2 นาที (ต้องยืนยันลิขสิทธิ์เสียงด้วย)",
+      "Speech-to-Speech: อัดเสียงพูดของคุณเข้าไป แล้วให้ AI เปลี่ยนเป็นเสียงคนอื่น แต่ยังคงจังหวะและอารมณ์ดั้งเดิมของคุณไว้ 100%"
+    ],
+    pros: [
+      "คุณภาพความสมจริงของเสียงชนะขาดคู่แข่งทุกตัวในตลาด",
+      "ภาษาไทยพัฒนาขึ้นมาก เสียงชัดเจน ควบกล้ำ ร.เรือ ล.ลิง ได้ค่อนข้างเป็นธรรมชาติ",
+      "มีคลังเสียง (Voice Library) ที่ผู้ใช้คนอื่นทำมาแชร์ให้เลือกใช้ฟรีๆ นับหมื่นเสียง"
+    ],
+    cons: [
+      "เครดิต (จำนวนตัวอักษร) ในแพ็กเกจฟรีหมดค่อนข้างไว หากทำคลิปยาวๆ ต้องสมัครรายเดือน",
+      "บางครั้งเสียงอาจจะใส่อารมณ์เกินจริงไปนิด (เช่น จู่ๆ ก็ทำเสียงกระซิบ) ต้องใช้เครื่องมือปรับจูน (Stability & Clarity) ช่วย"
+    ],
+    steps: [
+      { title: "เลือกเสียงพากย์", desc: "เข้าไปที่ Speech Synthesis เลือกเสียงจาก Library หรือโคลนเสียงตัวเอง" },
+      { title: "วางสคริปต์", desc: "พิมพ์หรือวางข้อความที่ต้องการให้ AI พูด (แนะนำให้เว้นบรรทัดเพื่อให้ AI เว้นจังหวะหายใจ)" },
+      { title: "ปรับแต่งและดาวน์โหลด", desc: "ปรับค่า Stability แล้วกด Generate เมื่อพอใจก็ดาวน์โหลดเป็นไฟล์ MP3 ไปตัดต่อได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สคริปต์สำหรับช่อง YouTube (Faceless Channel)", 
+        promptTh: "[การเว้นวรรคและเครื่องหมายวรรคตอน มีผลต่อจังหวะหายใจของ ElevenLabs]\nคุณเคยสงสัยไหมครับ... ว่าทำไมมหาเศรษฐีระดับโลก ถึงชอบตื่นกันตอนตี 4? [เว้นบรรทัด]\nวันนี้! เราจะพาไปเจาะลึก 'ความลับของเวลา' ที่คนรวยเก็บซ่อนไว้... ถ้าพร้อมแล้ว กดซับสไครบ์ แล้วไปดูกันเลยครับ!",
+        promptEn: "Have you ever wondered... why the world's billionaires always wake up at 4 AM? \n\nToday! We are going to uncover the 'Secrets of Time' that the rich have been hiding from you. If you're ready, hit that subscribe button, and let's dive right in!"
+      },
+      { 
+        purpose: "💡 สคริปต์ทำโฆษณาสินค้าแนวตื่นเต้น (Commercial Audio)", 
+        promptTh: "นี่คือโอกาสสุดท้ายของคุณ!! โปรโมชั่นลดล้างสต็อก 70% กำลังจะหมดเวลาในอีก... 3... 2... 1... นาที! อย่ารอช้า! รีบคลิกลิงก์ด้านล่างเพื่อรับสิทธิ์ด่วน ก่อนสินค้าจะหมดไปตลอดกาล!",
+        promptEn: "This is your absolute FINAL chance!! Our massive 70% clearance sale ends in... 3... 2... 1... minutes! Don't wait! Click the link below to claim your offer right now, before it's gone forever!"
+      }
+    ],
+    faqs: [
+      { question: "เอาเสียงดารามาโคลนได้ไหม?", answer: "ตามกฎหมายและข้อตกลงการใช้งาน (ToS) ของ ElevenLabs ห้ามโคลนเสียงบุคคลอื่นโดยไม่ได้รับอนุญาตครับ หากระบบตรวจพบ บัญชีจะถูกระงับทันทีครับ แนะนำให้ใช้เสียงใน Voice Library ที่เขาอนุญาตเชิงพาณิชย์แล้วดีกว่าครับ" }
+    ]
+  },
+  {
+    id: "v2",
+    slug: "openai-tts",
+    name: "OpenAI – Text-to-Speech (TTS)",
+    logoUrl: "/logos/OpenAI – ChatGPT.png",
+    description: "ขุมพลังเสียงเบื้องหลัง ChatGPT ไหลลื่น เป็นธรรมชาติ เหมาะสำหรับนักพัฒนาแอป",
+    longDescription: "ถ้าคุณเคยคุยโต้ตอบด้วยเสียง (Voice Mode) กับ ChatGPT แล้วรู้สึกทึ่งในความฉลาดและน้ำเสียงที่เป็นมนุษย์... นี่คือเทคโนโลยีเบื้องหลังสิ่งนั้นครับ! OpenAI TTS (Voice Engine) เป็นโมเดลเสียงแบบ Advanced Neural Network ที่ไม่ได้เน้นหน้าเว็บให้คนทั่วไปมาคลิกเล่น แต่เกิดมาเพื่อ 'นักพัฒนา (Developers)' ที่ต้องการเขียนโค้ดเรียก API เอาเสียงอัจฉริยะนี้ไปฝังในแอปพลิเคชันของตัวเอง เช่น ทำระบบ Call Center อัจฉริยะ, แอปอ่านหนังสือให้คนตาบอด, หรือผู้ช่วย AI ส่วนตัว",
+    origin: "สร้างโดย OpenAI เพื่อเติมเต็มระบบนิเวศ (Ecosystem) ของตนเองให้ครบทั้ง Text, Image และ Audio ทำให้สามารถสร้าง AI Agent ที่รับรู้และโต้ตอบได้เหมือนมนุษย์ 100%",
+    category: "Voice & Audio",
+    priceModel: "Pay-as-you-go (คิดเงินตามจำนวน 1,000 ตัวอักษรที่เรียก API)",
+    isFree: false,
+    externalUrl: "https://platform.openai.com/docs/guides/text-to-speech",
+    rating: 4.8,
+    reviewCount: 14200,
+    updatedAt: "Feb 2026",
+    features: [
+      "API Integration: ปลั๊กอินเข้ากับซอฟต์แวร์ผ่าน API ได้ง่ายดายและรวดเร็วมาก (Low Latency)",
+      "Real-time Audio Streaming: สามารถส่งเสียงสตรีมมิ่งกลับมาได้ทันทีที่ AI พิมพ์ข้อความเสร็จ (เหมาะทำแชทบอทเสียงโต้ตอบ)",
+      "Optimized Voices: มีเสียงพื้นฐานคุณภาพสูงให้เลือก 6 เสียง (เช่น Alloy, Echo, Fable) ที่ถูกปรับจูนมาเพื่อการสนทนาโดยเฉพาะ"
+    ],
+    pros: [
+      "เสียงมีความเป็นมนุษย์ใน 'สไตล์การสนทนา' (Conversational) สูงมาก ฟังดูไม่เหมือนการอ่านสคริปต์โฆษณา",
+      "ความเร็วในการประมวลผลผ่าน API (Latency) เร็วมากจนสามารถทำแอปโต้ตอบแบบ Real-time ได้",
+      "ราคาถูกมากเมื่อเทียบกับการเรียกใช้ API ของผู้ให้บริการเจ้าอื่น"
+    ],
+    cons: [
+      "ไม่มีหน้าต่าง User Interface (UI) แบบเว็บแอปให้คนทั่วไปเข้าไปพิมพ์ข้อความแล้วกดโหลดง่ายๆ ต้องใช้งานผ่าน API หรือแอป Third-party",
+      "มีเสียงให้เลือกจำกัดแค่ 6 เสียง ไม่สามารถโคลนเสียงตัวเองได้ (OpenAI ปิดฟีเจอร์นี้ไว้เพื่อความปลอดภัย)"
+    ],
+    steps: [
+      { title: "สร้าง API Key", desc: "เข้าไปที่ OpenAI Platform แล้วกดสร้าง API Key สำหรับโปรเจกต์ของคุณ" },
+      { title: "เขียนโค้ดเรียก API", desc: "ใช้ Python หรือ Node.js ส่งข้อความและกำหนดชื่อเสียง (เช่น voice='nova') ไปที่ Endpoint ของ OpenAI" },
+      { title: "รับไฟล์เสียง", desc: "ระบบจะคืนค่ากลับมาเป็นไฟล์เสียง (เช่น .mp3) ให้นำไปเล่นในแอปพลิเคชันของคุณได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 เขียนโค้ด Python เพื่อเรียกใช้ OpenAI TTS API", 
+        promptTh: "ช่วยเขียนโค้ด Python โดยใช้ไลบรารี `openai` เวอร์ชันล่าสุด เพื่อเรียกใช้บริการ Text-to-Speech (TTS) โดยรับข้อความภาษาไทยว่า 'สวัสดีครับ ยินดีต้อนรับสู่บริการผู้ช่วยอัจฉริยะ' ใช้โมเดล `tts-1` เสียง `alloy` และบันทึกผลลัพธ์เป็นไฟล์ `output.mp3`",
+        promptEn: "Write a Python script using the latest `openai` library to call the Text-to-Speech (TTS) API. The input text should be 'Welcome to our intelligent assistant service'. Use the `tts-1` model with the `alloy` voice, and save the audio output as `output.mp3`."
+      },
+      { 
+        purpose: "💡 สคริปต์โต้ตอบสำหรับ AI Call Center", 
+        promptTh: "[ใช้ในระบบ Prompt ฝั่งหลังบ้าน]\nสวัสดีค่ะ ศูนย์บริการลูกค้า บริษัท ไอทีโซลูชัน ยินดีให้บริการค่ะ ไม่ทราบว่าวันนี้มีอะไรให้ทางเราช่วยเหลือคะ? ท่านสามารถแจ้งหมายเลขคำสั่งซื้อ หรือเล่าปัญหาที่พบได้เลยค่ะ",
+        promptEn: "Hello! Welcome to IT Solution Customer Service. How may I assist you today? You can provide your order number or briefly describe the issue you are facing."
+      }
+    ],
+    faqs: [
+      { question: "โมเดล tts-1 กับ tts-1-hd ต่างกันยังไง?", answer: "tts-1 ออกแบบมาให้ทำงาน 'เร็วที่สุด' เหมาะสำหรับแอปพลิเคชันโต้ตอบสดๆ ส่วน tts-1-hd จะให้ 'คุณภาพเสียงที่ชัดเจนและสมูธกว่า' แลกมากับเวลาประมวลผลที่นานขึ้นเล็กน้อย เหมาะกับการเจนไฟล์เสียงเก็บไว้ครับ" }
+    ]
+  },
+  {
+    id: "v3",
+    slug: "murf-ai",
+    name: "Murf AI",
+    logoUrl: "/logos/Murf AI.png",
+    description: "สตูดิโอเสียงพากย์ AI สไตล์มืออาชีพ มีเครื่องมือปรับจังหวะและเน้นคำแบบละเอียด",
+    longDescription: "หาก ElevenLabs คือดาราฮอลลีวูด Murf AI ก็คือ 'โฆษกองค์กรและนักพากย์โฆษณา' มืออาชีพ! Murf ถูกออกแบบมาเพื่อตอบโจทย์งานฝั่ง Business โดยเฉพาะ เช่น การทำสื่อการสอน (E-learning), วิดีโอพรีเซนต์องค์กร, หรือเสียงบรรยายสินค้า จุดเด่นที่สุดของ Murf คือหน้าต่าง Editor ที่ทรงพลัง คุณสามารถลากวางไฟล์วิดีโอเข้าไปเทียบกับเสียงพากย์ได้เลย และสามารถปรับแต่งได้ลึกซึ้งถึงระดับ 'คำ' (เช่น สั่งให้พูดคำนี้ช้าลง สั่งเน้นเสียงหนักที่คำนี้ หรือเปลี่ยนระดับความสูงต่ำของเสียง - Pitch) เหมือนคุณเป็นผู้กำกับที่กำลังสั่งนักพากย์ในสตูดิโอ",
+    origin: "สร้างมาเพื่อเป็นแพลตฟอร์ม Voice-over แบบ All-in-one ไม่ใช่แค่เครื่องมือแปลงข้อความ แต่ต้องเป็นสตูดิโอตัดต่อเสียงแบบเต็มรูปแบบบนเบราว์เซอร์",
+    category: "Voice & Audio",
+    priceModel: "Free (ให้ลองฟังแต่ห้ามโหลด) / Pro $26 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://murf.ai",
+    rating: 4.7,
+    reviewCount: 9100,
+    updatedAt: "Feb 2026",
+    features: [
+      "Granular Voice Control: ควบคุมระดับเสียง (Pitch), ความเร็ว (Speed), และการเน้นคำ (Emphasis) ได้แบบเจาะจงรายคำ",
+      "Video & Audio Sync: อัปโหลดไฟล์วิดีโอหรือภาพนิ่งเข้าไปในระบบ เพื่อกะจังหวะเสียงพากย์ให้ตรงกับภาพ (Time-sync) ได้ในเว็บเดียว",
+      "Voice Changer: อัดเสียงธรรมดาๆ (เช่น เสียงอัดจากไมค์มือถือที่มีเสียงรบกวน) แล้วให้ AI แปลงเป็นเสียงผู้ประกาศข่าวคุณภาพสตูดิโอ"
+    ],
+    pros: [
+      "มีเสียงโทน 'มืออาชีพและเป็นทางการ' ให้เลือกเยอะมาก เหมาะกับงาน Corporate สุดๆ",
+      "หน้าต่าง Timeline ใช้งานง่าย คล้ายโปรแกรมตัดต่อวิดีโอ ทำให้กะจังหวะการเว้นวรรคได้แม่นยำ",
+      "มีไลบรารีเพลงประกอบพื้นหลัง (Background Music) แบบถูกลิขสิทธิ์ให้เลือกใส่พร้อมเสียงพากย์ได้เลย"
+    ],
+    cons: [
+      "เสียงภาษาไทยมีให้เลือกน้อยกว่าภาษาอังกฤษ และความสมจริงในการออกเสียงภาษาไทยยังแอบสู้ ElevenLabs ไม่ได้",
+      "เวอร์ชันฟรีไม่สามารถดาวน์โหลดไฟล์เสียงออกมาใช้งานได้ ทำได้แค่ทดลองฟังเท่านั้น"
+    ],
+    steps: [
+      { title: "เลือกโปรไฟล์เสียง", desc: "เข้าไปใน Studio เลือกหมวดหมู่เสียง เช่น Educator, Podcaster, หรือ Marketer" },
+      { title: "ปรับแต่งสคริปต์", desc: "วางสคริปต์ ใช้เมาส์ไฮไลต์คำที่ต้องการ 'เน้น (Emphasis)' หรือสั่งให้หยุดเว้นวรรค (Pause 0.5s)" },
+      { title: "ซิงก์กับภาพและโหลด", desc: "ลากภาพหรือวิดีโอมาวางเทียบเพื่อเช็กจังหวะ แล้วกด Export โปรเจกต์" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สคริปต์สื่อการสอนองค์กร (E-Learning / Onboarding)", 
+        promptTh: "[ใช้ฟีเจอร์ Emphasis เน้นคำสำคัญ]\nสวัสดีครับพนักงานใหม่ทุกท่าน! ในบทเรียนที่ 2 นี้ เราจะมาเรียนรู้เกี่ยวกับ *นโยบายความปลอดภัยทางไซเบอร์* (เน้นเสียง) ซึ่งถือเป็นสิ่งที่มีความสำคัญสูงสุด [เว้นวรรค 1 วิ] กรุณากดปุ่ม 'ถัดไป' เพื่อเริ่มทำแบบทดสอบครับ",
+        promptEn: "Hello and welcome to all new employees! In Module 2, we will be covering our *Cybersecurity Policies* (Emphasis), which are of the utmost importance. [Pause 1s] Please click 'Next' to begin the assessment."
+      },
+      { 
+        purpose: "💡 สคริปต์พรีเซนเทชันเปิดตัวสินค้า (Product Launch)", 
+        promptTh: "โลกเปลี่ยนไปแล้ว... และวิธีการทำงานของคุณก็ต้องเปลี่ยนตาม ขอแนะนำ 'EngMaster 2.0' (เน้นคำ) แพลตฟอร์มที่จะพลิกโฉมการเรียนภาษาของคุณให้ง่ายขึ้น เร็วขึ้น และสนุกกว่าที่เคยมีมา",
+        promptEn: "The world has changed... and the way you work needs to change with it. Introducing *EngMaster 2.0* (Emphasis) – the platform that will revolutionize your language learning experience. Making it easier, faster, and more fun than ever before."
+      }
+    ],
+    faqs: [
+      { question: "ถ้ามีสคริปต์ยาว 10 หน้ากระดาษ Murf รับมือไหวไหม?", answer: "ไหวสบายมากครับ Murf มีฟีเจอร์แยกบล็อกข้อความ (Text Blocks) ทำให้คุณสามารถจัดสคริปต์ยาวๆ และเปลี่ยนเสียงพากย์สลับไปมา (เช่น คนที่ 1 พูดสลับคนที่ 2) ในโปรเจกต์เดียวกันได้ครับ" }
+    ]
+  },
+  {
+    id: "v4",
+    slug: "synthesia-voice",
+    name: "Synthesia (Avatar + Voiceover)",
+    logoUrl: "/logos/Synthesia.png",
+    description: "AI พรีเซนเตอร์ครบจบในเว็บเดียว เสียงพากย์เป๊ะมาพร้อมคนพูดขยับปากสมจริง",
+    longDescription: "แม้จะถูกจัดอยู่ในหมวดวิดีโอ แต่ในแง่ของ 'งานเสียงพากย์และเสียงบรรยาย' Synthesia คือเครื่องมือที่เหนือชั้นไปอีกระดับ! เพราะนี่ไม่ใช่แค่การเจนไฟล์เสียง MP3 ทื่อๆ แต่มันเสก 'AI Avatar (คนเสมือนจริง)' มายืนขยับปากพูดตามสคริปต์ (Lip-sync) ด้วยจังหวะและภาษากายที่สอดคล้องกับเสียงแบบ 100% รองรับภาษามากกว่า 120 ภาษา (ภาษาไทยชัดมากและควบกล้ำดี) เหมาะสุดๆ สำหรับคนที่ต้องการทำวิดีโอพรีเซนต์งาน คอร์สเรียนออนไลน์ หรือคลิปเทรนนิ่ง โดยไม่ต้องจ้างนางแบบหรือเข้าสตูดิโออัดเสียงเลย",
+    origin: "ก่อตั้งโดยนักวิจัยด้าน Computer Vision ถือเป็นผู้บุกเบิกเทคโนโลยี AI Video Generation สำหรับกลุ่มองค์กร (B2B) ช่วยบริษัทลดต้นทุนงานโปรดักชันลงได้มหาศาล",
+    category: "Voice & Audio",
+    priceModel: "Starts at $22/เดือน",
+    isFree: false,
+    externalUrl: "https://www.synthesia.io",
+    rating: 4.8,
+    reviewCount: 6500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Text-to-Video & Voice: พิมพ์ข้อความ แล้วได้ทั้งเสียงพากย์และวิดีโอคนพูดขยับปากเนียนๆ ทันที",
+      "Multilingual Voiceovers: เสียงพากย์ภาษาไทยและภาษาต่างประเทศมีความชัดเจน สำเนียงเป๊ะ เหมือนเจ้าของภาษา",
+      "Voice Cloning (Custom Voice): อัดเสียงตัวเองเข้าระบบ เพื่อใช้เสียงคุณเองพากย์ทับร่าง Avatar"
+    ],
+    pros: [
+      "ได้ชิ้นงานที่สมบูรณ์แบบ (ภาพ+เสียง) เร็วกว่าการไปจ้างนักพากย์แล้วเอามาตัดต่อวิดีโอเอง",
+      "แก้ไขงานง่ายมาก ถ้าพูดผิด หรือต้องการอัปเดตข้อมูล ก็แค่เข้าไปแก้ Text แล้วกดเรนเดอร์วิดีโอใหม่ ไม่ต้องถ่ายทำใหม่",
+      "มีเทมเพลตจัดสไลด์ พิมพ์ข้อความประกอบฉากหลังได้เหมือนทำ PowerPoint"
+    ],
+    cons: [
+      "ไม่สามารถ Export ออกมาเฉพาะไฟล์เสียง (.mp3) เดี่ยวๆ ได้ (ระบบบังคับเรนเดอร์เป็นวิดีโอ MP4)",
+      "แววตาและอารมณ์ของ Avatar บางครั้งยังดูเป็นหุ่นยนต์นิดๆ หากต้องใช้สคริปต์ที่แสดงอารมณ์ดราม่าหนักๆ"
+    ],
+    steps: [
+      { title: "เลือก Avatar และภาษา", desc: "เลือกพรีเซนเตอร์ที่คุณชอบ และกำหนดภาษาเป็น Thai (หรือภาษาอื่นๆ)" },
+      { title: "วางสคริปต์", desc: "พิมพ์ข้อความในช่อง Script สามารถปรับความเร็ว หรือแทรกการหยุดเว้นวรรคได้" },
+      { title: "ตกแต่งฉากและเรนเดอร์", desc: "ใส่ข้อความบนหน้าจอ ใส่โลโก้บริษัท แล้วกด Generate Video รอประมาณ 5 นาที" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สคริปต์วิดีโอต้อนรับพนักงาน (HR Onboarding)", 
+        promptTh: "[การพิมพ์สคริปต์ ควรสะกดคำอ่านตามจริงเพื่อให้ AI ออกเสียงชัดเจน]\nสวัสดีค่ะ ยินดีต้อนรับเข้าสู่บริษัทของเราอย่างเป็นทางการนะคะ! ในคลิปวิดีโอนี้ เราจะขอแนะนำให้ทุกท่านรู้จักกับ สวัสดิการพนักงาน และ กฎระเบียบเบื้องต้นในการทำงานค่ะ [เว้นวรรค] หากมีข้อสงสัย สามารถติดต่อฝ่ายบุคคลได้ตลอดเวลาเลยนะคะ",
+        promptEn: "Hello, and a very warm welcome to our company! In this video, we will walk you through our employee benefits program and outline our basic workplace policies. [Pause] If you have any questions, please feel free to reach out to the HR department at any time."
+      },
+      { 
+        purpose: "💡 สคริปต์สาธิตการใช้ซอฟต์แวร์ (Software Demo)", 
+        promptTh: "ขั้นตอนต่อไป ให้คลิกที่เมนู 'การตั้งค่า' ที่มุมขวาบนของหน้าจอนะคะ... จากนั้นเลือกเมนูย่อย 'จัดการบัญชีผู้ใช้' ระบบจะพาคุณเข้าสู่หน้าจอสำหรับเพิ่มหรือลบรายชื่อพนักงานในทีมค่ะ",
+        promptEn: "Next, please click on the 'Settings' icon located in the top right corner of your screen. Then, select 'User Management' from the dropdown menu. This will take you to the dashboard where you can add or remove team members."
+      }
+    ],
+    faqs: [
+      { question: "ถ้าฉันอยากพิมพ์ภาษาอังกฤษ แต่ให้ Avatar พูดสำเนียงไทยๆ ทำได้ไหม?", answer: "ทำได้ครับ Synthesia มีฟีเจอร์ Localized Accents คุณสามารถพิมพ์ข้อความภาษาอังกฤษ แต่เลือกเสียงพากย์เป็นคนไทย ระบบจะอ่านภาษาอังกฤษด้วยสำเนียงแบบคนไทย (Thai Accent) ให้ครับ" }
+    ]
+  },
+  {
+    id: "v5",
+    slug: "resemble-ai",
+    name: "Resemble AI",
+    logoUrl: "/logos/Murf AI.png", // ใช้โลโก้ชั่วคราว หรือเว้นว่างหากไม่มี
+    description: "ระบบโคลนเสียง Real-time สาย Tech ขุมพลังสร้างบทสนทนา NPC ในเกมและแอป",
+    longDescription: "หากคุณเป็นนักพัฒนาเกม (Game Developer) หรือกำลังทำแอปที่ต้องการให้ตัวละครพูดโต้ตอบแบบ Real-time... Resemble AI คือคำตอบสุดท้าย! นี่คือแพลตฟอร์ม Voice Cloning ระดับองค์กรที่เก่งกาจด้านการทำงานร่วมกับ Code (API First) ฟีเจอร์ที่ว้าวที่สุดคือ 'Resemble Fill' สมมติว่าคุณมีไฟล์เสียงพากย์เก่าอยู่ แล้วนักพากย์พูดผิดไป 1 คำ คุณสามารถลากไฟล์นั้นลงไป แล้วพิมพ์ 'แก้คำผิด' ด้วย Text AI จะเนียนปะติดปะต่อเสียงใหม่ทับเสียงเก่าด้วยน้ำเสียงเดิมเป๊ะ โดยไม่ต้องเรียกนักพากย์มาเข้าห้องอัดใหม่!",
+    origin: "เน้นเจาะตลาดฝั่ง Gaming, Animation และ Entertainment Studio ขนาดใหญ่ ที่ต้องการนำเสียงนักพากย์มืออาชีพไปสร้างเป็นโมเดล (Voice IP) เพื่อต่อยอดในโปรเจกต์มหาศาล",
+    category: "Voice & Audio",
+    priceModel: "Pay-as-you-go (คิดตามวินาทีเสียง) / Creator $29 ต่อเดือน",
+    isFree: false,
+    externalUrl: "https://www.resemble.ai",
+    rating: 4.6,
+    reviewCount: 3200,
+    updatedAt: "Feb 2026",
+    features: [
+      "Real-time Voice Cloning: API ที่สามารถเจนเสียงโคลนนิ่งออกมาได้ในระดับมิลลิวินาที (เหมาะกับการโต้ตอบในเกม)",
+      "Resemble Fill: ฟีเจอร์ตัดต่อเสียงด้วยการพิมพ์ (Inpainting Audio) เปลี่ยนคำผิดในไฟล์เสียงเก่าได้แนบเนียน",
+      "Emotion Control: รองรับการปรับเปลี่ยนอารมณ์เสียงแบบเจาะจง (เช่น ดีใจ, โกรธ, เศร้า, กระซิบ) ในประโยคเดียวกัน"
+    ],
+    pros: [
+      "ความสามารถในการทำงานข้ามภาษา (Cross-lingual) โคลนเสียงคุณที่พูดภาษาไทย แล้วสั่งให้พูดภาษาฝรั่งเศสสำเนียงเป๊ะได้",
+      "มีเครื่องมือสำหรับ Developer (API/SDK) ที่เชื่อมต่อกับเอนจินเกมอย่าง Unity และ Unreal Engine ได้อย่างยอดเยี่ยม",
+      "มีความปลอดภัยสูง (Deepfake Detection) ป้องกันการนำเสียงไปใช้ในทางที่ผิด"
+    ],
+    cons: [
+      "การใช้งานบนหน้าเว็บ (Web UI) อาจจะไม่ User-friendly สำหรับคนทั่วไปเท่า ElevenLabs หรือ Murf",
+      "ต้องใช้ชุดข้อมูล (Data) เสียงตัวอย่างที่มีความคมชัดสูงมาก เพื่อให้ได้เสียงโคลนนิ่งที่สมบูรณ์แบบ"
+    ],
+    steps: [
+      { title: "บันทึกเสียงต้นฉบับ", desc: "อัดเสียงตัวคุณเองหรือนักพากย์อ่านสคริปต์ที่ระบบเตรียมไว้ (ประมาณ 50 ประโยค) เพื่อสร้าง Custom Voice" },
+      { title: "เขียนโค้ดเรียกใช้", desc: "นำ API Key ไปฝังในโปรเจกต์เกมของคุณ เพื่อสร้างบทสนทนาแบบไดนามิก" },
+      { title: "ควบคุมอารมณ์", desc: "ใช้ SSML tags ในโค้ด เพื่อสั่งให้ตัวละครทำเสียงตะโกน หรือเสียงกระซิบเวลาอยู่ในฉากซ่อนตัว" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สคริปต์สร้างบทสนทนา NPC ในเกม (Gaming Dialogue)", 
+        promptTh: "[ใช้เทคนิคการกำหนดอารมณ์ในระบบ Resemble]\n[อารมณ์: หวาดกลัว] ระวังตัวด้วย! ข้าได้ยินเสียงฝีเท้าของพวกมันกำลังใกล้เข้ามา... [อารมณ์: ตะโกน] รีบหนีไปทางประตูหลัง เร็วเข้า!!",
+        promptEn: "[Emotion: Fearful] Watch out! I can hear their footsteps approaching... [Emotion: Shouting] Run towards the back door, HURRY!!"
+      },
+      { 
+        purpose: "💡 สคริปต์โฆษณาแบบ Dynamic (เปลี่ยนชื่อลูกค้าตาม Data)", 
+        promptTh: "[ทำงานผ่าน API โดยใส่ตัวแปร Name]\nสวัสดีคุณ {{Customer_Name}}! พิเศษสุดสำหรับเดือนเกิดของคุณ เราขอมอบส่วนลด 50% สำหรับการสั่งซื้อเครื่องดื่มสาขาใกล้บ้านคุณ!",
+        promptEn: "Hello {{Customer_Name}}! As a special treat for your birthday month, we are offering you an exclusive 50% discount on your next drink order at your nearest store!"
+      }
+    ],
+    faqs: [
+      { question: "การนำไปใช้ในเกม มันทำงานยังไง?", answer: "แทนที่คุณจะต้องจ้างนักพากย์มาอัดเสียงบทพูด NPC นับหมื่นประโยค คุณอัดเสียงนักพากย์แค่เป็นต้นแบบ แล้วใช้โค้ดรันให้ Resemble AI เจนเสียงพูดทั้งหมดในเกมออกมาแบบอัตโนมัติ ช่วยลดขนาดไฟล์เกมและประหยัดงบได้มหาศาลครับ" }
+    ]
+  },
+
+
 ];
