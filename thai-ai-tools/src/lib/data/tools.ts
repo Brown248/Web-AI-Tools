@@ -2307,5 +2307,4 @@ export const tools: AITool[] = [
     ]
   },
 
-
 ];
