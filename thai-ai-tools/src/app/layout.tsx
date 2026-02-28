@@ -83,7 +83,7 @@ export const metadata: Metadata = {
 
   // ✅ ใส่โค้ดยืนยันตัวตนสำหรับ Google Search Console
   verification: {
-    google: 'google-site-verification=aCbBO9MEV_n-9kBQBTJjje7nTMa6cZxNubsCiTAOeyc', 
+    google: 'google-site-verification: google19abaa9a2c87fbcf.html', 
   },
   category: 'technology',
 };
