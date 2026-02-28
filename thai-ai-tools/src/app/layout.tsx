@@ -83,7 +83,8 @@ export const metadata: Metadata = {
 
   // ✅ ใส่โค้ดยืนยันตัวตนสำหรับ Google Search Console
   verification: {
-    google: 'google-site-verification: google19abaa9a2c87fbcf.html', 
+    // ⚠️ ระวัง: เปลี่ยนข้อความด้านล่างให้เป็น รหัสจากแท็ก HTML (<meta name="google-site-verification" content="...รหัสตรงนี้..." />)
+    google: 'ใส่รหัสยาวๆ_ที่ก็อปปี้มาจาก_GSC_ที่นี่', 
   },
   category: 'technology',
 };
@@ -123,7 +124,7 @@ export default function RootLayout({
 
         <CookieConsent />
         
-        #GoogleAnalytics
+        {/* GoogleAnalytics */}
         <GoogleAnalytics gaId="G-J3JWTXQ2K0" /> 
       </body>
     </html>
