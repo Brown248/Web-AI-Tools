@@ -88,9 +88,10 @@ export default function Home() {
       {/* Background & Hero Section */}
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.6] z-0" />
-        {/* ✅ เพิ่ม animate-float เข้าไปใน Background */}
-        <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] animate-pulse-slow animate-[float_10s_ease-in-out_infinite] transform-gpu will-change-transform" />
-        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-purple-100/40 rounded-full blur-[120px] animate-pulse-slow animate-[float_12s_ease-in-out_infinite_reverse] animation-delay-2000 transform-gpu will-change-transform" />
+        {/* ✅ ใช้ animate-float และ animate-pulse-slow ที่ผูกไว้ใน globals.css */}
+        <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] animate-pulse-slow animate-float transform-gpu will-change-transform" />
+        {/* ✅ เพิ่ม [animation-direction:reverse] และ [animation-delay:2s] ให้วงที่สองลอยสวนทางกัน */}
+        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-purple-100/40 rounded-full blur-[120px] animate-pulse-slow animate-float [animation-direction:reverse] [animation-delay:2s] transform-gpu will-change-transform" />
       </div>
 
       <section className="relative pt-44 pb-32 px-6 z-10">
@@ -122,10 +123,8 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={itemVariants} className="w-full max-w-xl relative group mt-2">
-               {/* ✅ แสง Glow ตอบสนองเมื่อ Focus */}
                <div className="absolute -inset-1 bg-gradient-to-r from-blue-300 to-indigo-300 rounded-2xl blur opacity-30 group-focus-within:opacity-70 group-hover:opacity-60 transition duration-500 transform-gpu"></div>
                
-               {/* ✅ กรอบค้นหาตอบสนองเมื่อ Focus */}
                <div className="relative flex items-center bg-white p-2 rounded-2xl shadow-xl shadow-blue-900/5 border border-slate-100 focus-within:ring-4 focus-within:ring-blue-500/20 focus-within:border-blue-400 transition-all duration-300">
                   <Search className="ml-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" size={20} />
                   <input 
@@ -307,7 +306,6 @@ export default function Home() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  // ✅ เพิ่ม Hover / Tap Effect ให้ปุ่ม Categories
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
