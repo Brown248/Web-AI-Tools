@@ -1,12 +1,14 @@
 export const categories = [
-  { name: "Conversational AI", slug: "Conversational AI" },
-  { name: "AI Writing & SEO", slug: "AI Writing & SEO" },
+  { name: "Chatbots, Writing & SEO", slug: "Chatbots, Writing & SEO" },
+  { name: "Chatbots & Writing", slug: "Chatbots & Writing" },
+  { name: "Chatbots & Assistants", slug: "Chatbots & Assistants" },
+  { name: "Marketing, SEO & Writing", slug: "Marketing, SEO & Writing" },
   { name: "Image Generation", slug: "Image Generation" },
-  { name: "Video Generation", slug: "Video Generation" },
+  { name: "Video & Voice Generation", slug: "Video & Voice Generation" },
   { name: "Voice & Audio", slug: "Voice & Audio" },
-  { name: "Music Generation", slug: "Music Generation" },
   { name: "Coding & Development", slug: "Coding & Development" },
   { name: "Data & Analytics", slug: "Data & Analytics" },
-  { name: "Presentation & Slides", slug: "Presentation & Slides" },
-  { name: "Summarization & Notes", slug: "Summarization & Notes" }
+  { name: "Presentation & Slides", slug: "Presentation & Slides" }
 ];
+
+
