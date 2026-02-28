@@ -3,12 +3,12 @@ import Link from 'next/link';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { Sparkles, Menu, X } from 'lucide-react';
 import { useState } from 'react';
-import { usePathname } from 'next/navigation'; // นำมาใช้เพื่อให้เมนูปิดเองเวลาเปลี่ยนหน้า
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // ✅ เพิ่ม State มือถือ
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -51,23 +51,28 @@ export default function Navbar() {
           
           {/* Menu (Desktop Centered) */}
           <nav className={`hidden md:flex items-center gap-1 p-1.5 rounded-full border backdrop-blur-md absolute left-1/2 -translate-x-1/2 ${isScrolled ? 'bg-slate-800/80 border-slate-700' : 'bg-slate-100/50 border-slate-200/50'}`}>
-            {navLinks.map((item) => (
-              <Link 
-                key={item.name} 
-                href={item.href} 
-                className={`relative px-4 py-1.5 text-sm font-medium rounded-full transition-colors duration-300 group
-                  ${pathname === item.href 
-                    ? (isScrolled ? 'text-slate-900 bg-white' : 'text-slate-900 bg-white shadow-sm') 
-                    : (isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-500 hover:text-slate-900')}
-                `}
-              >
-                {item.name}
-                {!pathname.includes(item.href) && <span className="absolute inset-0 bg-white/10 rounded-full scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 -z-10" />}
-              </Link>
-            ))}
+            {navLinks.map((item) => {
+              // ตรวจสอบความถูกต้องของ Path ให้ตรงตัว ไม่ให้ทับซ้อนกับ '/' ในหน้าอื่นๆ
+              const isActive = pathname === item.href;
+              
+              return (
+                <Link 
+                  key={item.name} 
+                  href={item.href} 
+                  className={`relative px-4 py-1.5 text-sm font-medium rounded-full transition-colors duration-300 group
+                    ${isActive 
+                      ? (isScrolled ? 'text-slate-900 bg-white' : 'text-slate-900 bg-white shadow-sm') 
+                      : (isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-500 hover:text-slate-900')}
+                  `}
+                >
+                  {item.name}
+                  {!isActive && <span className="absolute inset-0 bg-white/10 rounded-full scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 -z-10" />}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* ✅ ปุ่ม Mobile Menu Toggle (แสดงเฉพาะหน้าจอมือถือ) */}
+          {/* ปุ่ม Mobile Menu Toggle */}
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`md:hidden p-2 rounded-full flex items-center justify-center ${isScrolled ? 'text-white hover:bg-slate-800' : 'text-slate-800 hover:bg-slate-200/50'}`}
@@ -80,7 +85,7 @@ export default function Navbar() {
         </div>
       </motion.header>
 
-      {/* ✅ Dropdown Menu สำหรับมือถือ */}
+      {/* Dropdown Menu สำหรับมือถือ */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -90,18 +95,21 @@ export default function Navbar() {
             className="fixed top-[88px] left-4 right-4 z-40 md:hidden"
           >
             <nav className="bg-white/95 backdrop-blur-xl border border-slate-200 shadow-2xl rounded-3xl p-4 flex flex-col gap-2">
-              {navLinks.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-5 py-3 rounded-2xl text-base font-semibold transition-colors
-                    ${pathname === item.href ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}
-                  `}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navLinks.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`px-5 py-3 rounded-2xl text-base font-semibold transition-colors
+                      ${isActive ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}
+                    `}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
             </nav>
           </motion.div>
         )}

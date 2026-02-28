@@ -27,11 +27,22 @@ const itemVariants: Variants = {
 
 export default function Home() {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(""); // State สำหรับหน่วงเวลาพิมพ์
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   
   const [priceFilter, setPriceFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("recommended");
 
+  // ระบบ Debounce: รอให้ผู้ใช้พิมพ์เสร็จ 300ms ค่อยอัปเดตคำค้นหา
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  // เลื่อนจออัตโนมัติเมื่อเลือกหมวดหมู่
   useEffect(() => {
     if (selectedCategory) {
       document.getElementById('tools-section')?.scrollIntoView({ 
@@ -43,11 +54,13 @@ export default function Home() {
 
   const filteredTools = useMemo(() => {
     let result = tools.filter((tool) => {
-      const searchContent = query.toLowerCase();
+      const searchContent = debouncedQuery.toLowerCase();
+      
+      // ป้องกันเว็บแครช (Null/Undefined Safety) ด้วย Optional Chaining (?.)
       const matchesSearch = 
-        tool.name.toLowerCase().includes(searchContent) ||
-        tool.description.toLowerCase().includes(searchContent) ||
-        tool.features.some(f => f.toLowerCase().includes(searchContent));
+        (tool.name?.toLowerCase() || "").includes(searchContent) ||
+        (tool.description?.toLowerCase() || "").includes(searchContent) ||
+        (tool.features || []).some(f => (f?.toLowerCase() || "").includes(searchContent));
 
       const matchesCategory = selectedCategory ? tool.category === selectedCategory : true;
 
@@ -59,17 +72,17 @@ export default function Home() {
     });
 
     if (sortBy === "a-z") {
-      result.sort((a, b) => a.name.localeCompare(b.name));
+      result.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
     } else if (sortBy === "z-a") {
-      result.sort((a, b) => b.name.localeCompare(a.name));
+      result.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
     } else if (sortBy === "rating") {
-      result.sort((a, b) => b.rating - a.rating);
+      result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
     }
 
     return result;
-  }, [query, selectedCategory, priceFilter, sortBy]);
+  }, [debouncedQuery, selectedCategory, priceFilter, sortBy]);
 
-  const isFiltering = query.length > 0 || selectedCategory !== null || priceFilter !== "all" || sortBy !== "recommended";
+  const isFiltering = debouncedQuery.length > 0 || selectedCategory !== null || priceFilter !== "all" || sortBy !== "recommended";
 
   const handleCategorySelect = (slug: string | null) => {
     setSelectedCategory(slug === selectedCategory ? null : slug);
@@ -77,9 +90,19 @@ export default function Home() {
 
   const clearFilters = () => {
     setQuery("");
+    setDebouncedQuery(""); // เคลียร์ทันที ไม่ต้องรอ Debounce
     setSelectedCategory(null);
     setPriceFilter("all");
     setSortBy("recommended");
+  };
+
+  const handleTagClick = (tag: string) => {
+    setQuery(tag);
+    setDebouncedQuery(tag); // อัปเดตทันที ไม่ต้องรอ Debounce
+    // หน่วงเวลาเล็กน้อยเพื่อให้ DOM อัปเดตก่อนเลื่อนจอ ป้องกันการกระตุก
+    setTimeout(() => {
+      document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
   };
 
   return (
@@ -88,9 +111,7 @@ export default function Home() {
       {/* Background & Hero Section */}
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.6] z-0" />
-        {/* ✅ ใช้ animate-float และ animate-pulse-slow ที่ผูกไว้ใน globals.css */}
         <div className="absolute top-[-20%] left-[10%] w-[60vw] h-[60vw] bg-blue-100/40 rounded-full blur-[120px] animate-pulse-slow animate-float transform-gpu will-change-transform" />
-        {/* ✅ เพิ่ม [animation-direction:reverse] และ [animation-delay:2s] ให้วงที่สองลอยสวนทางกัน */}
         <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-purple-100/40 rounded-full blur-[120px] animate-pulse-slow animate-float [animation-direction:reverse] [animation-delay:2s] transform-gpu will-change-transform" />
       </div>
 
@@ -138,7 +159,7 @@ export default function Home() {
                     <motion.button 
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      onClick={() => setQuery("")} 
+                      onClick={() => { setQuery(""); setDebouncedQuery(""); }} 
                       className="mr-2 p-1 text-slate-400 hover:text-slate-600"
                     >
                       <X size={16} />
@@ -155,7 +176,7 @@ export default function Home() {
               {['ChatGPT', 'Midjourney', 'Canva', 'Notion'].map((tag) => (
                 <button 
                   key={tag}
-                  onClick={() => { setQuery(tag); document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth' }); }}
+                  onClick={() => handleTagClick(tag)}
                   className="text-sm px-3 py-1 rounded-full bg-white/60 border border-slate-200 text-slate-600 hover:bg-white hover:text-blue-600 hover:border-blue-200 cursor-pointer transition-all shadow-sm"
                 >
                   {tag}
@@ -287,51 +308,6 @@ export default function Home() {
           </AnimatePresence>
         )}
       </section>
-
-      {/* Categories Section */}
-      <section className="py-24 relative bg-slate-50/50 border-t border-slate-200/60">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Explore by Category</h2>
-            <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full opacity-20" />
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
-            {categories.map((cat, idx) => {
-              const isActive = selectedCategory === cat.slug;
-              return (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.05 }}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <button
-                    onClick={() => handleCategorySelect(cat.slug)}
-                    className={`
-                      flex items-center gap-3 px-6 py-3.5 rounded-xl border shadow-sm transition-all duration-300
-                      ${isActive 
-                        ? 'bg-blue-600 border-blue-600 text-white shadow-blue-500/40 ring-4 ring-blue-500/20' 
-                        : 'bg-white border-slate-200 text-slate-700 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10'}
-                    `}
-                  >
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isActive ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-600'}`}>
-                      <Sparkles size={14} />
-                    </div>
-                    <span className="font-medium">
-                      {cat.name}
-                    </span>
-                  </button>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
     </main>
   );
 }
