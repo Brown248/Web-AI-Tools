@@ -2306,5 +2306,515 @@ export const tools: AITool[] = [
       { question: "การนำไปใช้ในเกม มันทำงานยังไง?", answer: "แทนที่คุณจะต้องจ้างนักพากย์มาอัดเสียงบทพูด NPC นับหมื่นประโยค คุณอัดเสียงนักพากย์แค่เป็นต้นแบบ แล้วใช้โค้ดรันให้ Resemble AI เจนเสียงพูดทั้งหมดในเกมออกมาแบบอัตโนมัติ ช่วยลดขนาดไฟล์เกมและประหยัดงบได้มหาศาลครับ" }
     ]
   },
+  // ==========================================
+  // 🎯 หมวด AI ทำการตลาดและ SEO (Marketing & SEO) - 5 ตัวท็อปสายทำเงิน
+  // ==========================================
+  {
+    id: "seo1",
+    slug: "chatgpt-seo",
+    name: "OpenAI – ChatGPT (สาย Marketing/SEO)",
+    logoUrl: "/logos/OpenAI – ChatGPT.png",
+    description: "LLM ครบเครื่องที่สุด วางโครงสร้างบทความ SEO, แผนการตลาด (Funnel) และเขียน Sales Page ได้จบในตัว",
+    longDescription: "ในมุมมองของนักการตลาดและคนทำ SEO... ChatGPT คืออาวุธระดับนิวเคลียร์! มันไม่ได้มีดีแค่พิมพ์ตอบคำถาม แต่คุณสามารถสั่งให้มันสวมบทบาท (Roleplay) เป็นนักการตลาดระดับโลก เพื่อวางโครงสร้าง Content Strategy ทั้งระบบ (Top-to-Bottom Funnel) หรือสั่งให้ร่างโครงสร้างบทความ SEO แบบเจาะจง (H1, H2, H3) ที่แทรก Keyword Intent ได้อย่างแนบเนียน เหมาะสำหรับ Blogger, เจ้าของเว็บไซต์ Affiliate, หรือ Startup ที่ต้องการประหยัดงบจ้าง Copywriter หลักหมื่น",
+    origin: "พัฒนาโดย OpenAI ด้วยความฉลาดของโมเดลรุ่นล่าสุด (GPT-4o) ทำให้มันเข้าใจหลักจิตวิทยาการขาย (Psychology of Selling) และพฤติกรรมการค้นหาของมนุษย์ (Search Intent) ได้ลึกซึ้ง",
+    category: "Marketing & SEO",
+    priceModel: "Free / Plus $20 ต่อเดือน (แนะนำให้ใช้ Plus สำหรับงาน SEO)",
+    isFree: true,
+    externalUrl: "https://chatgpt.com",
+    rating: 4.9,
+    reviewCount: 61000,
+    updatedAt: "Feb 2026",
+    features: [
+      "SEO Outlining: โครงสร้างบทความตรงใจ Google สั่งแจกแจง Heading Tag (H1-H4) พร้อมแทรก LSI Keywords ได้แม่นยำ",
+      "Funnel Creation: วางแผนคอนเทนต์ดักลูกค้าตั้งแต่ขั้นตอน ไม่รู้จัก (Awareness) ไปจนถึง ตัดสินใจซื้อ (Decision)",
+      "Conversion Copywriting: สั่งเขียน Sales Page แบบยาวๆ (Long-form sales letter) โดยอิงตามสูตร Copywriting ระดับโลก"
+    ],
+    pros: [
+      "เขียนบทความภาษาไทยได้สละสลวยและเป็นธรรมชาติมากที่สุด",
+      "ครอบจักรวาล สั่งให้เขียนสคริปต์ YouTube, บทความบล็อก, หรืออีเมลตามจิกลูกค้า ก็ทำได้หมด",
+      "มี Custom GPTs สาย SEO และ Marketing ที่มีคนจูนพารามิเตอร์ไว้ให้ใช้ฟรีๆ นับพันตัว"
+    ],
+    cons: [
+      "ถ้าสั่งเขียนบทความ SEO แบบไม่ป้อนข้อมูลให้ดี (Zero-shot) มันอาจจะแต่งเนื้อหาที่ไม่มีอยู่จริง (Hallucination) หรือใช้ข้อมูลเก่า",
+      "สำนวนการเขียนบางครั้งจะแอบซ้ำซาก ต้องสั่ง Prompt บังคับไม่ให้ใช้คำน่าเบื่อ"
+    ],
+    steps: [
+      { title: "กำหนด Role", desc: "เริ่มแชทด้วยการสั่งให้เป็น 'ผู้เชี่ยวชาญด้าน SEO และ Copywriter มืออาชีพ'" },
+      { title: "ป้อนข้อมูลและเป้าหมาย", desc: "ใส่ Keyword หลัก, Keyword รอง, Search Intent และกลุ่มเป้าหมาย" },
+      { title: "สั่งทีละส่วน", desc: "อย่าสั่งเขียนทีเดียว 2,000 คำ ให้สั่งเขียนโครงสร้าง (Outline) ก่อน แล้วค่อยสั่งเขียนทีละหัวข้อย่อย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งวางโครงสร้างบทความ SEO หวังผลหน้าแรก Google (SEO Outline)", 
+        promptTh: "คุณคือ SEO Expert ระดับโลก จงวางโครงสร้างบทความบล็อก (Outline) ในหัวข้อ '[ใส่หัวข้อ เช่น วิธีเลือกซื้อประกันสุขภาพ]' โดยมีเป้าหมายคือการติดหน้าแรก Google ข้อมูลที่ต้องการ: \n1. กำหนด H1 ที่ดึงดูด CTR \n2. กำหนด H2 และ H3 โดยแทรก LSI Keywords ให้เป็นธรรมชาติ \n3. ระบุ Search Intent ของแต่ละหัวข้อย่อย \n4. แนะนำว่าควรใช้ภาพประกอบหรือตารางสถิติแบบไหนในจุดใดบ้าง",
+        promptEn: "Act as a world-class SEO Expert. Create a highly optimized blog post outline for the topic '[Insert Topic]'. Goal: Rank on the first page of Google. Requirements: \n1. An engaging H1 optimized for CTR. \n2. H2 and H3 structures naturally incorporating LSI Keywords. \n3. Specify the Search Intent for each section. \n4. Recommend where to place specific visual assets or statistical tables."
+      },
+      { 
+        purpose: "💡 สั่งเขียนหน้าขายสินค้า (Sales Page) ตามสูตร PAS", 
+        promptTh: "ช่วยเขียน Sales Page สำหรับขาย 'คอร์สเรียน Data Analytics สำหรับผู้เริ่มต้น' โดยใช้โครงสร้าง PAS (Problem, Agitation, Solution) \n- Problem: ชี้ให้เห็นปัญหาการโดนแย่งงานโดย AI และเงินเดือนไม่ขึ้น \n- Agitation: ขยี้ความกลัวว่าถ้าไม่เริ่มเรียนตอนนี้ อีก 3 ปีข้างหน้าจะหางานทำไม่ได้เลย \n- Solution: เสนอคอร์สของเราว่าเรียนง่าย ไม่ต้องมีพื้นฐานโค้ด ก็อัปเงินเดือนได้ 30% พร้อมปุ่ม Call to Action ที่ทรงพลัง",
+        promptEn: "Write a high-converting Sales Page for a 'Beginner Data Analytics Course' using the PAS (Problem, Agitation, Solution) framework. \n- Problem: Highlight the risk of AI replacing jobs and stagnant wages. \n- Agitation: Amplify the fear of being unemployable in 3 years if they don't adapt. \n- Solution: Position our course as the easy, no-coding-required path to a 30% salary bump. End with a strong Call to Action."
+      }
+    ],
+    faqs: [
+      { question: "ใช้ ChatGPT เขียนบล็อกล้วนๆ จะโดน Google ลงโทษไหม?", answer: "Google ยืนยันแล้วว่าไม่ได้แบนคอนเทนต์ AI แต่แบน 'คอนเทนต์สแปมที่ไร้คุณภาพ' ดังนั้นถ้าใช้ ChatGPT เขียนแล้วคุณนำมาเกลาเนื้อหา เพิ่มความคิดเห็นส่วนตัว (E-E-A-T) ก็สามารถติดหน้าแรกได้สบายครับ" }
+    ]
+  },
+  {
+    id: "seo2",
+    slug: "jasper-ai-marketing",
+    name: "Jasper AI",
+    logoUrl: "/logos/Jasper AI.png",
+    description: "AI นักการตลาดตัวจริง โดดเด่นด้านการเขียนโฆษณาเชิง Conversion และ Brand Voice",
+    longDescription: "สำหรับทีม Performance Marketing (สายยิงแอด) หรือเอเจนซี่โฆษณา Jasper AI คือลูกรัก! มันไม่ใช่แค่ AI เขียนข้อความ แต่ถูกฝึกฝน (Fine-tuned) ด้วยข้อมูลจากแคมเปญโฆษณาที่ประสบความสำเร็จระดับโลกนับหมื่นแคมเปญ ทำให้สำนวนการเขียนของ Jasper มุ่งเน้นไปที่ 'การกระตุ้นยอดขาย (Conversion-focused)' มากกว่าแค่ให้ข้อมูลเฉยๆ คุณมีหน้าที่แค่ใส่ฟีเจอร์สินค้า แล้วเลือกเทมเพลต (เช่น Facebook Ad, Email Sequence, Product Description) Jasper จะเสกคำโฆษณาที่อ่านแล้วอยากรูดบัตรเครดิตออกมาให้ทันที",
+    origin: "ทีมผู้สร้างตั้งใจให้ Jasper เป็นเครื่องมือสำหรับสาย Marketing โดยเฉพาะ จึงมีการจ้าง Copywriter ตัวท็อปของวงการมาช่วยประเมินและสอนโมเดล AI ในช่วงแรก",
+    category: "Marketing & SEO",
+    priceModel: "Starts at $39/เดือน",
+    isFree: false,
+    externalUrl: "https://www.jasper.ai",
+    rating: 4.8,
+    reviewCount: 15200,
+    updatedAt: "Feb 2026",
+    features: [
+      "Brand Voice: คุมโทนเสียงของแบรนด์ได้อย่างเด็ดขาด ไม่ว่าลูกน้องคนไหนในทีมจะกดสร้างคอนเทนต์ สำนวนที่ออกมาจะเหมือนกันเป๊ะ",
+      "50+ Marketing Templates: เทมเพลตพร้อมใช้ที่อิงจากหลักจิตวิทยา เช่น AIDA, PAS, Before-After-Bridge (BAB)",
+      "Campaign Manager: สร้างแคมเปญเดียว ระบบจะแตกกิ่งก้านเป็น บทความบล็อก, แคปชั่น IG, โพสต์ X (Twitter) ให้ครบชุด"
+    ],
+    pros: [
+      "ประหยัดเวลาการทำ A/B Testing โฆษณาได้มาก เพราะกดปุ่มเดียวมันปั่น Headline มาให้ลองเทสต์เป็นสิบแบบ",
+      "สำนวนการเขียนมีความ 'ขายของ' แบบเนียนๆ (Persuasive writing) ไม่ดูแข็งทื่อแบบหุ่นยนต์",
+      "เหมาะกับการทำงานเป็นทีม (Team Collaboration) ในฝั่งเอเจนซี่หรือองค์กรใหญ่"
+    ],
+    cons: [
+      "ราคาถือว่าสูงมากเมื่อเทียบกับเครื่องมือ LLM ทั่วไป",
+      "สำหรับธุรกิจเฉพาะทางมากๆ (Niche) อาจจะต้องป้อนข้อมูลสินค้า (Knowledge base) ให้มันละเอียดหน่อย ไม่งั้นมันจะเขียนกว้างๆ"
+    ],
+    steps: [
+      { title: "สอน AI รู้จักแบรนด์", desc: "เข้าไปที่ Brand Voice แล้วโยนแคปชั่นเก่าๆ ที่แบรนด์เคยใช้ ให้มันจดจำสไตล์" },
+      { title: "เลือกเป้าหมาย", desc: "เลือก Template เช่น 'Google Ads Headline' หรือ 'Amazon Product Description'" },
+      { title: "ปั่นคอนเทนต์", desc: "ใส่ชื่อและจุดเด่นสินค้า แล้วกดสร้างให้ Jasper พ่นไอเดียออกมารัวๆ" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 เขียนอีเมลทำ Retargeting (ดึงคนที่ทิ้งตะกร้าสินค้ากลับมา)", 
+        promptTh: "[เลือกเทมเพลต Email Marketing]\nโปรดเขียนอีเมลสำหรับแคมเปญ Abandoned Cart (ลูกค้ากดของลงตะกร้าแต่ไม่จ่ายเงิน) สินค้าคือ 'เซ็ตสกินแคร์ลดสิว' โทนเสียง: เข้าอกเข้าใจ และ เร่งรัด (Urgency) เสนอส่วนลด 15% หากชำระเงินภายใน 24 ชั่วโมง พร้อมทิ้งท้ายด้วยเสียงรีวิวสั้นๆ จากผู้ใช้จริง",
+        promptEn: "Write an Abandoned Cart email for a 'Acne-clearing Skincare Set'. Tone: Empathetic yet Urgent. Offer a 15% discount if they complete their purchase within 24 hours. Conclude the email with a short, compelling customer testimonial."
+      },
+      { 
+        purpose: "💡 คิด Headline สำหรับยิงแอด Facebook (A/B Testing)", 
+        promptTh: "[ใช้เทมเพลต Facebook Ads]\nช่วยคิด Headline โฆษณา Facebook 5 แบบ สำหรับโปรโมท 'แอปพลิเคชันจัดการบัญชีสำหรับร้านอาหาร' โดยเน้นที่ Pain point เรื่องการทำบัญชีที่ปวดหัวและเสียเวลา ขอแบบสั้น กระชับ และหยุดนิ้วคนดู (Scroll-stopping) ได้ทันที",
+        promptEn: "Generate 5 variations of Facebook Ad Headlines for promoting an 'Accounting App for Restaurants'. Focus heavily on the pain point of messy, time-consuming bookkeeping. Ensure they are short, punchy, and scroll-stopping."
+      }
+    ],
+    faqs: [
+      { question: "ถ้าเราขายสินค้า B2B จะใช้ Jasper ได้ไหม หรือเหมาะกับของจุกจิก?", answer: "ใช้ได้ดีเยี่ยมเลยครับ! Jasper มีโหมดปรับโทนเสียงให้เป็น 'Professional / Corporate' ซึ่งเหมาะกับการเขียน LinkedIn Posts หรืออีเมลหาลูกค้าระดับองค์กร (Cold Outreach) มากครับ" }
+    ]
+  },
+  {
+    id: "seo3",
+    slug: "surfer-seo",
+    name: "Surfer SEO",
+    logoUrl: "/logos/Surfer SEO.png", // สมมติโลโก้
+    description: "เครื่องมือสาย SEO ขนานแท้ วิเคราะห์คีย์เวิร์ดคู่แข่ง และให้คะแนน SEO แบบ Real-time",
+    longDescription: "นี่คือ 'อาวุธลับ' ของสายทำเว็บไซต์ Affiliate และ Niche Site! Surfer SEO ไม่ใช่แค่ตัวพิมพ์ข้อความ แต่มันคือ AI ที่ทำ 'Data-Driven SEO' เมื่อคุณพิมพ์คีย์เวิร์ดลงไป มันจะวิ่งไปกวาดข้อมูลจากเว็บไซต์ 10 อันดับแรกบนหน้าแรกของ Google มาวิเคราะห์ว่าพวกเขาใช้คำศัพท์ (LSI Keywords) คำไหนบ้าง ใช้จำนวนคำกี่คำ มีรูปกี่รูป แล้วนำมาสร้างเป็นมาตรวัด (SEO Score) ให้คุณแบบเรียลไทม์ ขณะที่คุณกำลังพิมพ์บทความ (หรือให้ AI เขียน) ตัวเลขคะแนนจะขยับขึ้นเรื่อยๆ ถือเป็นเครื่องมือที่การันตีว่าบทความของคุณมีโอกาส 'ติดหน้าแรก' สูงที่สุด",
+    origin: "สร้างโดยผู้เชี่ยวชาญด้าน SEO ชาวโปแลนด์ ที่ต้องการเปลี่ยนการทำ SEO จาก 'การเดาใจ Google' มาเป็น 'การใช้สถิติและคณิตศาสตร์' ในการทำอันดับ",
+    category: "Marketing & SEO",
+    priceModel: "Starts at $89/เดือน",
+    isFree: false,
+    externalUrl: "https://surferseo.com",
+    rating: 4.9,
+    reviewCount: 12500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Content Editor: หน้าต่างเขียนบทความที่มีแถบ SEO Score คอยให้คะแนน (0-100) และคอยบอกว่าขาดคำศัพท์สำคัญคำไหนไปบ้าง",
+      "SERP Analyzer: วิเคราะห์คู่แข่งแบบขุดรากถอนโคน ดูความหนาแน่นของคีย์เวิร์ด (Keyword Density) เทียบกับหน้าแรก Google",
+      "Surfer AI: ปุ่มกดวิเศษ จ่ายเงินเพิ่มเพื่อสั่งให้ AI ของ Surfer เขียนบทความระดับ 2,000+ คำ พร้อมอัดแน่น SEO Score ระดับ 80+ ให้ทันทีภายใน 5 นาที"
+    ],
+    pros: [
+      "เปลี่ยนเรื่อง SEO ที่ซับซ้อนให้กลายเป็นการ 'เล่นเกมเก็บแต้ม' ทำให้มือใหม่ก็ทำบทความคุณภาพสูงได้",
+      "มีปลั๊กอินเชื่อมต่อกับ Google Docs และ WordPress ทำให้ทำงานสะดวกมาก",
+      "อัปเดตอัลกอริทึมตาม Google ตลอดเวลา ข้อมูลคำศัพท์ (NLP Keywords) แม่นยำมาก"
+    ],
+    cons: [
+      "ราคาเริ่มต้นแพงมาก เหมาะกับคนที่ทำ SEO เพื่อสร้างรายได้จริงจัง ไม่เหมาะกับคนทำบล็อกเล่นๆ ขำๆ",
+      "บางครั้งการพยายามยัดคำศัพท์ (Keyword Stuffing) เพื่อให้ได้คะแนนเต็ม 100 อาจทำให้บทความอ่านแล้วไม่ลื่นไหล (ควรรักษาคะแนนไว้ที่ 70-85 ก็พอ)"
+    ],
+    steps: [
+      { title: "สร้าง Query", desc: "พิมพ์ Keyword ที่อยากทำอันดับ แล้วเลือกประเทศเป้าหมาย (รองรับไทย)" },
+      { title: "ดูไกด์ไลน์", desc: "ระบบจะสร้าง Content Editor ขึ้นมา พร้อมบอกเป้าหมายว่าต้องเขียนกี่คำ และใช้คำศัพท์ไหนบ้าง" },
+      { title: "พิมพ์และเก็บคะแนน", desc: "ลงมือเขียน หรือก๊อปปี้บทความจาก ChatGPT มาวาง แล้วตามไล่แก้ให้คะแนน SEO พุ่งถึงเกณฑ์สีเขียว" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ประยุกต์ใช้ ChatGPT คู่กับ Surfer SEO", 
+        promptTh: "[หลังจากได้ลิสต์คำศัพท์สำคัญ (LSI) จาก Surfer SEO ให้นำมาสั่ง ChatGPT]\nจงเขียนบทความความยาว 1,500 คำ ในหัวข้อ 'รีวิวรองเท้าวิ่ง' โดยคุณต้องบังคับใส่คำศัพท์เหล่านี้ลงไปในบทความให้เป็นธรรมชาติที่สุด (ห้ามฝืน): [แปะลิสต์คำศัพท์ เช่น พื้นรองเท้าคาร์บอน, การลดแรงกระแทก, น้ำหนักเบา, วิ่งมาราธอน, อาการบาดเจ็บหัวเข่า] และจัดรูปแบบโดยใช้ H2 และ H3",
+        promptEn: "Write a 1,500-word blog post on 'Running Shoes Review'. You MUST naturally integrate the following LSI keywords into the content without sounding forced: [Paste Surfer keywords e.g., carbon plate, shock absorption, lightweight, marathon running, knee injury prevention]. Format the post using proper H2 and H3 tags."
+      },
+      { 
+        purpose: "💡 สั่งปรับแก้เฉพาะย่อหน้าเพื่อดันคะแนน SEO", 
+        promptTh: "ช่วยนำย่อหน้านี้ไปเขียนใหม่ (Rewrite) โดยให้ความหมายเหมือนเดิม แต่ต้องแทรกคำว่า 'ประกันโรคร้ายแรง' และ 'ค่าห้องโรงพยาบาล' ลงไปอย่างละ 1 ครั้งให้เนียนที่สุด",
+        promptEn: "Please rewrite this specific paragraph. Maintain the original meaning, but seamlessly inject the exact phrases 'critical illness insurance' and 'hospital room rate' exactly once each."
+      }
+    ],
+    faqs: [
+      { question: "ทำไมคะแนนใน Surfer ได้ 90 แต่ยังไม่ติดหน้าแรก Google?", answer: "Surfer วัดผล 'On-Page SEO' (เนื้อหาภายใน) เป็นหลักครับ แต่อันดับบน Google ยังขึ้นอยู่กับปัจจัยภายนอกอย่าง Backlinks (Off-Page SEO) และอายุ/ความน่าเชื่อถือของโดเมนคุณด้วย (Domain Authority) ครับ" }
+    ]
+  },
+  {
+    id: "seo4",
+    slug: "writesonic-seo",
+    name: "Writesonic",
+    logoUrl: "/logos/Writesonic.png",
+    description: "โรงงานผลิตบทความ SEO อัตโนมัติ ดึงข้อมูลปัจจุบันจากเน็ต เขียนเสร็จพร้อมเผยแพร่",
+    longDescription: "หากเป้าหมายของคุณคือ 'ปริมาณและความเร็ว' Writesonic คือสุดยอดตัวช่วยสาย Affiliate Marketing และ Niche Site! จุดแข็งที่สุดของมันคือฟีเจอร์ AI Article Writer รุ่นใหม่ ที่สามารถเชื่อมต่ออินเทอร์เน็ตเพื่อดึงข้อมูลคู่แข่งในหน้าแรกมาใช้อ้างอิงแบบสดๆ ทำให้บทความที่ได้ไม่ตกยุค นอกจากนี้ยังมีเครื่องมือร่างหน้า Landing Page ภายใน 1 นาที แค่ใส่จุดเด่นของสินค้า มันจะพ่นทั้งโค้ด โครงสร้างหน้าเว็บ และข้อความโฆษณากลับมาให้ ถือเป็น AI ที่คุ้มค่าและให้ ROI (ผลตอบแทน) สูงมากสำหรับคนทำเว็บ",
+    origin: "ตั้งเป้าเป็นแพลตฟอร์ม Content Creation ขวัญใจสายบล็อกเกอร์ โดยเน้นการลดขั้นตอนยุ่งยาก (Friction) ตั้งแต่คิดคีย์เวิร์ด ไปจนถึงกด Publish ลง WordPress ให้จบในโปรแกรมเดียว",
+    category: "Marketing & SEO",
+    priceModel: "Free (จำกัดคำ) / Starts at $16/เดือน",
+    isFree: true,
+    externalUrl: "https://writesonic.com",
+    rating: 4.7,
+    reviewCount: 11400,
+    updatedAt: "Feb 2026",
+    features: [
+      "Article Writer 6.0: ระบุคีย์เวิร์ดเดียว AI จะสแกนคู่แข่ง หาช่องโหว่ (Content Gap) และเขียนบทความ 2,000 คำพร้อมรูปประกอบให้ทันที",
+      "Landing Page Generator: เครื่องมือเสกหน้าเว็บขายของ พร้อมโครงสร้างและ Copywriting ดึงดูดลูกค้า",
+      "1-Click WordPress Export: ผูกบัญชีกับ WordPress กดคลิกเดียวบทความวิ่งไปโผล่หน้าเว็บพร้อมจัด Layout เสร็จสรรพ"
+    ],
+    pros: [
+      "สายทำเว็บจำนวนมาก (Mass Production) จะชอบมาก เพราะเสกบทความได้เร็วสุดๆ",
+      "ข้อมูลอัปเดตเป็นปัจจุบันเสมอ (Real-time data) ไม่เหมือนการใช้ LLM เพียวๆ ที่ฐานข้อมูลอาจจะหยุดอยู่แค่ปีก่อน",
+      "ราคาถูกกว่า Jasper และ Surfer SEO อย่างเห็นได้ชัด (คุ้มค่าสำหรับคนเริ่มต้น)"
+    ],
+    cons: [
+      "บางครั้งบทความที่เจนมาแบบอัตโนมัติ จะดูเป็น 'แพทเทิร์น' (Pattern) มากเกินไป อ่านแล้วจะรู้สึกว่าเป็นบล็อกสำเร็จรูป",
+      "ระบบให้เครดิตการเขียน (Words limit) ค่อนข้างโหด หากใช้โมเดลคุณภาพสูงสุด (Premium) เครดิตจะละลายหายไปเร็วมาก"
+    ],
+    steps: [
+      { title: "เลือก Article Writer", desc: "เข้าไปที่หน้าเขียนบทความ ใส่หัวข้อหรือคีย์เวิร์ดที่อยากทำ SEO" },
+      { title: "ตรวจทาน Outline", desc: "ระบบจะดึงโครงสร้างหัวข้อย่อยมาให้ ให้คุณเพิ่ม/ลบ หัวข้อตามความเหมาะสม" },
+      { title: "สวมภาพลักษณ์และสั่งเขียน", desc: "เลือกโทนเสียง และกด Generate รอระบบพ่นบทความยาวๆ ออกมาให้" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ Chatsonic (บอทของ Writesonic) ช่วยหาเทรนด์เพื่อทำคอนเทนต์", 
+        promptTh: "[ทำงานคล้าย ChatGPT แต่มีเน็ต]\nช่วยค้นหา '5 เทรนด์เครื่องสำอางเกาหลี (K-Beauty) ที่กำลังมาแรงที่สุดในปี 2026' อิงจากข้อมูลปัจจุบันบนเว็บไซต์ต่างประเทศ พร้อมแนะนำ Keyword หางยาว (Long-tail keywords) ที่มีโอกาสทำ SEO ติดอันดับได้ง่าย เพื่อนำมาทำบทความลงเว็บ",
+        promptEn: "Search the web for the 'Top 5 Trending K-Beauty Cosmetics in 2026' based on current international data. Also, suggest low-competition Long-tail keywords related to these trends that would be easy to rank for in an SEO blog post."
+      },
+      { 
+        purpose: "💡 สร้างรีวิวสินค้าแบบ Affiliate (Product Review)", 
+        promptTh: "[ใช้ฟีเจอร์ Product Review]\nชื่อสินค้า: ไมโครโฟนไร้สาย DJI Mic 2\nข้อดี: ตัดเสียงรบกวน AI เก่ง, แบตทน, ชาร์จกับเคสได้\nข้อเสีย: ราคาสูงกว่าแบรนด์รอง\nคำสั่ง: เขียนรีวิวแบบจริงใจเหมือนใช้งานจริง (Authentic tone) เพื่อนำไปลงเว็บ Affiliate พร้อมมีสรุปตอนท้ายว่าเหมาะกับใคร",
+        promptEn: "Product: DJI Mic 2 Wireless Microphone\nPros: Excellent AI noise cancellation, long battery life, charging case.\nCons: Higher price point than budget brands.\nInstruction: Write an authentic, hands-on product review for an Affiliate website. Conclude with a clear summary of 'Who this product is best for'."
+      }
+    ],
+    faqs: [
+      { question: "ถ้าใช้ Writesonic ร่วมกับ Surfer SEO ได้ไหม?", answer: "ได้ครับผม! ปัจจุบัน Writesonic มีฟีเจอร์ Integration ที่ให้คุณเอาบัญชี Surfer SEO มาผูกได้เลย ทำให้ระหว่างที่ AI กำลังเขียน คุณก็เห็นคะแนน SEO พุ่งขึ้นแบบสดๆ ในหน้าจอเดียวกันครับ" }
+    ]
+  },
+  {
+    id: "seo5",
+    slug: "copy-ai-marketing",
+    name: "Copy.ai",
+    logoUrl: "/logos/Copy.ai.png",
+    description: "ราชาแห่งโฆษณาสั้น (Short-form) เขียน Headline กระชากใจ และแคปชั่นโซเชียลที่ปิดการขายได้จริง",
+    longDescription: "หากเป้าหมายของคุณไม่ใช่บทความยาวเหยียด แต่คือการ 'หยุดนิ้วคนดู' บน Facebook Ads หรือ Instagram... Copy.ai คือเครื่องมือที่ตอบโจทย์ที่สุด! จุดเด่นของมันคือความเชี่ยวชาญด้าน Copywriting ข้อความสั้นที่ต้องใช้จิตวิทยาการขายขั้นสูง (เช่น Hook, Headline, หรือแคปชั่นสั้นกระชับ) ระบบมี Workflow สำหรับทีมการตลาดโดยเฉพาะ คุณสามารถโยนลิงก์หน้าเว็บไซต์สินค้าเข้าไป แล้วสั่งให้มัน 'สกัดข้อมูล' ออกมาทำเป็นโพสต์โซเชียลมีเดีย 30 วัน 30 โพสต์ ให้โดยอัตโนมัติ เหมาะมากสำหรับแอดมินเพจ หรือคนซื้อโฆษณา (Media Buyer)",
+    origin: "สร้างขึ้นด้วยความเข้าใจวิถีชีวิตนักการตลาดที่ต้อง 'ปั่นคอนเทนต์รายวัน' เน้นความเร็ว พิมพ์น้อยแต่ได้ไอเดีย (Brainstorming) ออกมาหลายสิบรูปแบบในเสี้ยววินาที",
+    category: "Marketing & SEO",
+    priceModel: "Free (ให้เครดิตจำกัด) / Pro $36 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://www.copy.ai",
+    rating: 4.7,
+    reviewCount: 10500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Ad Copy Generator: เครื่องมือเสกข้อความโฆษณา Google Ads และ Facebook Ads โดยจำกัดจำนวนตัวอักษรให้พอดีกับแพลตฟอร์มเป๊ะๆ",
+      "Sales Workflows: ระบบอัตโนมัติ สั่งให้ระบบสแกนโปรไฟล์ LinkedIn ของเป้าหมาย แล้วร่างข้อความ Direct Message ไปทักทายเพื่อเสนอขายของแบบเนียนๆ",
+      "Brainstorming Tools: เครื่องมือช่วยคิดชื่อแบรนด์ คิดชื่อแคมเปญ หรือแม้แต่คิดหัวข้อวิดีโอ TikTok"
+    ],
+    pros: [
+      "ไอเดียและถ้อยคำมีความสร้างสรรค์ (Creative) และดูวัยรุ่นกว่าเครื่องมือตัวอื่นๆ",
+      "หน้าต่างผู้ใช้งาน (UI) สะอาดสะอ้าน ใช้งานง่ายมากสำหรับคนที่เพิ่งหัดใช้ AI ครั้งแรก",
+      "เวอร์ชันฟรี ให้โควต้าค่อนข้างใจกว้าง เหมาะกับการเอามาคิดแคปชั่นสั้นๆ รายวัน"
+    ],
+    cons: [
+      "ไม่เก่งเรื่องการเขียนบทความวิชาการ บทความยาว (Long-form) หรือเนื้อหาที่ต้องการความน่าเชื่อถือสูงลิ่ว",
+      "การควบคุมโทนเสียง (Brand Voice) สำหรับภาษาไทย บางครั้งอาจจะยังมีหลุดใช้คำแปลกๆ บ้าง ต้องเกลาเพิ่ม"
+    ],
+    steps: [
+      { title: "เลือก Tool ย่อย", desc: "เข้าไปในระบบ จะมีเครื่องมือให้เลือกมากมาย ให้กดเลือกเช่น 'Facebook Primary Text'" },
+      { title: "บอกชื่อและจุดเด่น", desc: "พิมพ์ชื่อโปรดักส์ และใส่จุดขาย (Selling points) สั้นๆ แค่บรรทัดเดียว" },
+      { title: "ก็อปปี้ไปยิงแอด", desc: "AI จะให้ตัวเลือกมาประมาณ 10 แบบ เลือกอันที่ภาษาจี๊ดจ๊าดที่สุดก๊อปไปวางใน Facebook Ads Manager ได้เลย" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 เขียน Hook กระชากใจสำหรับวิดีโอ TikTok", 
+        promptTh: "[ใช้เครื่องมือ TikTok Brainstorming]\nช่วยคิดประโยคเปิดคลิป (Hook) 3 วินาทีแรก สำหรับคลิปวิดีโอขาย 'แผ่นแปะแก้ปวดหลังสำหรับคนทำงานออฟฟิศ' ขอประโยคที่ฟังแล้วคนออฟฟิศต้องสะดุ้งและหยุดดูทันที",
+        promptEn: "Generate powerful 3-second opening Hooks for a TikTok video selling 'Pain Relief Patches for Office Workers'. The hooks must be highly relatable to office syndrome and force viewers to stop scrolling immediately."
+      },
+      { 
+        purpose: "💡 เขียนอีเมลต้อนรับและเสนอโปรโมชั่น (Welcome Email)", 
+        promptTh: "[ใช้เครื่องมือ Welcome Email]\nเขียนอีเมลต้อนรับลูกค้าที่เพิ่งสมัครสมาชิกเว็บไซต์ 'ขายอาหารคลีน' ขอบคุณที่มาร่วมเป็นครอบครัวเดียวกัน แจ้งสิทธิพิเศษของสมาชิก และแจกโค้ดลด 100 บาทสำหรับการสั่งซื้อครั้งแรก โทนเสียง: อบอุ่น เป็นมิตร และสนับสนุนสุขภาพที่ดี",
+        promptEn: "Write a Welcome Email for new subscribers to our 'Clean Food Delivery' website. Express gratitude for joining our community, outline membership benefits, and offer a 100 THB discount code for their first order. Tone: Warm, friendly, and health-encouraging."
+      }
+    ],
+    faqs: [
+      { question: "เครื่องมือ Workflows ของ Copy.ai มันดียังไง?", answer: "มันเจ๋งมากตรงที่คุณสามารถใส่ Prompt ต่อกันเป็นลูกโซ่ครับ เช่น สเตป 1 สั่งให้หาข้อมูลสถิติ -> สเตป 2 เอาสถิตินั้นมาเขียนเป็นแคปชั่น IG -> สเตป 3 สั่งแปลเป็น 3 ภาษา กดทีเดียวรันอัตโนมัติจนจบกระบวนการเลยครับ" }
+    ]
+  },
+
+  // ==========================================
+  // 💬 หมวด AI แชทบอทและผู้ช่วยอเนกประสงค์ (AI Chatbots & Assistants) - 4 ตัวท็อปของโลก
+  // ==========================================
+  {
+    id: "bot1",
+    slug: "chatgpt",
+    name: "OpenAI – ChatGPT",
+    logoUrl: "/logos/OpenAI – ChatGPT.png",
+    description: "AI แชทบอทอันดับ 1 ของโลก ครบเครื่องที่สุดรอบด้าน ทั้งเขียนโค้ด วิเคราะห์ข้อมูล และแต่งรูป",
+    longDescription: "ChatGPT (โดยเฉพาะโมเดล GPT-4o) คือ AI ที่ 'ครบเครื่อง (Well-rounded)' ที่สุดในตลาดตอนนี้ มันเป็น Multimodal LLM ที่สามารถรับคำสั่งได้ทั้งข้อความ เสียง รูปภาพ และไฟล์เอกสาร จุดแข็งที่ทำให้ ChatGPT ครองใจคนทั่วโลกคือระบบนิเวศ (Ecosystem) ที่แข็งแกร่ง ทั้งฟีเจอร์ Advanced Data Analysis ที่ให้คุณอัปโหลดไฟล์ Excel เพื่อสร้างกราฟ หรือฟีเจอร์ Custom GPTs ที่ให้คุณสร้างบอทเฉพาะทางของตัวเองได้โดยไม่ต้องเขียนโค้ด เหมาะสำหรับนักเรียน นักธุรกิจ โปรแกรมเมอร์ ไปจนถึงผู้บริหาร",
+    origin: "พัฒนาโดย OpenAI ถือเป็นแชทบอทที่เปิดประตูโลกสู่ยุค Generative AI สร้างปรากฏการณ์ผู้ใช้งานครบ 100 ล้านคนเร็วที่สุดในประวัติศาสตร์",
+    category: "AI Chatbots & Assistants",
+    priceModel: "Free / Plus $20 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://chatgpt.com",
+    rating: 4.9,
+    reviewCount: 95000,
+    updatedAt: "Feb 2026",
+    features: [
+      "Advanced Data Analysis: อัปโหลดไฟล์ CSV/Excel ให้ AI คลีนข้อมูล วิเคราะห์สถิติ และวาดกราฟให้เบ็ดเสร็จ",
+      "Multimodal Capabilities: รองรับการพูดคุยด้วยเสียง (Real-time voice) อ่านรูปภาพ และสร้างรูปภาพผ่าน DALL-E 3",
+      "Custom GPTs: สร้างแชทบอทที่ถูกปรับแต่งเฉพาะกิจ (เช่น บอทสอนภาษา, บอทตรวจโค้ด) และนำไปแชร์ให้คนอื่นใช้ได้"
+    ],
+    pros: [
+      "ความฉลาดโดยรวมและตรรกะการให้เหตุผล (Reasoning) ยังคงเป็นมาตรฐานสูงสุด (Gold Standard)",
+      "แอปพลิเคชันบนมือถือทำงานได้ลื่นไหลมาก โหมดคุยด้วยเสียงทำได้เป็นธรรมชาติเหมือนคุยกับมนุษย์",
+      "รองรับการพิมพ์ภาษาไทยได้ดีเยี่ยม สละสลวย และเข้าใจบริบทวัฒนธรรมไทยได้ดี"
+    ],
+    cons: [
+      "การให้ข้อมูลเชิงลึกในงานเฉพาะทางบางอย่าง อาจจะยังมีอาการ 'แต่งเรื่อง (Hallucination)' หากไม่เปิดโหมดค้นหาเว็บ",
+      "โมเดล GPT-4o ในเวอร์ชันฟรีมีข้อจำกัดเรื่องปริมาณการใช้งาน (Message limits) ที่ค่อนข้างเข้มงวด"
+    ],
+    steps: [
+      { title: "เลือกโมเดล", desc: "แนะนำให้เลือกโมเดล GPT-4o (หรือ o1 สำหรับงานที่ต้องคิดตรรกะซับซ้อน)" },
+      { title: "ป้อนคำสั่ง (Prompt)", desc: "พิมพ์คำสั่งให้ชัดเจน ระบุบทบาท และผลลัพธ์ที่ต้องการ" },
+      { title: "แนบไฟล์", desc: "กดไอคอนรูปคลิปหนีบกระดาษเพื่อโยนไฟล์ PDF หรือ Excel ให้ AI อ่านประกอบ" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI วิเคราะห์ชุดข้อมูลขนาดใหญ่ (Data Analysis)", 
+        promptTh: "[อัปโหลดไฟล์ Excel ยอดขาย]\nช่วยทำหน้าที่เป็น Data Analyst วิเคราะห์ไฟล์ยอดขายนี้ให้หน่อย 1. หาสินค้าที่ทำกำไรสูงสุด 3 อันดับ 2. หาสาเหตุที่ยอดขายไตรมาส 3 ตก 3. วาดกราฟเส้นแสดงแนวโน้มยอดขายรายเดือน พร้อมสรุปข้อเสนอแนะ 3 ข้อ",
+        promptEn: "[Upload Sales Excel file]\nAct as a Data Analyst. Analyze this sales dataset: 1. Identify the top 3 most profitable products. 2. Find the root cause of the sales drop in Q3. 3. Generate a monthly sales trend line chart. Provide 3 actionable recommendations based on your findings."
+      },
+      { 
+        purpose: "💡 สั่งให้จำลองสถานการณ์ฝึกสัมภาษณ์งาน (Roleplay)", 
+        promptTh: "ช่วยสวมบทบาทเป็น Hiring Manager ของบริษัท Google เพื่อสัมภาษณ์ฉันในตำแหน่ง Data Engineer ให้คุณถามคำถามเชิงเทคนิค (Technical questions) ฉันทีละ 1 คำถาม รอฉันตอบ แล้วค่อยฟีดแบ็กและถามคำถามต่อไป",
+        promptEn: "Act as a Hiring Manager at Google interviewing me for a Data Engineer position. Ask me one technical interview question at a time. Wait for my response, provide constructive feedback on my answer, and then ask the next question."
+      }
+    ],
+    faqs: [
+      { question: "ถ้าส่งข้อมูลความลับบริษัทลงไป AI จะเอาไปจำไหม?", answer: "ถ้าใช้บัญชีฟรีหรือ Plus ข้อมูลอาจถูกนำไปเทรนโมเดลต่อครับ แนะนำให้เข้าไปที่ Settings -> Data Controls แล้วปิดสวิตช์ 'Chat history & training' เพื่อความปลอดภัยของข้อมูลบริษัทครับ" }
+    ]
+  },
+  {
+    id: "bot2",
+    slug: "claude-3",
+    name: "Anthropic – Claude 3.5",
+    logoUrl: "/logos/Anthropic – Claude.png",
+    description: "นักอ่านและนักคิดวิเคราะห์มือฉมัง เก่งเรื่องเอกสารยาวๆ ตอบมีเหตุผล และเขียนโค้ดลื่นไหล",
+    longDescription: "Claude คือคู่แข่งที่สูสีที่สุดของ ChatGPT และมักจะเอาชนะได้ในเรื่อง 'งานวิจัยและการวิเคราะห์เอกสาร' จุดเด่นของโมเดลตระกูล Claude 3.5 (Sonnet/Opus) คือมี Context Window (หน่วยความจำชั่วคราว) ที่ใหญ่มาก คุณสามารถโยนหนังสือความยาว 500 หน้า หรือรายงานงบการเงินหลายๆ ปีเข้าไปพร้อมกัน มันก็สามารถอ่านและจำรายละเอียดได้ครบถ้วนโดยไม่ตกหล่น นอกจากนี้ สำนวนการเขียนของ Claude ยังดู 'เป็นมนุษย์' มีการคิดเป็นลำดับขั้นตอน (Step-by-step reasoning) และมีฟีเจอร์ไม้ตายอย่าง 'Artifacts' ที่ให้มันเขียนโค้ดสร้างหน้าเว็บหรือกราฟิก แล้วโชว์ผลลัพธ์เป็นแอปจำลองให้ดูทันที",
+    origin: "Anthropic ก่อตั้งโดยอดีตทีมวิจัยของ OpenAI ที่ต้องการสร้าง AI ที่ปลอดภัย มีจริยธรรม และควบคุมได้ (Constitutional AI) ทำให้ Claude ปฏิเสธการทำคำสั่งที่เป็นอันตรายได้ดีกว่า AI ทั่วไป",
+    category: "AI Chatbots & Assistants",
+    priceModel: "Free / Pro $20 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://claude.ai",
+    rating: 4.9,
+    reviewCount: 42100,
+    updatedAt: "Feb 2026",
+    features: [
+      "Artifacts UI: เมื่อสั่งให้เขียนโค้ด (เช่น React/HTML) หรือทำพรีเซนเทชัน Claude จะเปิดหน้าต่างฝั่งขวาโชว์ผลลัพธ์ให้ดูและใช้งานได้ทันที",
+      "Massive Context Window: รองรับการอ่านและประมวลผลข้อมูลระดับ 200K Tokens (เทียบเท่าหนังสือหนาๆ 1 เล่ม) ได้รวดเร็วและแม่นยำ (Near-perfect recall)",
+      "Nuanced & Human-like Tone: สำนวนการตอบมีความเป็นธรรมชาติ ถ่อมตัว ไม่ใช้คำศัพท์ฟุ่มเฟือยแบบหุ่นยนต์"
+    ],
+    pros: [
+      "เป็นเบอร์ 1 ของวงการอย่างแท้จริงในงาน 'วิเคราะห์เอกสาร (Document Analysis)' และ 'การเขียนโค้ด (Coding)'",
+      "มีตรรกะการคิดวิเคราะห์ที่ดีเยี่ยม ไม่ค่อยตอบแบบตื้นๆ แต่จะเจาะลึกที่มาที่ไป",
+      "ฟีเจอร์ Artifacts เปลี่ยนวิธีคิดของการใช้ Chatbot ไปเลย เพราะมันกลายเป็นหน้าต่างสร้างแอปขนาดย่อมได้"
+    ],
+    cons: [
+      "ในเวอร์ชันฟรี โควต้าการใช้งานจะหมดเร็วมาก โดยเฉพาะถ้าอัปโหลดไฟล์ขนาดใหญ่บ่อยๆ",
+      "ไม่สามารถค้นหาข้อมูลอัปเดตจากอินเทอร์เน็ต (Web Browsing) ได้ในตัวเหมือน ChatGPT หรือ Gemini"
+    ],
+    steps: [
+      { title: "อัปโหลด Knowledge", desc: "โยนไฟล์ PDF หรือเอกสาร Word ที่ต้องการให้เป็นฐานความรู้ (Knowledge base) ลงไป" },
+      { title: "กำหนดบริบท", desc: "พิมพ์คำถามเจาะจง หรือสั่งให้มันเปรียบเทียบข้อมูลระหว่างไฟล์" },
+      { title: "ใช้ Artifacts", desc: "ถ้าอยากได้กราฟิกหรือหน้าเว็บ ให้สั่ง 'ช่วยสร้าง Interactive dashboard ของข้อมูลนี้'" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 ให้ AI สรุปและตรวจทานสัญญาทางกฎหมาย (Legal Review)", 
+        promptTh: "[อัปโหลดไฟล์สัญญาจ้างงาน.pdf]\nช่วยอ่านสัญญาฉบับนี้อย่างละเอียด และสรุปประเด็นสำคัญ 5 ข้อให้คนทั่วไปเข้าใจง่ายๆ จากนั้นช่วยหา 'ช่องโหว่ หรือข้อเสียเปรียบ' ที่ฝั่งลูกจ้างควรระวังเป็นพิเศษ พร้อมอ้างอิงเลขหน้าและหมวดหมู่ของข้อความนั้น",
+        promptEn: "[Upload Employment_Contract.pdf]\nPlease thoroughly review this contract. Summarize the 5 key takeaways in plain English. Then, identify any 'loopholes or unfavorable clauses' that the employee should be particularly cautious about, referencing the specific page and section numbers."
+      },
+      { 
+        purpose: "💡 สั่งสร้างแอปพลิเคชันผ่าน Artifacts (Web Dev)", 
+        promptTh: "ช่วยสร้างเครื่องมือ 'Pomodoro Timer (นาฬิกาจับเวลาอ่านหนังสือ)' โดยใช้ React และ Tailwind CSS ขอดีไซน์สไตล์มินิมอล มีปุ่ม Start, Pause, Reset และมีแถบ Progress bar ให้แสดงผลในหน้าต่าง Artifacts ทางขวาเลย",
+        promptEn: "Build a 'Pomodoro Timer' application using React and Tailwind CSS. Use a clean, minimalist design. Include Start, Pause, and Reset buttons, along with a visual Progress bar. Please render the interactive output in the Artifacts window."
+      }
+    ],
+    faqs: [
+      { question: "ทำไม Claude ชอบปฏิเสธไม่ยอมตอบบางคำถาม?", answer: "Claude ถูกฝังระบบ Constitutional AI ที่เข้มงวดมากครับ ถ้าคำถามมีความเสี่ยงด้านลิขสิทธิ์ ความรุนแรง หรือการแฮ็กระบบ มันจะปฏิเสธทันทีเพื่อความปลอดภัยครับ" }
+    ]
+  },
+  {
+    id: "bot3",
+    slug: "gemini-google",
+    name: "Google – Gemini",
+    logoUrl: "/logos/Google – Gemini.png",
+    description: "ขุมพลัง AI แห่ง Google Ecosystem โดดเด่นด้านการดูวิดีโอ YouTube และทำงานร่วมกับ Docs/Drive",
+    longDescription: "Gemini (ชื่อเดิม Bard) คือความพยายามของ Google ที่จะคว้าแชมป์ในสมรภูมิ AI จุดตายที่คู่แข่งไม่มีทางสู้ได้เลยคือ 'การฝังตัวอยู่ใน Ecosystem ของ Google' คุณสามารถพิมพ์สั่งให้ Gemini เข้าไปค้นหาอีเมลใน Gmail, สรุปไฟล์งานใน Google Drive, หรือแม้แต่โยนลิงก์ YouTube ให้มันดูวิดีโอแล้วสรุปเนื้อหาเป็นข้อๆ ออกมาได้ภายในไม่กี่วินาที นอกจากนี้ โมเดลตัวท็อปอย่าง Gemini 1.5 Pro ยังมี Context Window ทะลุ 1-2 ล้านโทเคน! (อัปโหลดหนังสือได้เป็นสิบเล่ม หรือคลิปวิดีโอความยาว 1 ชั่วโมงให้มันดูรวดเดียวได้)",
+    origin: "พัฒนาโดย Google DeepMind โดยเป็นโมเดลที่ถูกสร้างมาให้เป็น 'Multimodal ตั้งแต่เกิด (Natively Multimodal)' ไม่ใช่โมเดลข้อความที่เอาตัวอ่านภาพมาแปะทับ ทำให้มันเข้าใจบริบทของวิดีโอและรูปภาพได้ลึกซึ้งที่สุด",
+    category: "AI Chatbots & Assistants",
+    priceModel: "Free / Gemini Advanced $20 ต่อเดือน",
+    isFree: true,
+    externalUrl: "https://gemini.google.com",
+    rating: 4.7,
+    reviewCount: 38900,
+    updatedAt: "Feb 2026",
+    features: [
+      "Google Workspace Extensions: สั่งให้ไปค้นอีเมลใน Inbox หรืออ่านไฟล์ใน Google Drive เพื่อนำมาตอบคำถามได้โดยตรง",
+      "YouTube Video Analysis: แปะลิงก์ YouTube AI สามารถดูวิดีโอ (ผ่านซับไตเติลและภาพ) แล้วสรุปย่อหรือหาไทม์แสตมป์สำคัญได้",
+      "Ultra-Long Context (1M+ Tokens): ในเวอร์ชัน Advanced สามารถรับไฟล์วิดีโอ ไฟล์เสียง หรือโค้ดทั้งโปรเจกต์เข้าไปวิเคราะห์ได้ในคราวเดียว"
+    ],
+    pros: [
+      "ดึงข้อมูลแบบ Real-time จาก Google Search ได้แม่นยำและรวดเร็วที่สุด",
+      "ฟีเจอร์สรุปวิดีโอ YouTube เป็นอะไรที่ประหยัดเวลาชีวิตนักเรียนและคนทำงานได้มหาศาล",
+      "แจกโควต้าการใช้งานฟรีที่ค่อนข้างใจกว้างกว่า ChatGPT และให้ความรู้สึกในการแชทที่ลื่นไหล"
+    ],
+    cons: [
+      "บางครั้งอาจจะยังมีความ 'หลอน (Hallucination)' หรือตอบผิดพลาดในคำถามเชิงตรรกะซับซ้อน (คณิตศาสตร์/โค้ด) มากกว่า GPT-4o และ Claude",
+      "ระบบเซนเซอร์ (Safety filter) บางครั้งทำงานไวเกินไป ทำให้ปฏิเสธการตอบคำถามธรรมดาๆ เพียงเพราะมีคีย์เวิร์ดต้องห้าม"
+    ],
+    steps: [
+      { title: "เปิด Extensions", desc: "เข้าไปที่ Settings -> Extensions เพื่ออนุญาตให้ Gemini เข้าถึง Google Drive / Gmail / YouTube" },
+      { title: "เริ่มพิมพ์สั่งงาน", desc: "พิมพ์ @ เพื่อเรียกใช้ส่วนเสริม เช่น พิมพ์ '@YouTube ช่วยสรุปคลิปนี้...'" },
+      { title: "Export ผลลัพธ์", desc: "กดปุ่ม 'ส่งออกไปยัง Docs' หรือ 'ร่างจดหมายใน Gmail' เพื่อนำข้อความไปใช้งานต่อทันที" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งสรุปวิดีโอ YouTube และจับประเด็นสำคัญ (Time-saving)", 
+        promptTh: "@YouTube [แปะลิงก์คลิปสอนการลงทุนยาว 1 ชั่วโมง]\nช่วยดูคลิปวิดีโอนี้และทำสรุปประเด็นหลัก 5 ข้อที่ผู้พูดต้องการสื่อ พร้อมระบุช่วงเวลา (Timestamp) ของจังหวะที่เขาพูดถึง 'เทคนิคการจัดพอร์ตแบบ DCA' ให้ด้วย",
+        promptEn: "@YouTube [Paste 1-hour investment video link]\nPlease watch this video and summarize the top 5 key takeaways. Also, provide the exact Timestamp where the speaker discusses the 'DCA Portfolio Allocation technique'."
+      },
+      { 
+        purpose: "💡 สั่งค้นหาและร่างอีเมลจากข้อมูลใน Google Workspace", 
+        promptTh: "@GoogleDrive ช่วยค้นหาไฟล์ที่ชื่อ 'บันทึกการประชุมฝ่ายขาย Q3' แล้วนำข้อมูลยอดขายที่สรุปในนั้น มาให้ @Gmail ร่างอีเมลเตรียมส่งหาทีมงานเพื่อชื่นชมผลงาน พร้อมกำหนดเป้าหมายของไตรมาสถัดไป ขอโทนเสียงฮึกเหิมและเป็นผู้นำ",
+        promptEn: "@GoogleDrive Find the document named 'Q3 Sales Meeting Minutes'. Extract the sales performance summary from it, and ask @Gmail to draft an email to the team praising their hard work. Include the goals for the next quarter. Tone: Motivational and Leadership."
+      }
+    ],
+    faqs: [
+      { question: "ทำไมใช้ Extension หาไฟล์ใน Drive ไม่เจอ?", answer: "บางครั้ง AI อาจจะหาไฟล์ภาษาไทยไม่เจอหากไม่ได้พิมพ์ชื่อตรงเป๊ะๆ แนะนำให้พิมพ์คีย์เวิร์ดเฉพาะ หรือเข้าไปดูใน Settings ว่าเผลอปิดสวิตช์ Workspace Extension ไปหรือไม่ครับ" }
+    ]
+  },
+  {
+    id: "bot4",
+    slug: "grok",
+    name: "xAI – Grok",
+    logoUrl: "/logos/grok.png",
+    description: "AI สุดกวนแห่งโลกโซเชียล เข้าถึงข้อมูลข่าวสารและเทรนด์ทวิตเตอร์ (X) ได้แบบวินาทีต่อวินาที",
+    longDescription: "Grok คือแชทบอทสุดอินดี้จาก xAI (บริษัทของ Elon Musk) ที่สร้างมาท้าชนกระแสหลัก จุดแข็งหนึ่งเดียวที่ทำให้ Grok พิเศษคือ 'การเชื่อมต่อท่อข้อมูลตรงกับแพลตฟอร์ม X (Twitter)' ทำให้มันเป็น AI ที่รู้ข่าวสารล่าสุด เทรนด์ดราม่า หรือกระแสโลกได้แบบ Real-time วินาทีต่อวินาที (ในขณะที่ AI ตัวอื่นต้องรอให้คนเขียนข่าวลงเว็บก่อนถึงจะเสิร์ชเจอ) นอกจากนี้ Grok ยังขึ้นชื่อเรื่อง 'โทนการตอบที่กวนโอ๊ย (Fun Mode)' มีอารมณ์ขัน ใช้คำจิกกัดแบบมีสไตล์ และมีระบบเซนเซอร์เนื้อหา (Censorship) ที่น้อยกว่าชาวบ้าน!",
+    origin: "สร้างโดยทีม xAI เพื่อตอบสนองวิสัยทัศน์ของ Elon Musk ที่ต้องการ AI ที่ค้นหาความจริงสูงสุด (Maximum Truth-seeking) และมีอารมณ์ขัน ไม่ถูกจำกัดด้วยความถูกต้องทางการเมือง (Political Correctness) มากเกินไป",
+    category: "AI Chatbots & Assistants",
+    priceModel: "รวมอยู่ในแพ็กเกจ X Premium ($8 ต่อเดือน)",
+    isFree: false,
+    externalUrl: "https://x.com/i/grok",
+    rating: 4.5,
+    reviewCount: 15600,
+    updatedAt: "Feb 2026",
+    features: [
+      "Real-time X Integration: ดึงโพสต์ (Tweets) จากฐานข้อมูล X มาประมวลผลเป็นข่าวและเทรนด์ให้คุณอ่านแบบเรียลไทม์",
+      "Fun Mode / Regular Mode: เลือกสไตล์การตอบได้ว่าอยากได้ความรู้เน้นๆ หรืออยากให้ AI ตอบแบบจิกกัดติดตลก",
+      "Image Generation (Grok-2): เวอร์ชันใหม่สามารถสร้างภาพวาดได้ในตัว (และเซนเซอร์ภาพค่อนข้างน้อยเมื่อเทียบกับ DALL-E 3)"
+    ],
+    pros: [
+      "เบอร์ 1 ในการเช็กกระแส (Social Listening) อยากรู้ว่าตอนนี้คนในโซเชียลกำลังดราม่าเรื่องอะไร Grok สรุปให้ได้",
+      "โทนการตอบเป็นเอกลักษณ์ ไม่น่าเบื่อเหมือนหุ่นยนต์ อ่านแล้วสนุก",
+      "เก่งเรื่องอัปเดตข่าวด่วน (Breaking News) หรืองานกีฬา/คริปโต แบบเรียลไทม์"
+    ],
+    cons: [
+      "ไม่ฟรี ต้องเป็นสมาชิก X Premium ถึงจะใช้งานได้",
+      "ความสามารถเชิงลึกเรื่องการเขียนโค้ด (Coding) หรือประมวลผลไฟล์ (Data Analysis) ยังสู้ ChatGPT หรือ Claude ไม่ได้",
+      "บางครั้งอาจจะดึงข้อมูลเฟคนิวส์ (Fake news) บน X มาสรุปรวมด้วย ต้องมีวิจารณญาณในการอ่าน"
+    ],
+    steps: [
+      { title: "สมัคร X Premium", desc: "เข้าไปที่แอป X (Twitter) กดสมัครแพ็กเกจพรีเมียมรายเดือน" },
+      { title: "เลือกโหมด", desc: "เปิดแท็บ Grok แล้วเลือกโหมด 'Fun Mode' หรือ 'Regular Mode'" },
+      { title: "ถามข่าวล่าสุด", desc: "พิมพ์ถามถึงเทรนด์ (#Hashtag) หรือข่าวด่วนที่เพิ่งเกิดขึ้นไม่กี่นาทีที่ผ่านมา" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งสรุปเทรนด์และดราม่าบนโซเชียล (Social Listening)", 
+        promptTh: "[แนะนำให้เปิด Fun Mode]\nช่วยสรุปให้หน่อยว่าแฮชแท็ก #ดราม่าบริษัทไอที ที่กำลังติดเทรนด์อันดับ 1 ใน X ตอนนี้ มันเกิดอะไรขึ้น? ใครเป็นคนเริ่ม ฝั่งคนเห็นด้วยกับฝั่งไม่เห็นด้วยเขาเถียงกันว่ายังไง? ขอแบบสรุปสั้นๆ แซ่บๆ เข้าใจง่าย",
+        promptEn: "[Enable Fun Mode]\nPlease summarize the current #TechCompanyDrama hashtag trending on X right now. What sparked it? What are the main arguments from both sides? Give me a quick, spicy, and easy-to-understand breakdown."
+      },
+      { 
+        purpose: "💡 เกาะติดข่าวคริปโตหรือหุ้น (Real-time Market Update)", 
+        promptTh: "อัปเดตข่าวสารของ Bitcoin (BTC) ในช่วง 12 ชั่วโมงที่ผ่านมาให้หน่อย มีทวีตหรือประกาศสำคัญจากฝั่งรัฐบาลสหรัฐฯ หรือวาฬ (Whales) ที่ส่งผลกระทบต่อราคาบ้างไหม? ยกตัวอย่างโพสต์เด่นๆ มาให้ดูด้วย",
+        promptEn: "Provide a real-time update on Bitcoin (BTC) news over the last 12 hours. Have there been any major tweets or announcements from the US Government or Crypto Whales affecting the price? Quote the most significant posts."
+      }
+    ],
+    faqs: [
+      { question: "Grok สร้างรูปภาพได้ไหม?", answer: "ทำได้แล้วครับ! ในโมเดล Grok-2 มีการจับมือกับเครื่องมือสร้างภาพอย่าง Flux ทำให้ออกคำสั่งเสกรูปได้ในช่องแชทเลย แถมยังให้อิสระในการสร้างรูปภาพมากกว่าค่ายอื่นๆ ด้วยครับ" }
+    ]
+  },
+
+  {
+    id: "bot5",
+    slug: "meta-llama",
+    name: "Meta AI (Llama)",
+    logoUrl: "/logos/meta.png", // สมมติโลโก้ Meta หรือ Llama
+    description: "โมเดล AI แบบ Open-weight ที่ทรงพลังที่สุด ให้สาย Dev โหลดไปรันบนเครื่องตัวเองได้ฟรี",
+    longDescription: "Llama (Large Language Model Meta AI) ปัจจุบันเดินทางมาถึงรุ่นที่ 3 เป็นขุมพลังที่อยู่เบื้องหลัง Meta AI บน Facebook, Instagram และ WhatsApp จุดแข็งที่พลิกโฉมวงการคือมันเป็น 'Open-weight' (คล้าย Open-source) หมายความว่า Meta ยอมเปิดพารามิเตอร์โมเดลระดับโลกให้คนทั่วไปดาวน์โหลดไปรันบนเซิร์ฟเวอร์ส่วนตัว (Local) ได้ฟรีๆ! สิ่งนี้ทำให้บริษัทระดับองค์กร (Enterprise) นิยมนำ Llama ไปปรับจูน (Fine-tune) หรือทำระบบ RAG เพื่อสร้างผู้ช่วย AI เฉพาะทางของบริษัท โดยไม่ต้องกลัวว่าข้อมูลความลับจะรั่วไหลออกสู่อินเทอร์เน็ต",
+    origin: "พัฒนาโดย Meta (Facebook เดิม) นำโดย Mark Zuckerberg ที่มีวิสัยทัศน์อยากสร้าง Ecosystem แบบเปิด เพื่อทลายการผูกขาดของโมเดลปิด (Closed-source) อย่าง GPT-4 ของ OpenAI และ Claude",
+    category: "AI Chatbots & Assistants",
+    priceModel: "Free (Open-weight สำหรับใช้งานส่วนตัวและเชิงพาณิชย์)",
+    isFree: true,
+    externalUrl: "https://llama.meta.com",
+    rating: 4.8,
+    reviewCount: 27500,
+    updatedAt: "Feb 2026",
+    features: [
+      "Open-Weight Models: ดาวน์โหลดโมเดลขนาดต่างๆ (เช่น 8B, 70B, 400B) ไปรันบนเซิร์ฟเวอร์หรือคอมพิวเตอร์ของคุณเองได้อิสระ",
+      "Fine-tuning Ready: เหมาะสมที่สุดสำหรับการนำไปสอนเพิ่มเติม (Train) ให้เรียนรู้คำศัพท์เฉพาะทางของบริษัท",
+      "Meta Ecosystem: สำหรับผู้ใช้ทั่วไป สามารถเรียกใช้ Meta AI ผ่านแอปแชทอย่าง Messenger หรือ WhatsApp ได้โดยตรง"
+    ],
+    pros: [
+      "ความปลอดภัยของข้อมูล (Privacy) ระดับสูงสุด หากคุณรันโมเดลแบบ Offline ข้อมูลจะไม่ถูกส่งไปประมวลผลที่เซิร์ฟเวอร์อื่นเลย",
+      "ฟรี 100% สำหรับบริษัทที่มีผู้ใช้งานน้อยกว่า 700 ล้านคนต่อเดือน (ซึ่งก็คือเกือบทุกบริษัทบนโลก)",
+      "มีชุมชนนักพัฒนา (Open-source Community) ที่ยิ่งใหญ่มากบน Hugging Face มีเครื่องมือช่วยรันโมเดลให้เลือกใช้เพียบ"
+    ],
+    cons: [
+      "หากต้องการนำโมเดลมารันเอง ต้องมีความรู้ด้านโปรแกรมมิ่ง (DevOps) และต้องใช้คอมพิวเตอร์/เซิร์ฟเวอร์ที่มีการ์ดจอ (VRAM) สูงมาก",
+      "ความสละสลวยของการใช้ภาษาไทย ยังเป็นรองโมเดลอย่าง ChatGPT หรือ Claude อยู่พอสมควร (แต่มีโมเดลที่คนไทยนำไป Fine-tune ต่อให้โหลดใช้งานเยอะ)"
+    ],
+    steps: [
+      { title: "ดาวน์โหลดเครื่องมือ", desc: "สำหรับมือใหม่ แนะนำให้โหลดโปรแกรมอย่าง Ollama หรือ LM Studio มาติดตั้งบนคอมพิวเตอร์" },
+      { title: "โหลดโมเดล Llama", desc: "ค้นหาโมเดล Llama 3 (เช่น รุ่น 8B Instruct) และกดดาวน์โหลดลงเครื่อง" },
+      { title: "รันและใช้งาน", desc: "เปิดแอปแล้วแชทกับ Llama ได้ทันทีแบบไม่ต้องต่อเน็ต (Offline Mode) หรือจะเขียนโค้ดเรียกผ่าน API ในเครื่อง (Localhost) ก็ได้" }
+    ],
+    prompts: [
+      { 
+        purpose: "💡 สั่งรัน Llama เบื้องต้นผ่าน Command Line (Ollama)", 
+        promptTh: "[เปิด Terminal/Command Prompt บนเครื่องตัวเอง]\nollama run llama3\nจากนั้นพิมพ์คำถาม: 'ช่วยอธิบายคอนเซปต์ของการทำ RAG (Retrieval-Augmented Generation) ในการสร้าง AI ขององค์กรให้ฟังหน่อย'",
+        promptEn: "[Open Terminal/Command Prompt locally]\nollama run llama3\nThen type: 'Explain the concept of RAG (Retrieval-Augmented Generation) in the context of building enterprise AI solutions.'"
+      },
+      { 
+        purpose: "💡 ไอเดีย Prompt สำหรับการเขียนโค้ดให้โมเดลอ่านไฟล์ (Python)", 
+        promptTh: "[Prompt สำหรับนำไปประยุกต์ใช้ในโค้ด Python]\nคุณคือ AI ผู้ช่วยดึงข้อมูล (Information Extractor) จงอ่านข้อความเอกสารด้านล่างนี้ และสกัดเฉพาะ 'ชื่อบริษัท' และ 'ยอดรายได้' ออกมาในรูปแบบ JSON format เท่านั้น ห้ามพิมพ์คำอธิบายอื่นเพิ่มเติม",
+        promptEn: "You are an AI Information Extractor. Read the document provided below and extract only the 'Company Names' and their corresponding 'Revenue figures'. Return the output strictly in JSON format without any additional conversational text."
+      }
+    ],
+    faqs: [
+      { question: "คอมพิวเตอร์ทั่วไป (ไม่มีการ์ดจอแรงๆ) รัน Llama ได้ไหม?", answer: "สามารถรันโมเดลขนาดเล็ก (เช่น Llama 3 รุ่น 8B) ได้ครับ โดยใช้โปรแกรมจำพวก LM Studio หรือ Ollama ซึ่งมันจะไปดึงพลังจาก CPU และ RAM มาใช้แทน แต่เวลาประมวลผล (ความเร็วในการตอบ) จะช้ากว่าเครื่องที่มีการ์ดจอ (GPU) มากครับ" }
+    ]
+  }
+
 
 ];
