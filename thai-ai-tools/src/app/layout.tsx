@@ -123,6 +123,7 @@ export default function RootLayout({
 
         <CookieConsent />
         
+        #GoogleAnalytics
         <GoogleAnalytics gaId="G-J3JWTXQ2K0" /> 
       </body>
     </html>
