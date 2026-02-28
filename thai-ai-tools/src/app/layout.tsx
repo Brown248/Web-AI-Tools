@@ -115,7 +115,8 @@ export default function RootLayout({
                 <AlertTriangle size={14} /> แจ้งปัญหาใช้งาน
               </Link>
             </div>
-            <p>© 2025 AIToolbox. All rights reserved.</p>
+            {/* ✅ อัปเดตปีลิขสิทธิ์ให้เป็นปีปัจจุบันอัตโนมัติ */}
+            <p>© {new Date().getFullYear()} AIToolbox. All rights reserved.</p>
             <p className="text-xs text-slate-300 mt-2">Made with ❤️ for AI Lovers</p>
           </div>
         </footer>
