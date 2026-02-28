@@ -62,7 +62,9 @@ export default function Home() {
         (tool.description?.toLowerCase() || "").includes(searchContent) ||
         (tool.features || []).some(f => (f?.toLowerCase() || "").includes(searchContent));
 
-      const matchesCategory = selectedCategory ? tool.category === selectedCategory : true;
+      // ✅ แก้ไขการจับคู่หมวดหมู่: หาชื่อเต็ม (name) จาก slug ที่ผู้ใช้เลือก
+      const activeCategoryName = categories.find(c => c.slug === selectedCategory)?.name;
+      const matchesCategory = selectedCategory ? tool.category === activeCategoryName : true;
 
       let matchesPrice = true;
       if (priceFilter === "free") matchesPrice = tool.isFree === true;
@@ -308,6 +310,53 @@ export default function Home() {
           </AnimatePresence>
         )}
       </section>
+      
+      {/* =========================================
+          CATEGORIES SECTION (เพิ่มกลับมาให้สมบูรณ์)
+      ========================================= */}
+      <section className="py-24 relative bg-slate-50/50 border-t border-slate-200/60">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Explore by Category</h2>
+            <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full opacity-20" />
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+            {categories.map((cat, idx) => {
+              const isActive = selectedCategory === cat.slug;
+              return (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.05 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <button
+                    onClick={() => handleCategorySelect(cat.slug)}
+                    className={`
+                      flex items-center gap-3 px-6 py-3.5 rounded-xl border shadow-sm transition-all duration-300
+                      ${isActive 
+                        ? 'bg-blue-600 border-blue-600 text-white shadow-blue-500/40 ring-4 ring-blue-500/20' 
+                        : 'bg-white border-slate-200 text-slate-700 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/10'}
+                    `}
+                  >
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isActive ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-600'}`}>
+                      <Sparkles size={14} />
+                    </div>
+                    <span className="font-medium">
+                      {cat.name}
+                    </span>
+                  </button>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }
