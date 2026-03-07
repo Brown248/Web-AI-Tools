@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     siteName: 'AIToolbox',
     images: [
       {
-        url: '/og-image-home.jpg', // ขนาดที่แนะนำ: 1200x630px
+        url: '/icon.png', // ขนาดที่แนะนำ: 1200x630px
         width: 1200,
         height: 630,
         alt: 'AIToolbox - ศูนย์รวมเครื่องมือ AI',
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     creator: '@aitoolbox',
     title: 'AIToolbox | ศูนย์รวมเครื่องมือ AI',
     description: 'อัปเดตเครื่องมือ AI ใหม่ๆ และ Prompt เด็ดๆ ที่จะช่วยลดเวลาทำงานของคุณ',
-    images: ['/og-image-home.jpg'], 
+    images: ['/icon.png'], 
   },
 
   // ✅ ใส่โค้ดยืนยันตัวตนสำหรับ Google Search Console
