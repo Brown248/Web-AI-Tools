@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { tools, categories } from '@/lib/data';
+import { tools, categories } from '@/lib/data/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://web-ai-tools.vercel.app';

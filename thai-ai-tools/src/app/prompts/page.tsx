@@ -4,8 +4,8 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-// 💡 เปลี่ยนมา import แค่ customPrompts จากโฟลเดอร์ prompts ที่เราเพิ่งแก้
-import { customPrompts } from '@/lib/data/prompts'; 
+// ✅ ดึงเฉพาะข้อมูลคลัง Prompt และรายชื่อหมวดหมู่มาใช้
+import { customPrompts, PROMPT_CATEGORIES } from '@/lib/data'; 
 import PromptCopyBox from '@/components/ui/PromptCopyBox';
 import { Search, Terminal, LayoutGrid, Sparkles, X } from 'lucide-react';
 
@@ -13,16 +13,13 @@ export default function PromptLibraryPage() {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  // 🧠 ใช้เฉพาะ Prompt จากไฟล์ที่เราเขียนเอง
+  // 🧠 ใช้เฉพาะ Prompt จากไฟล์คลัง Prompt ของเรา (ไม่รวมหน้า Tools)
   const allPrompts = useMemo(() => {
     return customPrompts;
   }, []);
 
-  // ดึงรายชื่อหมวดหมู่ที่มี Prompt 
-  const categories = useMemo(() => {
-    const cats = Array.from(new Set(allPrompts.map(p => p.category)));
-    return ['All', ...cats];
-  }, [allPrompts]);
+  // ✅ ดึงรายชื่อหมวดหมู่จากตัวแปรกลาง ป้องกันบักจากการพิมพ์ผิด
+  const categories = ['All', ...PROMPT_CATEGORIES];
 
   // ระบบค้นหาและกรอง
   const filteredPrompts = useMemo(() => {
@@ -75,7 +72,11 @@ export default function PromptLibraryPage() {
                 className="w-full p-3 bg-transparent outline-none text-slate-700 placeholder:text-slate-400"
               />
               {query && (
-                <button onClick={() => setQuery('')} className="p-1 text-slate-400 hover:text-slate-600">
+                <button 
+                  onClick={() => setQuery('')} 
+                  className="p-1 text-slate-400 hover:text-slate-600"
+                  aria-label="Clear search"
+                >
                   <X size={16} />
                 </button>
               )}
@@ -160,7 +161,11 @@ export default function PromptLibraryPage() {
                 <Terminal className="mx-auto text-slate-300 mb-4" size={48} />
                 <h3 className="text-xl font-bold text-slate-800">ไม่พบ Prompt ที่ค้นหา</h3>
                 <p className="text-slate-500 mt-2">ลองเปลี่ยนคำค้นหา หรือเลือกหมวดหมู่ใหม่ดูนะครับ</p>
-                <button onClick={() => {setQuery(''); setActiveCategory('All');}} className="mt-4 text-blue-600 font-semibold hover:underline">
+                <button 
+                  onClick={() => {setQuery(''); setActiveCategory('All');}} 
+                  className="mt-4 text-blue-600 font-semibold hover:underline"
+                  aria-label="Clear all search and filters"
+                >
                   ล้างการค้นหา
                 </button>
               </motion.div>

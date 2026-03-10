@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
+// ✅ ดึง Tools และ Categories มาใช้จากไฟล์กลาง (data/index.ts)
 import { tools, categories } from '@/lib/data';
 import ToolCard from '@/components/ui/ToolCard';
 import { Search, ArrowRight, Sparkles, X, SlidersHorizontal, ArrowDownAZ } from 'lucide-react';
@@ -27,13 +28,13 @@ const itemVariants: Variants = {
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState(""); // State สำหรับหน่วงเวลาพิมพ์
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   
   const [priceFilter, setPriceFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("recommended");
 
-  // ระบบ Debounce: รอให้ผู้ใช้พิมพ์เสร็จ 300ms ค่อยอัปเดตคำค้นหา
+  // ระบบ Debounce: รอ 300ms
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(query);
@@ -56,13 +57,11 @@ export default function Home() {
     let result = tools.filter((tool) => {
       const searchContent = debouncedQuery.toLowerCase();
       
-      // ป้องกันเว็บแครช (Null/Undefined Safety) ด้วย Optional Chaining (?.)
       const matchesSearch = 
         (tool.name?.toLowerCase() || "").includes(searchContent) ||
         (tool.description?.toLowerCase() || "").includes(searchContent) ||
         (tool.features || []).some(f => (f?.toLowerCase() || "").includes(searchContent));
 
-      // ✅ แก้ไขการจับคู่หมวดหมู่: หาชื่อเต็ม (name) จาก slug ที่ผู้ใช้เลือก
       const activeCategoryName = categories.find(c => c.slug === selectedCategory)?.name;
       const matchesCategory = selectedCategory ? tool.category === activeCategoryName : true;
 
@@ -92,7 +91,7 @@ export default function Home() {
 
   const clearFilters = () => {
     setQuery("");
-    setDebouncedQuery(""); // เคลียร์ทันที ไม่ต้องรอ Debounce
+    setDebouncedQuery("");
     setSelectedCategory(null);
     setPriceFilter("all");
     setSortBy("recommended");
@@ -100,8 +99,7 @@ export default function Home() {
 
   const handleTagClick = (tag: string) => {
     setQuery(tag);
-    setDebouncedQuery(tag); // อัปเดตทันที ไม่ต้องรอ Debounce
-    // หน่วงเวลาเล็กน้อยเพื่อให้ DOM อัปเดตก่อนเลื่อนจอ ป้องกันการกระตุก
+    setDebouncedQuery(tag);
     setTimeout(() => {
       document.getElementById('tools-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
@@ -163,6 +161,7 @@ export default function Home() {
                       animate={{ opacity: 1, scale: 1 }}
                       onClick={() => { setQuery(""); setDebouncedQuery(""); }} 
                       className="mr-2 p-1 text-slate-400 hover:text-slate-600"
+                      aria-label="Clear search"
                     >
                       <X size={16} />
                     </motion.button>
@@ -213,6 +212,7 @@ export default function Home() {
                <button 
                  onClick={clearFilters}
                  className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-red-500 bg-white border border-slate-200 px-4 py-2 rounded-full transition-all hover:border-red-200 hover:bg-red-50"
+                 aria-label="Clear all filters"
                >
                  <X size={16} /> ล้างตัวกรอง
                </button>
@@ -231,7 +231,13 @@ export default function Home() {
               <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-sm font-medium border border-blue-100">
                 <Sparkles size={14} />
                 {categories.find(c => c.slug === selectedCategory)?.name || selectedCategory}
-                <button onClick={() => setSelectedCategory(null)} className="ml-1 hover:text-blue-900 bg-white/50 rounded-full p-0.5"><X size={12}/></button>
+                <button 
+                  onClick={() => setSelectedCategory(null)} 
+                  className="ml-1 hover:text-blue-900 bg-white/50 rounded-full p-0.5"
+                  aria-label="Remove category filter"
+                >
+                  <X size={12}/>
+                </button>
               </span>
             )}
             {!selectedCategory && <span className="text-sm text-slate-400 hidden sm:block">แสดงทุกหมวดหมู่</span>}
@@ -312,7 +318,7 @@ export default function Home() {
       </section>
       
       {/* =========================================
-          CATEGORIES SECTION (เพิ่มกลับมาให้สมบูรณ์)
+          CATEGORIES SECTION
       ========================================= */}
       <section className="py-24 relative bg-slate-50/50 border-t border-slate-200/60">
         <div className="max-w-7xl mx-auto px-6">

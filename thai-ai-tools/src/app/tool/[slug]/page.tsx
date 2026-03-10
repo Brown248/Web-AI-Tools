@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { tools } from '@/lib/data';
+import { tools } from '@/lib/data/data';
 import { notFound } from 'next/navigation';
 import { 
   ArrowLeft, ExternalLink, CheckCircle2, 

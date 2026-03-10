@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { tools } from '@/lib/data';
+import { tools } from '@/lib/data/data';
 import ToolCard from '@/components/ui/ToolCard'; // ✅ ใช้ Component หลักตัวเดียวกับหน้าแรก
 import { 
   LayoutGrid, MessageSquare, ImageIcon, Video, Code, 
