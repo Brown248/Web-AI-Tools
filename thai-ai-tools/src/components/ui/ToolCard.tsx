@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
-import { AITool } from '@/lib/data/data';
+import { AITool } from '@/lib/data/tools';
 import { ArrowUpRight } from 'lucide-react';
 
 interface ToolCardProps {
