@@ -4,7 +4,8 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { tools } from '@/lib/data';
+// 💡 เปลี่ยนมา import แค่ customPrompts (ลบ tools ออก)
+import { customPrompts } from '@/lib/data'; 
 import PromptCopyBox from '@/components/ui/PromptCopyBox';
 import { Search, Terminal, LayoutGrid, Sparkles, X } from 'lucide-react';
 
@@ -12,17 +13,9 @@ export default function PromptLibraryPage() {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  // 🧠 ดึง Prompt ทั้งหมดออกมาจาก AI ทุกตัวมารวมกัน
+  // 🧠 ใช้เฉพาะ Prompt จากไฟล์ที่เราเขียนเอง
   const allPrompts = useMemo(() => {
-    return tools.flatMap((tool) => 
-      (tool.prompts || []).map((prompt) => ({
-        ...prompt,
-        toolName: tool.name,
-        toolSlug: tool.slug,
-        category: tool.category,
-        logoUrl: tool.logoUrl
-      }))
-    );
+    return customPrompts;
   }, []);
 
   // ดึงรายชื่อหมวดหมู่ที่มี Prompt 

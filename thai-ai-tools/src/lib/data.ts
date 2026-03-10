@@ -1,7 +1,10 @@
-// ไฟล์นี้ทำหน้าที่เป็น "ตัวมัดรวม" (Barrel File) 
-// ทำให้หน้าเว็บอื่นๆ (เช่น page.tsx) สามารถ import ข้อมูลทั้งหมดได้จากไฟล์เดียวเหมือนเดิม
+// ไฟล์: src/lib/data.ts
 
 export { tools } from './data/tools';
 export { categories } from './data/categories';
 
+// ชี้ไปที่โฟลเดอร์ prompts (มันจะอ่านไฟล์ index.ts อัตโนมัติ)
+export { customPrompts } from './data/prompts'; 
+
 export type { AITool, BlogPost } from '@/app/types';
+export type { CustomPrompt } from './data/prompts';
