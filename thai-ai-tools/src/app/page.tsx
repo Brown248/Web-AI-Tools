@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 // ✅ ดึง Tools และ Categories มาใช้จากไฟล์กลาง (data/index.ts)
-import { tools, categories } from '@/lib/data';
+import { tools, categories } from '@/lib/data/data';
 import ToolCard from '@/components/ui/ToolCard';
 import { Search, ArrowRight, Sparkles, X, SlidersHorizontal, ArrowDownAZ } from 'lucide-react';
 import { useState, useMemo, useEffect } from 'react';

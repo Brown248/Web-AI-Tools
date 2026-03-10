@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 // ✅ ดึงเฉพาะข้อมูลคลัง Prompt และรายชื่อหมวดหมู่มาใช้
-import { customPrompts, PROMPT_CATEGORIES } from '@/lib/data'; 
+import { customPrompts, PROMPT_CATEGORIES } from '@/lib/data/data'; 
 import PromptCopyBox from '@/components/ui/PromptCopyBox';
 import { Search, Terminal, LayoutGrid, Sparkles, X } from 'lucide-react';
 
