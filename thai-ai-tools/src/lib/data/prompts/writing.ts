@@ -1,4 +1,4 @@
-import { CustomPrompt } from './index';
+import type { CustomPrompt } from './index';
 
 export const writingPrompts: CustomPrompt[] = [
   {

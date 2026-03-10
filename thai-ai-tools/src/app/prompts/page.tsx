@@ -4,8 +4,8 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-// 💡 เปลี่ยนมา import แค่ customPrompts (ลบ tools ออก)
-import { customPrompts } from '@/lib/data'; 
+// 💡 เปลี่ยนมา import แค่ customPrompts จากโฟลเดอร์ prompts ที่เราเพิ่งแก้
+import { customPrompts } from '@/lib/data/prompts'; 
 import PromptCopyBox from '@/components/ui/PromptCopyBox';
 import { Search, Terminal, LayoutGrid, Sparkles, X } from 'lucide-react';
 
