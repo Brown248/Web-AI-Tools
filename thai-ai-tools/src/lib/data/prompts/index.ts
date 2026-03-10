@@ -1,18 +1,16 @@
-// ✅ 1. ประกาศหมวดหมู่ที่อนุญาตให้ใช้ (Centralized Category List)
+// 1. ประกาศหมวดหมู่ (คงไว้เหมือนเดิม ไม่ต้องแก้)
 export const PROMPT_CATEGORIES = [
   "Marketing, SEO & Writing",
   "Writing & Email",
   "Coding & Development",
-  "Image Generation",
+  "Image Generation", // 👈 มีหมวดหมู่นี้รอรับไว้อยู่แล้ว!
   "Video & Voice Generation",
   "Data & Analytics",
   "Presentation & Slides"
 ] as const;
 
-// นำ Array ด้านบนมาแปลงเป็น TypeScript Type
 export type PromptCategory = typeof PROMPT_CATEGORIES[number];
 
-// ✅ 2. ประกาศ Type สำหรับ Prompt (บังคับใช้ Category จากด้านบน)
 export interface CustomPrompt {
   id: string;
   purpose: string;
@@ -24,14 +22,16 @@ export interface CustomPrompt {
   logoUrl?: string; 
 }
 
-// ✅ 3. Import โพรอมต์จากหมวดต่างๆ ที่คุณเขียนไว้
+// 2. Import โพรอมต์จากหมวดต่างๆ 
 import { codingPrompts } from './coding';
 import { marketingPrompts } from './marketing';
 import { writingPrompts } from './writing';
+import { imagePrompts } from './image'; // 👈 [เพิ่มบรรทัดนี้] ดึงไฟล์ใหม่เข้ามา
 
-// ✅ 4. รวมร่างทุก Array เข้าด้วยกัน (export ตัวนี้ไปใช้ในหน้าเว็บ)
+// 3. รวมร่างทุก Array เข้าด้วยกัน
 export const customPrompts: CustomPrompt[] = [
   ...codingPrompts,
   ...marketingPrompts,
   ...writingPrompts,
+  ...imagePrompts, // 👈 [เพิ่มบรรทัดนี้] เอา Prompt รูปภาพมารวมเข้าไป
 ];
